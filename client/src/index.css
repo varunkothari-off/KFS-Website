@@ -137,6 +137,23 @@
   animation: float 3s ease-in-out infinite;
 }
 
+/* Animation delays for staggered effects */
+.animation-delay-1000 {
+  animation-delay: 1s;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-3000 {
+  animation-delay: 3s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
 /* Sticky header transition */
 .sticky-header-enter {
   transform: translateY(-100%);
