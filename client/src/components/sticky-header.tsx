@@ -11,7 +11,7 @@ export default function StickyHeader() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -26,10 +26,10 @@ export default function StickyHeader() {
   ];
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
       isScrolled 
-        ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200' 
-        : 'bg-transparent'
+        ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200 translate-y-0 opacity-100' 
+        : 'bg-transparent -translate-y-full opacity-0'
     }`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">

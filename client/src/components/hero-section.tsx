@@ -33,29 +33,74 @@ export default function HeroSection() {
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-500/5 to-transparent"></div>
         </div>
         
-        {/* Subtle geometric grid */}
+        {/* Noise texture overlay */}
+        <div className="absolute inset-0 opacity-30" style={{
+          backgroundImage: `
+            radial-gradient(circle at 1px 1px, rgba(255,255,255,0.08) 1px, transparent 0)
+          `,
+          backgroundSize: '20px 20px'
+        }}></div>
+        
+        {/* Diagonal texture lines */}
+        <div className="absolute inset-0 opacity-15" style={{
+          backgroundImage: `
+            repeating-linear-gradient(
+              45deg,
+              transparent,
+              transparent 2px,
+              rgba(255,255,255,0.03) 2px,
+              rgba(255,255,255,0.03) 4px
+            )
+          `
+        }}></div>
+        
+        {/* Enhanced geometric grid with texture */}
         <div className="absolute inset-0 opacity-20">
           <div 
             className="w-full h-full" 
             style={{
               backgroundImage: `
                 linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+                radial-gradient(circle at 40px 40px, rgba(255,255,255,0.02) 2px, transparent 2px)
               `,
-              backgroundSize: '80px 80px'
+              backgroundSize: '80px 80px, 80px 80px, 80px 80px'
             }}
           />
         </div>
         
-        {/* Floating particles */}
+        {/* Subtle grain texture */}
+        <div className="absolute inset-0 opacity-25 mix-blend-soft-light" style={{
+          backgroundImage: `
+            radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0),
+            radial-gradient(circle at 8px 8px, rgba(255,255,255,0.03) 1px, transparent 0)
+          `,
+          backgroundSize: '16px 16px, 32px 32px'
+        }}></div>
+        
+        {/* Enhanced floating particles */}
         <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-yellow-300 rounded-full opacity-60 animate-ping animation-delay-1000"></div>
         <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-blue-300 rounded-full opacity-40 animate-ping animation-delay-2000"></div>
         <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 bg-purple-300 rounded-full opacity-50 animate-ping animation-delay-3000"></div>
         <div className="absolute bottom-1/3 right-1/4 w-1 h-1 bg-green-300 rounded-full opacity-30 animate-ping animation-delay-4000"></div>
+        <div className="absolute top-3/4 left-1/5 w-1 h-1 bg-cyan-300 rounded-full opacity-45 animate-ping animation-delay-5000"></div>
+        <div className="absolute top-1/5 right-1/5 w-1.5 h-1.5 bg-orange-300 rounded-full opacity-35 animate-ping animation-delay-6000"></div>
+        <div className="absolute bottom-1/5 left-2/3 w-1 h-1 bg-pink-300 rounded-full opacity-40 animate-ping animation-delay-7000"></div>
+        <div className="absolute top-2/3 right-2/3 w-2 h-2 bg-teal-300 rounded-full opacity-25 animate-ping animation-delay-8000"></div>
         
-        {/* Subtle light rays */}
+        {/* Enhanced light rays with texture */}
         <div className="absolute top-20 right-20 w-px h-32 bg-gradient-to-b from-yellow-300/50 to-transparent transform rotate-45"></div>
         <div className="absolute bottom-32 left-32 w-px h-24 bg-gradient-to-t from-blue-300/40 to-transparent transform -rotate-45"></div>
+        <div className="absolute top-40 left-20 w-px h-28 bg-gradient-to-b from-purple-300/30 to-transparent transform rotate-12"></div>
+        <div className="absolute bottom-20 right-32 w-px h-20 bg-gradient-to-t from-cyan-300/35 to-transparent transform -rotate-12"></div>
+        
+        {/* Organic texture patterns */}
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: `
+            radial-gradient(ellipse at top left, rgba(255,255,255,0.1) 0%, transparent 50%),
+            radial-gradient(ellipse at bottom right, rgba(255,255,255,0.05) 0%, transparent 50%)
+          `
+        }}></div>
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
