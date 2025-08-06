@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { authService, type SocialProfile } from "./auth";
 import { insertUserSchema, insertLoanApplicationSchema, insertConsultationSchema } from "@shared/schema";
 import { z } from "zod";
 
@@ -9,6 +10,44 @@ const otpVerificationSchema = z.object({
   otp: z.string().length(6),
 });
 
+const socialLoginSchema = z.object({
+  provider: z.enum(['google', 'linkedin', 'microsoft']),
+  code: z.string(),
+  redirectUri: z.string(),
+});
+
+const profileCompletionSchema = z.object({
+  mobile: z.string().min(10).optional(),
+});
+
+// Extend Express Request interface
+interface AuthRequest extends Express.Request {
+  user?: any;
+}
+
+// Authentication middleware
+async function authenticateUser(req: Express.Request & { user?: any }, res: Express.Response, next: Express.NextFunction) {
+  const authHeader = req.headers.authorization;
+  const token = authHeader?.split(' ')[1]; // Bearer token
+
+  if (!token) {
+    return res.status(401).json({ message: "Authentication required" });
+  }
+
+  try {
+    const user = await authService.validateSession(token);
+    if (!user) {
+      return res.status(401).json({ message: "Invalid session" });
+    }
+    
+    req.user = user;
+    next();
+  } catch (error) {
+    console.error("Authentication error:", error);
+    return res.status(401).json({ message: "Authentication failed" });
+  }
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   
   // User registration and OTP verification
@@ -16,10 +55,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userData = insertUserSchema.parse(req.body);
       
-      // Check if user already exists
-      const existingUser = await storage.getUserByMobile(userData.mobile);
-      if (existingUser) {
-        return res.status(400).json({ message: "User already exists with this mobile number" });
+      // Check if user already exists (only for mobile-based registration)
+      if (userData.mobile) {
+        const existingUser = await storage.getUserByMobile(userData.mobile);
+        if (existingUser) {
+          return res.status(400).json({ message: "User already exists with this mobile number" });
+        }
       }
       
       const user = await storage.createUser(userData);
@@ -53,6 +94,67 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("OTP verification error:", error);
       res.status(400).json({ message: "OTP verification failed" });
+    }
+  });
+
+  // Social authentication routes
+  app.post("/api/auth/social-login", async (req, res) => {
+    try {
+      const { provider, code, redirectUri } = socialLoginSchema.parse(req.body);
+      
+      // Mock social login - In production, you would exchange code for profile data
+      // This is a simplified version for demo purposes
+      const mockProfile: SocialProfile = {
+        id: `${provider}_${Date.now()}`,
+        name: `User from ${provider}`,
+        email: `user@${provider}.com`,
+        picture: `https://via.placeholder.com/100`,
+        provider
+      };
+      
+      const user = await authService.createOrUpdateUserFromSocial(mockProfile);
+      const sessionToken = await authService.createSession(user.id);
+      
+      res.json({ 
+        user, 
+        token: sessionToken,
+        needsProfileCompletion: authService.needsProfileCompletion(user)
+      });
+    } catch (error) {
+      console.error("Social login error:", error);
+      res.status(400).json({ message: "Social login failed" });
+    }
+  });
+
+  app.post("/api/auth/complete-profile", authenticateUser, async (req: Express.Request & { user?: any }, res: Express.Response) => {
+    try {
+      const profileData = profileCompletionSchema.parse(req.body);
+      const updatedUser = await authService.completeProfile(req.user.id, profileData);
+      
+      res.json({ user: updatedUser });
+    } catch (error) {
+      console.error("Profile completion error:", error);
+      res.status(400).json({ message: "Profile completion failed" });
+    }
+  });
+
+  app.get("/api/auth/user", authenticateUser, async (req: Express.Request & { user?: any }, res: Express.Response) => {
+    res.json({ user: req.user });
+  });
+
+  app.post("/api/auth/logout", authenticateUser, async (req: Express.Request & { user?: any }, res: Express.Response) => {
+    try {
+      const authHeader = req.headers.authorization;
+      const token = authHeader?.split(' ')[1];
+      
+      if (token) {
+        await authService.deleteSession(token);
+      }
+      
+      res.json({ message: "Logged out successfully" });
+    } catch (error) {
+      console.error("Logout error:", error);
+      res.status(400).json({ message: "Logout failed" });
     }
   });
 

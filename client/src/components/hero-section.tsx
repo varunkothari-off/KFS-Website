@@ -1,12 +1,26 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Rocket, Calendar, ChevronDown } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function HeroSection() {
+  const { isAuthenticated, user } = useAuth();
+  const [, setLocation] = useLocation();
+
   const scrollToServices = () => {
     const element = document.getElementById('services');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleStartApplication = () => {
+    if (!isAuthenticated) {
+      setLocation('/login');
+    } else if (user && !user.isProfileComplete) {
+      setLocation('/complete-profile');
+    } else {
+      setLocation('/loan-application');
     }
   };
 
@@ -125,12 +139,14 @@ export default function HeroSection() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 mb-12">
-              <Link href="/loan-application">
-                <Button size="lg" className="group bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-400 text-slate-900 hover:from-yellow-300 hover:via-yellow-400 hover:to-orange-300 text-lg px-10 py-5 shadow-2xl hover:shadow-yellow-500/25 transform hover:-translate-y-1 transition-all duration-300 font-semibold rounded-xl">
-                  <Rocket className="w-6 h-6 mr-3 group-hover:translate-x-1 transition-transform" />
-                  Start Your Application
-                </Button>
-              </Link>
+              <Button 
+                onClick={handleStartApplication}
+                size="lg" 
+                className="group bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-400 text-slate-900 hover:from-yellow-300 hover:via-yellow-400 hover:to-orange-300 text-lg px-10 py-5 shadow-2xl hover:shadow-yellow-500/25 transform hover:-translate-y-1 transition-all duration-300 font-semibold rounded-xl"
+              >
+                <Rocket className="w-6 h-6 mr-3 group-hover:translate-x-1 transition-transform" />
+                {isAuthenticated ? "Continue Application" : "Start Your Application"}
+              </Button>
               <Link href="/consultation">
                 <Button 
                   variant="outline" 

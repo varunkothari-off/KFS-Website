@@ -8,12 +8,16 @@ import Home from "./pages/home";
 import LoanApplication from "./pages/loan-application";
 import Consultation from "./pages/consultation";
 import ApplicationStatus from "./pages/application-status";
+import LoginPage from "./pages/login";
+import CompleteProfilePage from "./pages/complete-profile";
 import NotFound from "./pages/not-found";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/login" component={LoginPage} />
+      <Route path="/complete-profile" component={CompleteProfilePage} />
       <Route path="/loan-application" component={LoanApplication} />
       <Route path="/consultation" component={Consultation} />
       <Route path="/application-status/:id?" component={ApplicationStatus} />

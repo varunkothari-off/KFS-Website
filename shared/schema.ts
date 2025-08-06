@@ -6,9 +6,22 @@ import { z } from "zod";
 export const users = pgTable("users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   fullName: text("full_name").notNull(),
-  mobile: text("mobile").notNull().unique(),
-  email: text("email"),
+  mobile: text("mobile"),
+  email: text("email").notNull().unique(),
+  profilePicture: text("profile_picture"),
+  provider: text("provider"), // 'google', 'linkedin', 'microsoft', 'phone'
+  providerId: text("provider_id"), // Provider-specific user ID
   isVerified: boolean("is_verified").default(false),
+  isProfileComplete: boolean("is_profile_complete").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const sessions = pgTable("sessions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  token: text("token").notNull().unique(),
+  expiresAt: timestamp("expires_at").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -74,9 +87,16 @@ export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
   createdAt: true,
 });
 
+export const insertSessionSchema = createInsertSchema(sessions).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
+export type Session = typeof sessions.$inferSelect;
+export type InsertSession = z.infer<typeof insertSessionSchema>;
 export type LoanApplication = typeof loanApplications.$inferSelect;
 export type InsertLoanApplication = z.infer<typeof insertLoanApplicationSchema>;
 export type Consultation = typeof consultations.$inferSelect;
