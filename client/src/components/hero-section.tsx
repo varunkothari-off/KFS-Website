@@ -108,17 +108,34 @@ export default function HeroSection() {
         <div className="absolute top-40 left-20 w-px h-28 bg-gradient-to-b from-purple-300/30 to-transparent transform rotate-12"></div>
         <div className="absolute bottom-20 right-32 w-px h-20 bg-gradient-to-t from-cyan-300/35 to-transparent transform -rotate-12"></div>
         
-        {/* Organic texture patterns */}
-        <div className="absolute inset-0 opacity-10" style={{
+        {/* Enhanced organic texture patterns */}
+        <div className="absolute inset-0 opacity-15" style={{
           backgroundImage: `
-            radial-gradient(ellipse at top left, rgba(255,255,255,0.1) 0%, transparent 50%),
-            radial-gradient(ellipse at bottom right, rgba(255,255,255,0.05) 0%, transparent 50%)
+            radial-gradient(ellipse at top left, rgba(255,255,255,0.15) 0%, transparent 50%),
+            radial-gradient(ellipse at bottom right, rgba(255,255,255,0.08) 0%, transparent 50%),
+            radial-gradient(circle at 30% 70%, rgba(254,240,138,0.1) 0%, transparent 40%),
+            radial-gradient(circle at 70% 30%, rgba(147,197,253,0.08) 0%, transparent 40%)
+          `
+        }}></div>
+        
+        {/* Additional texture overlay */}
+        <div className="absolute inset-0 opacity-30" style={{
+          backgroundImage: `
+            linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.02) 25%, transparent 50%, rgba(255,255,255,0.02) 75%, transparent 100%),
+            repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0px, transparent 2px, transparent 4px, rgba(255,255,255,0.01) 6px)
+          `
+        }}></div>
+        
+        {/* Subtle noise texture */}
+        <div className="absolute inset-0 opacity-20" style={{
+          backgroundImage: `
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3Ccircle cx='27' cy='7' r='1'/%3E%3Ccircle cx='47' cy='7' r='1'/%3E%3Ccircle cx='17' cy='17' r='1'/%3E%3Ccircle cx='37' cy='17' r='1'/%3E%3Ccircle cx='7' cy='27' r='1'/%3E%3Ccircle cx='27' cy='27' r='1'/%3E%3Ccircle cx='47' cy='27' r='1'/%3E%3Ccircle cx='17' cy='37' r='1'/%3E%3Ccircle cx='37' cy='37' r='1'/%3E%3Ccircle cx='7' cy='47' r='1'/%3E%3Ccircle cx='27' cy='47' r='1'/%3E%3Ccircle cx='47' cy='47' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
           `
         }}></div>
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-5xl grid lg:grid-cols-5 gap-12 items-center">
+        <div className="max-w-6xl grid lg:grid-cols-5 gap-8 lg:gap-12 items-start">
           {/* Left Content - spans 3 columns */}
           <div className="lg:col-span-3 text-white">
             <div className="inline-block bg-gradient-to-r from-yellow-400/20 to-orange-400/20 text-yellow-200 px-6 py-3 rounded-full text-sm font-medium mb-6 border border-yellow-400/30 backdrop-blur-sm">
@@ -181,8 +198,8 @@ export default function HeroSection() {
           </div>
           
           {/* Right Content - Enhanced Features Card - spans 2 columns */}
-          <div className="lg:col-span-2 relative">
-            <div className="bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl hover:shadow-white/10 transition-all duration-500">
+          <div className="lg:col-span-2 relative w-full overflow-hidden">
+            <div className="bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-xl rounded-3xl p-4 sm:p-6 lg:p-8 border border-white/20 shadow-2xl hover:shadow-white/10 transition-all duration-500 w-full max-w-none">
               <div className="text-center mb-8">
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-3xl mb-6 shadow-xl">
                   <svg className="w-10 h-10 text-slate-900" fill="currentColor" viewBox="0 0 20 20">
