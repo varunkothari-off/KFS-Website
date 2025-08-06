@@ -1,0 +1,44 @@
+OLE:
+You are a lead UI/UX Designer at a top-tier digital agency. Your specialty is creating premium, high-trust websites for fintech and financial consulting firms. Your work is known for its exceptional clarity, modern aesthetic, and flawless visual hierarchy. You will now apply this expertise to redesign the KFS homepage.
+
+THE GRAND VISION:
+Forget generic templates. We are building a website that feels like a premium financial brand (think Stripe, but for business consulting). The aesthetic is one of calm confidence and clarity. The design must be clean, spacious, and guide the user seamlessly through a story of trust and competence.
+
+THE NEW HOMEPAGE BLUEPRINT:
+You are to generate the complete Next.js/Tailwind CSS code for the Homepage following this precise, top-to-bottom structure.
+
+1. The Pre-Header: The First Trust Signal
+
+Your Instruction: Before the main headline, at the very top of the hero section, add the "Trusted by" banner.
+
+Styling: It should be subtle. Use a small checkmark icon next to the text "Trusted by 500+ Businesses Across India". The text should be small but clear. This primes the user with social proof before they even read the main offer.
+
+2. The Hero Section: Clarity and Choice
+
+The Background (Crucial Fix): We are not using a generic gradient. Choose one of these two professional options:
+
+Option A (Abstract & Clean): Create a light, off-white background (#F9FAFB). On top of this, layer very subtle, soft-edged geometric shapes in different opacities, using the light and dark blues from the KFS logo. This creates depth without being distracting.
+
+Option B (Human & Professional): Use a high-resolution, professional photograph of a modern, bright office environment or a diverse group of professionals in a meeting. Apply a semi-transparent blue color overlay on top of the image to ensure the white text has perfect readability and the scene aligns with the brand colors.
+
+The Headline (The H1): Use the headline "Get Your Business Financed Today". Ensure it has a large font size (text-5xl or text-6xl), bold weight (font-bold), and excellent readability against the new background.
+
+The Call-to-Action (CTA) Buttons:
+
+Your Instruction: As requested, we will have two buttons side-by-side below the headline.
+
+Primary Button: [ Start Your Application ] - This button must be solid, using the primary blue from the logo as its background, with white text. It must have the highest visual weight.
+
+Secondary Button: [ Book a Free Consultation ] - This button should be an "outline" or "ghost" style. It will have a transparent background with a 1px blue border and blue text. This clearly offers a second option without competing with the primary goal.
+
+3. The Social Proof Bar: Dynamic & Engaging
+
+Your Instruction: Immediately following the hero section, create the social proof bar we discussed (the "discover our services thingy").
+
+Placement & Animation: This section should be hidden initially and then smoothly animate into view as the user scrolls down. The numbers (₹500+ Cr, 500+, 20+, 98%) should have a "count-up" animation effect, starting from 0 and quickly counting up to their final value as they appear. This creates a dynamic and impressive reveal.
+
+4. The Partner Wall: Showing, Not Telling
+
+Your Instruction: Below the social proof bar, create a new section titled "Partnered With India's Most Trusted Lenders".
+
+Execution: You must display the logos of the partner banks
