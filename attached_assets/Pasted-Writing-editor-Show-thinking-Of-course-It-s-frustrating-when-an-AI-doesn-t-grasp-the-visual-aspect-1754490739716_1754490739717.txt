@@ -1,0 +1,94 @@
+Writing editor
+
+Show thinking
+Of course. It's frustrating when an AI doesn't grasp the visual aspect of a design. The screenshot shows that the Replit AI has generated a very basic, unstyled HTML structure, completely ignoring the principles of modern web design.
+
+The links you provided on Visual Hierarchy and Design Thinking are the exact concepts needed to fix this. To get a better result, we need to stop giving the AI simple instructions and start giving it a detailed design brief disguised as a prompt.
+
+This new prompt forces the AI to act like a professional UI/UX designer. It translates the abstract principles from the articles you shared into concrete, actionable commands.
+
+Prompt for Replit AI: A Masterclass in Modern Web Design
+ROLE:
+You are an expert UI/UX Designer and Frontend Developer. You have a deep understanding of modern design principles, including the laws of Visual Hierarchy and the user-centric process of Design Thinking. Your task is to redesign the Kothari Financial Services homepage from scratch, creating a visually stunning, trustworthy, and highly functional user experience.
+
+CORE PHILOSOPHY:
+You must adhere to the following two core philosophies for this entire design:
+
+Visual Hierarchy is Paramount: Every element on the page must be intentionally placed. Guide the user's eye purposefully from the most important message to the least important. You will use size, color, contrast, alignment, and whitespace to achieve this.
+
+Design Thinking is Your Process: The page structure must follow a "Design Thinking" narrative. It should take the user on a journey that builds trust and answers their questions intuitively.
+
+DETAILED DESIGN SYSTEM & INSTRUCTIONS:
+
+You are to generate the code for the Homepage using Next.js and Tailwind CSS, following this precise design system.
+
+1. Typography & Hierarchy (The Voice of the Brand):
+
+Font: Use a clean, modern, sans-serif font family like "Inter" or "Manrope" from Google Fonts.
+
+H1 (Primary Headline): Size: text-5xl or text-6xl. Weight: font-bold. Color: A dark, near-black color (#1A202C). This is the most important visual anchor.
+
+H2 (Section Titles): Size: text-3xl. Weight: font-semibold. Color: The same dark, near-black color.
+
+Paragraph/Body Text: Size: text-lg. Weight: font-normal. Color: A softer grey (#4A5568). This makes it easy to read without competing with headlines.
+
+Buttons & CTAs: Size: text-lg. Weight: font-semibold.
+
+2. Layout, Spacing & Proximity (The Breathing Room):
+
+Whitespace is Essential: Be generous with whitespace. Sections should have significant top and bottom padding (e.g., py-16 or py-24) to give each part of the story its own space.
+
+Alignment: All content must be meticulously aligned to a grid. Use Tailwind's grid or flexbox utilities to ensure headlines, text, and images line up cleanly. Do not just center everything.
+
+Proximity: Group related items together. For example, in the "Meet Your Financial Partners" section, the photo, name, and title of a person should be close together, creating a single visual unit. There should be more space between different team members than there is within each member's profile.
+
+3. Color & Contrast (The Mood and Focus):
+
+Primary Color: Use the most prominent shade of blue from the KFS logo as your primary action color. This will be used for buttons, links, and important highlights.
+
+Backgrounds: Use a clean, off-white (#F7FAFC) or light grey for section backgrounds to create subtle separation and a premium feel. Avoid pure white (#FFFFFF) for large background areas.
+
+Contrast for CTAs: The primary call-to-action button ("Get Financed") must have the highest contrast on the page. Use the primary blue as the background color with crisp white text.
+
+4. The Design Thinking Homepage Structure (The User's Journey):
+
+Apply the design principles above to build the homepage wireframe we designed, but frame it as a user-centric story:
+
+Scene 1: Empathize & Hook (The Hero Section)
+
+Goal: Immediately show the user you understand their primary goal.
+
+Execution: A full-screen, immersive hero section. The H1 headline is the hero. The single, high-contrast "Get Financed" button is the only action. No distractions.
+
+Scene 2: Introduce the Solution (The "Meet the Team" Section)
+
+Goal: Build immediate human trust.
+
+Execution: Use professional, high-quality photos. The section title (H2) "Meet Your Financial Partners" clearly states the purpose. Each team member's card is a clean, well-spaced visual unit.
+
+Scene 3: Define the Authority (The "Trusted By" Section)
+
+Goal: Establish credibility with social proof.
+
+Execution: A clean, minimalist display of partner bank logos. They should be presented in grayscale to avoid visual clutter and only show color on hover. This demonstrates confidence.
+
+Scene 4: Ideate the Possibilities (The "Core Services" Section)
+
+Goal: Clearly present the solutions available.
+
+Execution: Use clean cards with icons and short descriptions for each service. Use alignment and proximity to make these easy to scan.
+
+Scene 5: Prototype the Success (The "Real Success Stories" Section)
+
+Goal: Show, don't just tell. Let the user see a prototype of their own future success.
+
+Execution: Make the client testimonial the visual centerpiece. Use a large font size for the quote. The client's photo and company logo make it real and verifiable.
+
+Scene 6: Test the Knowledge (The "Free Insights" Section)
+
+Goal: Offer value with no strings attached, demonstrating expertise.
+
+Execution: A clean, 3-column grid of blog post previews. Each card should have a compelling image, a clear headline, and a "Read More" link.
+
+YOUR TASK:
+Generate the complete Next.js/Tailwind CSS code for the Homepage based strictly on the detailed design system and structure outlined above. Ensure the navigation bar is hidden on initial load and becomes a sticky header on scroll. Implement the floating WhatsApp button in the bottom-right corner.

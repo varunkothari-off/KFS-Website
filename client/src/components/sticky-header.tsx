@@ -26,9 +26,9 @@ export default function StickyHeader() {
   ];
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200 translate-y-0 opacity-100' 
+        ? 'bg-white/95 backdrop-blur-lg shadow-sm border-b border-gray-100 translate-y-0 opacity-100' 
         : 'bg-transparent -translate-y-full opacity-0'
     }`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,12 +38,12 @@ export default function StickyHeader() {
             <Logo className="w-10 h-10" />
             <div className="flex flex-col">
               <span className={`font-bold text-lg leading-tight ${
-                isScrolled ? 'text-kfs-dark' : 'text-white'
+                isScrolled ? 'text-slate-900' : 'text-white'
               }`}>
                 KFS
               </span>
               <span className={`text-xs ${
-                isScrolled ? 'text-gray-600' : 'text-blue-200'
+                isScrolled ? 'text-slate-600' : 'text-blue-200'
               }`}>
                 Financial Services
               </span>
@@ -56,8 +56,8 @@ export default function StickyHeader() {
               <Link key={item.name} href={item.href}>
                 <span className={`font-medium transition-colors ${
                   location === item.href
-                    ? (isScrolled ? 'text-kfs-primary' : 'text-yellow-300')
-                    : (isScrolled ? 'text-gray-700 hover:text-kfs-primary' : 'text-white hover:text-yellow-300')
+                    ? (isScrolled ? 'text-blue-600' : 'text-yellow-300')
+                    : (isScrolled ? 'text-slate-700 hover:text-blue-600' : 'text-white hover:text-yellow-300')
                 }`}>
                   {item.name}
                 </span>
