@@ -4,6 +4,16 @@ This is a modern financial services web application built for Kothari Financial 
 
 The system is designed to serve entrepreneurs and businesses looking for various types of loans including property loans, business loans, and cash credit facilities. The platform emphasizes trust-building through partner bank displays, client testimonials, and professional service presentation.
 
+# Recent Changes
+
+## Deployment Fixes Applied (August 07, 2025)
+- **Health Check Endpoints**: Added `/health` and `/ready` endpoints for deployment monitoring
+- **Error Handling**: Enhanced server startup error handling with proper logging and graceful shutdown
+- **Environment Configuration**: Automatic NODE_ENV setup for production deployments
+- **Port Binding**: Server properly binds to 0.0.0.0 for all interfaces
+- **Graceful Shutdown**: Added SIGTERM and SIGINT handlers for clean shutdowns
+- **Build Process**: Ensured proper static file serving for production builds
+
 # User Preferences
 
 Preferred communication style: Simple, everyday language.

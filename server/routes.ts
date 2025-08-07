@@ -1,4 +1,4 @@
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { authService, type SocialProfile } from "./auth";
@@ -21,12 +21,12 @@ const profileCompletionSchema = z.object({
 });
 
 // Extend Express Request interface
-interface AuthRequest extends Express.Request {
+interface AuthRequest extends Request {
   user?: any;
 }
 
 // Authentication middleware
-async function authenticateUser(req: Express.Request & { user?: any }, res: Express.Response, next: Express.NextFunction) {
+async function authenticateUser(req: Request & { user?: any }, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
   const token = authHeader?.split(' ')[1]; // Bearer token
 
@@ -126,7 +126,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/auth/complete-profile", authenticateUser, async (req: Express.Request & { user?: any }, res: Express.Response) => {
+  app.post("/api/auth/complete-profile", authenticateUser, async (req: Request & { user?: any }, res: Response) => {
     try {
       const profileData = profileCompletionSchema.parse(req.body);
       const updatedUser = await authService.completeProfile(req.user.id, profileData);
@@ -138,11 +138,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/auth/user", authenticateUser, async (req: Express.Request & { user?: any }, res: Express.Response) => {
+  app.get("/api/auth/user", authenticateUser, async (req: Request & { user?: any }, res: Response) => {
     res.json({ user: req.user });
   });
 
-  app.post("/api/auth/logout", authenticateUser, async (req: Express.Request & { user?: any }, res: Express.Response) => {
+  app.post("/api/auth/logout", authenticateUser, async (req: Request & { user?: any }, res: Response) => {
     try {
       const authHeader = req.headers.authorization;
       const token = authHeader?.split(' ')[1];
