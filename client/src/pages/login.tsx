@@ -6,16 +6,19 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useLocation } from "wouter";
-import { Building2, ArrowRight, Phone, Shield } from "lucide-react";
+import { Building2, ArrowRight, Phone, Shield, Briefcase } from "lucide-react";
+import { SiGoogle, SiLinkedin } from "react-icons/si";
 import { apiRequest } from "@/lib/queryClient";
 import { queryClient } from "@/lib/queryClient";
 
 export default function LoginPage() {
   const [, setLocation] = useLocation();
   const [isLoading, setIsLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState<string | null>(null);
   const [mobileNumber, setMobileNumber] = useState("");
   const [otp, setOtp] = useState("");
   const [showOtpInput, setShowOtpInput] = useState(false);
+  const [loginMethod, setLoginMethod] = useState<'social' | 'otp'>('social');
   const { toast } = useToast();
 
   const handleSendOtp = async () => {
@@ -30,10 +33,15 @@ export default function LoginPage() {
 
     setIsLoading(true);
     try {
-      await apiRequest("/api/users/register", {
+      const response = await fetch("/api/users/register", {
         method: "POST",
-        body: { mobileNumber },
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mobileNumber }),
       });
+      
+      if (!response.ok) {
+        throw new Error("Failed to send OTP");
+      }
 
       setShowOtpInput(true);
       toast({
@@ -51,6 +59,58 @@ export default function LoginPage() {
     }
   };
 
+  const handleSocialLogin = async (provider: 'google' | 'linkedin' | 'microsoft') => {
+    setSocialLoading(provider);
+    
+    try {
+      // Mock social login for demo - in production, this would redirect to OAuth provider
+      const mockCode = `mock_${provider}_code_${Date.now()}`;
+      const response = await fetch("/api/auth/social-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          provider,
+          code: mockCode,
+          redirectUri: `${window.location.origin}/auth/callback`
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error("Social login failed");
+      }
+      
+      const data = await response.json() as { token: string; user: any; needsProfileCompletion?: boolean };
+
+      // Store the authentication token
+      localStorage.setItem("authToken", data.token);
+      
+      // Invalidate and refetch user query
+      await queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
+
+      toast({
+        title: "Login successful!",
+        description: `Welcome ${data.user.name || 'to Kothari Financial Services'}`,
+      });
+
+      // Check if profile completion is needed
+      if (data.needsProfileCompletion) {
+        setLocation("/complete-profile");
+      } else {
+        // Redirect to member dashboard
+        setLocation("/dashboard");
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      toast({
+        title: "Login failed",
+        description: error instanceof Error ? error.message : "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setSocialLoading(null);
+    }
+  };
+
   const handleVerifyOtp = async () => {
     if (!otp || otp.length !== 6) {
       toast({
@@ -63,13 +123,20 @@ export default function LoginPage() {
 
     setIsLoading(true);
     try {
-      const response = await apiRequest("/api/users/verify-otp", {
+      const response = await fetch("/api/users/verify-otp", {
         method: "POST",
-        body: { mobileNumber, otp },
-      }) as { token: string; needsProfileCompletion?: boolean };
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mobileNumber, otp }),
+      });
+      
+      if (!response.ok) {
+        throw new Error("Invalid OTP");
+      }
+      
+      const data = await response.json() as { token: string; needsProfileCompletion?: boolean };
 
       // Store the authentication token
-      localStorage.setItem("authToken", response.token);
+      localStorage.setItem("authToken", data.token);
       
       // Invalidate and refetch user query
       await queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
@@ -80,7 +147,7 @@ export default function LoginPage() {
       });
 
       // Check if profile completion is needed
-      if (response.needsProfileCompletion) {
+      if (data.needsProfileCompletion) {
         setLocation("/complete-profile");
       } else {
         // Check if there's a redirect path stored
@@ -89,7 +156,7 @@ export default function LoginPage() {
           localStorage.removeItem("redirectAfterLogin");
           setLocation(redirectPath);
         } else {
-          setLocation("/loan-application");
+          setLocation("/dashboard");
         }
       }
     } catch (error) {
@@ -121,13 +188,76 @@ export default function LoginPage() {
 
         <Card className="shadow-xl border-0 bg-white/95 backdrop-blur-sm">
           <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-xl">Sign in with your mobile number</CardTitle>
+            <CardTitle className="text-xl">Choose your login method</CardTitle>
             <CardDescription>
               Quick and secure access to your KFS account
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {!showOtpInput ? (
+            {loginMethod === 'social' ? (
+              <div className="space-y-3">
+                <Button
+                  variant="outline"
+                  className="w-full h-14 flex items-center justify-start gap-3 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
+                  onClick={() => handleSocialLogin('google')}
+                  disabled={socialLoading !== null}
+                >
+                  {socialLoading === 'google' ? (
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-current"></div>
+                  ) : (
+                    <SiGoogle className="w-5 h-5" />
+                  )}
+                  <span className="flex-1 text-left">Continue with Google</span>
+                  <ArrowRight className="w-4 h-4 opacity-50" />
+                </Button>
+                
+                <Button
+                  variant="outline"
+                  className="w-full h-14 flex items-center justify-start gap-3 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200"
+                  onClick={() => handleSocialLogin('linkedin')}
+                  disabled={socialLoading !== null}
+                >
+                  {socialLoading === 'linkedin' ? (
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-current"></div>
+                  ) : (
+                    <SiLinkedin className="w-5 h-5" />
+                  )}
+                  <span className="flex-1 text-left">Continue with LinkedIn</span>
+                  <ArrowRight className="w-4 h-4 opacity-50" />
+                </Button>
+                
+                <Button
+                  variant="outline"
+                  className="w-full h-14 flex items-center justify-start gap-3 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300"
+                  onClick={() => handleSocialLogin('microsoft')}
+                  disabled={socialLoading !== null}
+                >
+                  {socialLoading === 'microsoft' ? (
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-current"></div>
+                  ) : (
+                    <Briefcase className="w-5 h-5" />
+                  )}
+                  <span className="flex-1 text-left">Continue with Microsoft</span>
+                  <ArrowRight className="w-4 h-4 opacity-50" />
+                </Button>
+                
+                <div className="relative my-6">
+                  <Separator />
+                  <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-sm text-gray-500">
+                    or
+                  </span>
+                </div>
+                
+                <Button 
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => setLoginMethod('otp')}
+                >
+                  <Phone className="w-4 h-4 mr-2" />
+                  Use Mobile Number
+                </Button>
+              </div>
+            ) : !showOtpInput ? (
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="mobile">Mobile Number</Label>
@@ -169,6 +299,15 @@ export default function LoginPage() {
                   <Shield className="w-4 h-4 inline mr-1 text-green-600" />
                   We'll send you a 6-digit verification code
                 </div>
+                
+                <Button
+                  variant="ghost"
+                  className="w-full mt-2"
+                  onClick={() => setLoginMethod('social')}
+                >
+                  <ArrowRight className="w-4 h-4 mr-2 rotate-180" />
+                  Back to social login
+                </Button>
               </div>
             ) : (
               <div className="space-y-4">
