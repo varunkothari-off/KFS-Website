@@ -2,10 +2,35 @@ import { Button } from "@/components/ui/button";
 import { useLocation, Link } from "wouter";
 import { ArrowRight, ChevronDown, Check, Calendar } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useMemo } from "react";
 
 export default function HeroSection() {
   const { isAuthenticated, user } = useAuth();
   const [, setLocation] = useLocation();
+  
+  // Generate random shooting stars
+  const shootingStars = useMemo(() => {
+    const stars = [];
+    const starCount = 20; // Increased count for more stars
+    
+    for (let i = 0; i < starCount; i++) {
+      const isReverse = Math.random() > 0.5;
+      const randomTop = Math.random() * 60; // Random position from 0% to 60% of screen height
+      const randomDelay = Math.random() * 5; // Random delay from 0 to 5 seconds
+      const randomDuration = 2 + Math.random() * 2; // Duration between 2-4 seconds
+      
+      stars.push({
+        id: i,
+        top: `${randomTop}%`,
+        animationDelay: `${randomDelay}s`,
+        animationDuration: `${randomDuration}s`,
+        isReverse,
+        opacity: 0.4 + Math.random() * 0.6, // Random opacity between 0.4 and 1
+      });
+    }
+    
+    return stars;
+  }, []);
 
   const scrollToServices = () => {
     const element = document.getElementById('services');
@@ -37,35 +62,39 @@ export default function HeroSection() {
         </div>
       </div>
       
-      {/* Shooting stars - 15+ with movement and disappearing animations */}
+      {/* Randomized shooting stars */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="shooting-star" style={{ top: '10%', left: '-5%', animationDelay: '0s' }}></div>
-        <div className="shooting-star" style={{ top: '20%', left: '-5%', animationDelay: '0.5s' }}></div>
-        <div className="shooting-star" style={{ top: '30%', left: '-5%', animationDelay: '1s' }}></div>
-        <div className="shooting-star" style={{ top: '15%', left: '-5%', animationDelay: '1.5s' }}></div>
-        <div className="shooting-star" style={{ top: '40%', left: '-5%', animationDelay: '2s' }}></div>
-        <div className="shooting-star" style={{ top: '5%', left: '-5%', animationDelay: '2.5s' }}></div>
-        <div className="shooting-star" style={{ top: '25%', left: '-5%', animationDelay: '3s' }}></div>
-        <div className="shooting-star" style={{ top: '35%', left: '-5%', animationDelay: '3.5s' }}></div>
+        {shootingStars.map((star) => (
+          <div
+            key={star.id}
+            className={`shooting-star ${star.isReverse ? 'shooting-star-reverse' : ''}`}
+            style={{
+              top: star.top,
+              [star.isReverse ? 'right' : 'left']: '-5%',
+              animationDelay: star.animationDelay,
+              animationDuration: star.animationDuration,
+              opacity: star.opacity,
+            }}
+          />
+        ))}
         
-        <div className="shooting-star shooting-star-reverse" style={{ top: '10%', right: '-5%', animationDelay: '0.3s' }}></div>
-        <div className="shooting-star shooting-star-reverse" style={{ top: '20%', right: '-5%', animationDelay: '0.8s' }}></div>
-        <div className="shooting-star shooting-star-reverse" style={{ top: '30%', right: '-5%', animationDelay: '1.3s' }}></div>
-        <div className="shooting-star shooting-star-reverse" style={{ top: '15%', right: '-5%', animationDelay: '1.8s' }}></div>
-        <div className="shooting-star shooting-star-reverse" style={{ top: '40%', right: '-5%', animationDelay: '2.3s' }}></div>
-        <div className="shooting-star shooting-star-reverse" style={{ top: '5%', right: '-5%', animationDelay: '2.8s' }}></div>
-        <div className="shooting-star shooting-star-reverse" style={{ top: '25%', right: '-5%', animationDelay: '3.3s' }}></div>
-        <div className="shooting-star shooting-star-reverse" style={{ top: '35%', right: '-5%', animationDelay: '3.8s' }}></div>
-        
-        {/* Additional static twinkling stars for depth */}
-        <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full opacity-70" style={{
-          boxShadow: '0 0 8px rgba(255, 255, 255, 0.6)',
-          animation: 'pulse 2s ease-in-out infinite'
-        }}></div>
-        <div className="absolute top-3/4 right-1/3 w-0.5 h-0.5 bg-blue-200 rounded-full opacity-60" style={{
-          boxShadow: '0 0 6px rgba(191, 219, 254, 0.5)',
-          animation: 'pulse 2.5s ease-in-out infinite'
-        }}></div>
+        {/* Additional random twinkling stars for depth */}
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={`twinkle-${i}`}
+            className="absolute rounded-full bg-white"
+            style={{
+              top: `${Math.random() * 80}%`,
+              left: `${Math.random() * 90 + 5}%`,
+              width: `${Math.random() * 2 + 0.5}px`,
+              height: `${Math.random() * 2 + 0.5}px`,
+              opacity: Math.random() * 0.7 + 0.3,
+              boxShadow: `0 0 ${Math.random() * 6 + 2}px rgba(255, 255, 255, ${Math.random() * 0.6 + 0.4})`,
+              animation: `pulse ${Math.random() * 2 + 1.5}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 3}s`,
+            }}
+          />
+        ))}
       </div>
       
       <div className="container mx-auto px-6 lg:px-8 relative z-10">

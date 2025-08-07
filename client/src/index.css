@@ -150,7 +150,7 @@
   animation: float 3s ease-in-out infinite;
 }
 
-/* Shooting star animation */
+/* Shooting star animation with varied paths */
 @keyframes shootingStar {
   0% {
     transform: translate(0, 0) rotate(-45deg);
@@ -160,7 +160,7 @@
     opacity: 1;
   }
   100% {
-    transform: translate(300px, 300px) rotate(-45deg);
+    transform: translate(calc(200px + 20vw), calc(200px + 20vh)) rotate(-45deg);
     opacity: 0;
   }
 }
@@ -174,7 +174,7 @@
     opacity: 1;
   }
   100% {
-    transform: translate(-300px, 300px) rotate(-45deg);
+    transform: translate(calc(-200px - 20vw), calc(200px + 20vh)) rotate(-45deg);
     opacity: 0;
   }
 }
