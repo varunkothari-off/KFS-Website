@@ -1,39 +1,49 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type { User } from '@shared/schema';
+import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
+import { useEffect } from "react";
+import { apiRequest } from "@/lib/queryClient";
 
-interface AuthState {
-  user: User | null;
-  token: string | null;
-  isAuthenticated: boolean;
-  login: (token: string, user: User) => Promise<void>;
-  logout: () => void;
-  updateUser: (user: User) => void;
+export function useAuth() {
+  const { data: user, isLoading, error } = useQuery({
+    queryKey: ["/api/auth/user"],
+    queryFn: async () => {
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        throw new Error("No auth token");
+      }
+      const response = await apiRequest("GET", "/api/auth/user", null, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      if (!response.ok) {
+        throw new Error("Not authenticated");
+      }
+      const data = await response.json();
+      return data.user;
+    },
+    retry: false,
+  });
+
+  return {
+    user,
+    isLoading,
+    isAuthenticated: !!user && !error,
+  };
 }
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
-      user: null,
-      token: null,
-      isAuthenticated: false,
-      login: async (token: string, user: User) => {
-        set({ token, user, isAuthenticated: true });
-      },
-      logout: () => {
-        set({ user: null, token: null, isAuthenticated: false });
-      },
-      updateUser: (user: User) => {
-        set({ user });
-      },
-    }),
-    {
-      name: 'kfs-auth',
-    }
-  )
-);
+export function useRequireAuth() {
+  const { isAuthenticated, isLoading } = useAuth();
+  const [, setLocation] = useLocation();
 
-// Hook for components to use authentication
-export function useAuth() {
-  return useAuthStore();
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      // Store the current path to redirect back after login
+      const currentPath = window.location.pathname;
+      localStorage.setItem("redirectAfterLogin", currentPath);
+      setLocation("/login");
+    }
+  }, [isAuthenticated, isLoading, setLocation]);
+
+  return { isAuthenticated, isLoading };
 }

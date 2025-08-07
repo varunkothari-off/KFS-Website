@@ -158,11 +158,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Loan application endpoints
-  app.post("/api/loan-applications", async (req, res) => {
+  // Loan application endpoints - All require authentication
+  app.post("/api/loan-applications", authenticateUser, async (req: Request & { user?: any }, res: Response) => {
     try {
       const applicationData = insertLoanApplicationSchema.parse(req.body);
-      const application = await storage.createLoanApplication(applicationData);
+      // Associate application with authenticated user
+      const applicationWithUser = {
+        ...applicationData,
+        userId: req.user.id
+      };
+      const application = await storage.createLoanApplication(applicationWithUser);
       res.json(application);
     } catch (error) {
       console.error("Loan application error:", error);
@@ -170,11 +175,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/loan-applications/:id", async (req, res) => {
+  app.get("/api/loan-applications/:id", authenticateUser, async (req: Request & { user?: any }, res: Response) => {
     try {
       const application = await storage.getLoanApplication(req.params.id);
       if (!application) {
         return res.status(404).json({ message: "Application not found" });
+      }
+      // Ensure user can only view their own applications
+      if (application.userId !== req.user.id) {
+        return res.status(403).json({ message: "Access denied" });
       }
       res.json(application);
     } catch (error) {
@@ -183,8 +192,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/users/:userId/loan-applications", async (req, res) => {
+  app.get("/api/users/:userId/loan-applications", authenticateUser, async (req: Request & { user?: any }, res: Response) => {
     try {
+      // Users can only view their own applications
+      if (req.params.userId !== req.user.id) {
+        return res.status(403).json({ message: "Access denied" });
+      }
       const applications = await storage.getUserLoanApplications(req.params.userId);
       res.json(applications);
     } catch (error) {
@@ -193,9 +206,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/loan-applications/:id/status", async (req, res) => {
+  app.patch("/api/loan-applications/:id/status", authenticateUser, async (req: Request & { user?: any }, res: Response) => {
     try {
       const { status, notes } = req.body;
+      // First check if application belongs to user
+      const existingApp = await storage.getLoanApplication(req.params.id);
+      if (!existingApp || existingApp.userId !== req.user.id) {
+        return res.status(403).json({ message: "Access denied" });
+      }
       const application = await storage.updateLoanApplicationStatus(req.params.id, status, notes);
       res.json(application);
     } catch (error) {
@@ -204,11 +222,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Consultation booking
-  app.post("/api/consultations", async (req, res) => {
+  // Consultation booking - Requires authentication
+  app.post("/api/consultations", authenticateUser, async (req: Request & { user?: any }, res: Response) => {
     try {
       const consultationData = insertConsultationSchema.parse(req.body);
-      const consultation = await storage.createConsultation(consultationData);
+      // Associate consultation with authenticated user
+      const consultationWithUser = {
+        ...consultationData,
+        userId: req.user.id
+      };
+      const consultation = await storage.createConsultation(consultationWithUser);
       
       // In a real app, send confirmation email/SMS here
       console.log(`Consultation booked for ${consultationData.fullName} on ${consultationData.preferredDate}`);

@@ -4,15 +4,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useLocation } from "wouter";
-import { useAuthStore } from "@/hooks/useAuth";
 import { SiGoogle, SiLinkedin } from "react-icons/si";
 import { Building2, ArrowRight } from "lucide-react";
+import { apiRequest } from "@/lib/queryClient";
+import { queryClient } from "@/lib/queryClient";
 
 export default function LoginPage() {
   const [, setLocation] = useLocation();
   const [isLoading, setIsLoading] = useState<string | null>(null);
   const { toast } = useToast();
-  const { login } = useAuthStore();
 
   const handleSocialLogin = async (provider: 'google' | 'linkedin' | 'microsoft') => {
     setIsLoading(provider);
@@ -38,7 +38,11 @@ export default function LoginPage() {
         throw new Error(data.message || 'Login failed');
       }
 
-      await login(data.token, data.user);
+      // Store the authentication token
+      localStorage.setItem("authToken", data.token);
+      
+      // Invalidate and refetch user query
+      await queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
 
       toast({
         title: "Login successful!",
@@ -49,7 +53,14 @@ export default function LoginPage() {
       if (data.needsProfileCompletion) {
         setLocation("/complete-profile");
       } else {
-        setLocation("/loan-application");
+        // Check if there's a redirect path stored
+        const redirectPath = localStorage.getItem("redirectAfterLogin");
+        if (redirectPath) {
+          localStorage.removeItem("redirectAfterLogin");
+          setLocation(redirectPath);
+        } else {
+          setLocation("/loan-application");
+        }
       }
     } catch (error) {
       console.error('Login error:', error);

@@ -5,11 +5,13 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
-import { useAuthStore } from "@/hooks/useAuth";
+import { useAuth, useRequireAuth } from "@/hooks/useAuth";
 import { Building2, Phone, CheckCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { apiRequest } from "@/lib/queryClient";
+import { queryClient } from "@/lib/queryClient";
 
 const profileSchema = z.object({
   mobile: z.string().min(10, "Mobile number must be at least 10 digits"),
@@ -18,10 +20,11 @@ const profileSchema = z.object({
 type ProfileFormData = z.infer<typeof profileSchema>;
 
 export default function CompleteProfilePage() {
+  const { isAuthenticated, isLoading: authLoading } = useRequireAuth();
+  const { user } = useAuth();
   const [, setLocation] = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-  const { user, token, updateUser } = useAuthStore();
 
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -31,7 +34,7 @@ export default function CompleteProfilePage() {
   });
 
   const handleSubmit = async (data: ProfileFormData) => {
-    if (!token) {
+    if (!user) {
       toast({
         title: "Authentication Error",
         description: "Please log in again",
@@ -44,14 +47,7 @@ export default function CompleteProfilePage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/auth/complete-profile', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await apiRequest('POST', '/api/auth/complete-profile', data);
 
       const result = await response.json();
 
@@ -59,7 +55,8 @@ export default function CompleteProfilePage() {
         throw new Error(result.message || 'Profile completion failed');
       }
 
-      updateUser(result.user);
+      // Invalidate and refetch user query
+      await queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
 
       toast({
         title: "Profile completed!",
