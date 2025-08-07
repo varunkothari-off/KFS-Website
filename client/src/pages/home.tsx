@@ -8,7 +8,6 @@ import TestimonialsSection from "@/components/testimonials-section";
 import EMICalculator from "@/components/emi-calculator";
 import BlogPreview from "@/components/blog-preview";
 import FloatingWhatsApp from "@/components/floating-whatsapp";
-import TrustSignal from "@/components/trust-signal";
 import LoanQuestionnaire from "@/components/loan-questionnaire";
 
 export default function Home() {
@@ -25,7 +24,6 @@ export default function Home() {
       <EMICalculator />
       <BlogPreview />
       <FloatingWhatsApp />
-      <TrustSignal />
       
       {/* Footer */}
       <footer className="bg-kfs-dark text-white py-16">

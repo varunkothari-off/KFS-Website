@@ -37,7 +37,7 @@ export default function HeroSection() {
         </div>
       </div>
       
-      {/* Subtle shooting stars */}
+      {/* Shooting stars - increased quantity */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full opacity-70 shadow-lg" style={{
           boxShadow: '0 0 8px rgba(255, 255, 255, 0.6)',
@@ -53,6 +53,27 @@ export default function HeroSection() {
         }}></div>
         <div className="absolute bottom-1/3 left-1/5 w-1 h-1 bg-white/60 rounded-full opacity-40" style={{
           animation: 'float 12s ease-in-out infinite reverse'
+        }}></div>
+        <div className="absolute top-1/5 right-2/3 w-0.5 h-0.5 bg-white/80 rounded-full opacity-50" style={{
+          boxShadow: '0 0 4px rgba(255, 255, 255, 0.4)',
+          animation: 'float 7s ease-in-out infinite'
+        }}></div>
+        <div className="absolute bottom-1/4 right-1/6 w-1 h-1 bg-blue-300 rounded-full opacity-45" style={{
+          boxShadow: '0 0 6px rgba(147, 197, 253, 0.3)',
+          animation: 'float 9s ease-in-out infinite reverse'
+        }}></div>
+        <div className="absolute top-2/3 left-1/6 w-0.5 h-0.5 bg-purple-300 rounded-full opacity-35" style={{
+          animation: 'float 11s ease-in-out infinite'
+        }}></div>
+        <div className="absolute top-1/6 left-2/3 w-1 h-1 bg-white/50 rounded-full opacity-60" style={{
+          boxShadow: '0 0 5px rgba(255, 255, 255, 0.3)',
+          animation: 'float 13s ease-in-out infinite reverse'
+        }}></div>
+        <div className="absolute bottom-2/5 left-2/5 w-0.5 h-0.5 bg-blue-100 rounded-full opacity-40" style={{
+          animation: 'float 14s ease-in-out infinite'
+        }}></div>
+        <div className="absolute top-3/4 right-2/5 w-1 h-1 bg-purple-100 rounded-full opacity-30" style={{
+          animation: 'float 15s ease-in-out infinite reverse'
         }}></div>
       </div>
       
@@ -81,7 +102,7 @@ export default function HeroSection() {
             </p>
             
             {/* Two-Button CTA Structure */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-32">
               <Button 
                 onClick={handleStartApplication}
                 size="lg" 
@@ -107,8 +128,8 @@ export default function HeroSection() {
           </div>
         </div>
         
-        {/* Scroll indicator - moved further down */}
-        <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2">
+        {/* Scroll indicator - moved to absolute bottom */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
           <button
             onClick={scrollToServices}
             className="inline-flex flex-col items-center text-white/70 hover:text-white transition-colors group"
