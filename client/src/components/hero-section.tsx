@@ -11,23 +11,22 @@ export default function HeroSection() {
   // Generate random shooting stars with varying trail lengths
   const shootingStars = useMemo(() => {
     const stars = [];
-    const starCount = 20; // Increased count for more stars
+    const starCount = 15; // Visible star count
     
     for (let i = 0; i < starCount; i++) {
       const isReverse = Math.random() > 0.5;
-      const randomTop = Math.random() * 60; // Random position from 0% to 60% of screen height
-      const randomDelay = Math.random() * 6; // Random delay from 0 to 6 seconds
-      const randomDuration = 1.5 + Math.random() * 2.5; // Duration between 1.5-4 seconds
-      const trailLength = 40 + Math.random() * 160; // Trail length between 40px and 200px
+      const randomTop = Math.random() * 50; // Random position from 0% to 50% of screen height
+      const randomLeft = Math.random() * 100; // Random horizontal position
+      const randomDelay = Math.random() * 5; // Random delay from 0 to 5 seconds
+      const randomDuration = 2 + Math.random() * 2; // Duration between 2-4 seconds
       
       stars.push({
         id: i,
         top: `${randomTop}%`,
+        left: `${randomLeft}%`,
         animationDelay: `${randomDelay}s`,
         animationDuration: `${randomDuration}s`,
         isReverse,
-        opacity: 0.4 + Math.random() * 0.6, // Random opacity between 0.4 and 1
-        trailLength: `${trailLength}px`,
       });
     }
     
@@ -65,19 +64,17 @@ export default function HeroSection() {
       </div>
       
       {/* Randomized shooting stars */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 100 }}>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 5 }}>
         {shootingStars.map((star) => (
           <div
             key={star.id}
             className={`shooting-star ${star.isReverse ? 'shooting-star-reverse' : ''}`}
             style={{
               top: star.top,
-              [star.isReverse ? 'right' : 'left']: '-10%',
+              left: star.left,
               animationDelay: star.animationDelay,
               animationDuration: star.animationDuration,
-              opacity: star.opacity,
-              '--trail-length': star.trailLength,
-            } as React.CSSProperties}
+            }}
           />
         ))}
         

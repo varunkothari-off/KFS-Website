@@ -153,66 +153,48 @@
 /* Shooting star animation with varied paths */
 @keyframes shootingStar {
   0% {
-    transform: translate(0, 0) rotate(-45deg);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  70% {
+    transform: translateX(0) translateY(0);
     opacity: 1;
   }
   100% {
-    transform: translate(calc(300px + 30vw), calc(300px + 30vh)) rotate(-45deg);
+    transform: translateX(500px) translateY(500px);
     opacity: 0;
   }
 }
 
 @keyframes shootingStarReverse {
   0% {
-    transform: translate(0, 0) rotate(-45deg);
-    opacity: 1;
-  }
-  70% {
+    transform: translateX(0) translateY(0);
     opacity: 1;
   }
   100% {
-    transform: translate(calc(-200px - 20vw), calc(200px + 20vh)) rotate(-45deg);
+    transform: translateX(-500px) translateY(500px);
     opacity: 0;
   }
 }
 
 .shooting-star {
   position: absolute;
-  width: 4px;
-  height: 4px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.9), 0 0 45px rgba(255, 255, 255, 0.7);
-  animation: shootingStar 4s linear infinite;
-  z-index: 50;
+  width: 2px;
+  height: 60px;
+  background: linear-gradient(to bottom, white, transparent);
+  border-radius: 10px;
+  filter: drop-shadow(0 0 6px white);
+  animation: shootingStar 3s linear infinite;
+  transform: rotate(45deg);
 }
 
 .shooting-star-reverse {
-  animation: shootingStarReverse 4s linear infinite;
+  animation: shootingStarReverse 3s linear infinite;
+  transform: rotate(-45deg);
 }
 
 .shooting-star::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: var(--trail-length, 100px);
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.8), white);
-  transform: translate(-100%, -50%) rotate(-45deg);
-  transform-origin: right center;
+  display: none;
 }
 
 .shooting-star-reverse::before {
-  background: linear-gradient(270deg, transparent, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.8), white);
-  transform: translate(100%, -50%) rotate(45deg);
-  transform-origin: left center;
+  display: none;
 }
 
 /* Animation delays for staggered effects */
