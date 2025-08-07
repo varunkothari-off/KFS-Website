@@ -102,7 +102,7 @@ export class MemStorage implements IStorage {
       id, 
       createdAt: new Date(),
       isVerified: false,
-      email: insertUser.email || null,
+      email: insertUser.email || "",
     };
     this.users.set(id, user);
     return user;
@@ -130,6 +130,8 @@ export class MemStorage implements IStorage {
       monthlyIncome: insertApplication.monthlyIncome || null,
       propertyValue: insertApplication.propertyValue || null,
       notes: insertApplication.notes || null,
+      existingLoans: insertApplication.existingLoans ?? null,
+      documents: insertApplication.documents || null,
     };
     this.loanApplications.set(id, application);
     return application;

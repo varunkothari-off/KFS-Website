@@ -18,9 +18,9 @@ export default function Home() {
       <AnimatedStatsSection />
       <PartnerBanksSection />
       <TrustBuildingSection />
-      <ServicesSection />
       <LoanQuestionnaire />
       <TestimonialsSection />
+      <ServicesSection />
       <EMICalculator />
       <BlogPreview />
       <FloatingWhatsApp />
