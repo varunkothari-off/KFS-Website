@@ -183,8 +183,9 @@
   position: absolute;
   width: 2px;
   height: 2px;
-  background: linear-gradient(45deg, transparent, white, transparent);
-  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 1);
   animation: shootingStar 3s linear infinite;
 }
 
@@ -195,12 +196,21 @@
 .shooting-star::before {
   content: '';
   position: absolute;
-  top: 50%;
-  left: -50px;
-  width: 50px;
+  top: 0;
+  left: 0;
+  width: var(--trail-length, 80px);
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), white);
-  transform: translateY(-50%);
+  background: linear-gradient(to left, white 0%, rgba(255, 255, 255, 0.8) 10%, rgba(255, 255, 255, 0.4) 40%, transparent 100%);
+  transform: rotate(-45deg);
+  transform-origin: left center;
+}
+
+.shooting-star-reverse::before {
+  background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0.8) 10%, rgba(255, 255, 255, 0.4) 40%, transparent 100%);
+  transform: rotate(45deg);
+  transform-origin: right center;
+  left: auto;
+  right: 0;
 }
 
 /* Animation delays for staggered effects */
