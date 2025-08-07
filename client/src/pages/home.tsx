@@ -8,6 +8,8 @@ import TestimonialsSection from "@/components/testimonials-section";
 import EMICalculator from "@/components/emi-calculator";
 import BlogPreview from "@/components/blog-preview";
 import FloatingWhatsApp from "@/components/floating-whatsapp";
+import TrustSignal from "@/components/trust-signal";
+import LoanQuestionnaire from "@/components/loan-questionnaire";
 
 export default function Home() {
   return (
@@ -18,10 +20,12 @@ export default function Home() {
       <PartnerBanksSection />
       <TrustBuildingSection />
       <ServicesSection />
+      <LoanQuestionnaire />
       <TestimonialsSection />
       <EMICalculator />
       <BlogPreview />
       <FloatingWhatsApp />
+      <TrustSignal />
       
       {/* Footer */}
       <footer className="bg-kfs-dark text-white py-16">
@@ -89,24 +93,40 @@ export default function Home() {
                 </div>
                 <div className="flex items-center space-x-3">
                   <span className="text-kfs-accent">📞</span>
-                  <span className="text-gray-300">+91 98765 43210</span>
+                  <span className="text-gray-300">+91 70190 56576</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <span className="text-kfs-accent">📧</span>
-                  <span className="text-gray-300">info@kotharifinance.com</span>
+                  <span className="text-gray-300">connect@kotharifinancialservices.com</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <span className="text-green-400">💬</span>
-                  <span className="text-gray-300">WhatsApp: +91 98765 43210</span>
+                  <span className="text-gray-300">WhatsApp: +91 70190 56576</span>
+                </div>
+                
+                {/* Social Media Links */}
+                <div className="flex items-center space-x-4 mt-6">
+                  <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors">
+                    <span className="text-xl">💼</span> LinkedIn
+                  </a>
+                  <a href="#" className="text-gray-300 hover:text-red-400 transition-colors">
+                    <span className="text-xl">🔍</span> Google My Business
+                  </a>
                 </div>
               </div>
             </div>
           </div>
           
-          <div className="border-t border-gray-700 mt-12 pt-8 text-center">
-            <p className="text-gray-300">
-              &copy; 2024 Kothari Financial Services. All rights reserved. | Privacy Policy | Terms of Service
-            </p>
+          <div className="border-t border-gray-700 mt-12 pt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+              <p className="text-gray-300">
+                &copy; 2025 Kothari Financial Services. All rights reserved.
+              </p>
+              <div className="flex space-x-6">
+                <a href="/privacy-policy" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</a>
+                <a href="/terms-of-service" className="text-gray-300 hover:text-white transition-colors">Terms of Service</a>
+              </div>
+            </div>
           </div>
         </div>
       </footer>

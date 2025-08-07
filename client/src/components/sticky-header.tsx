@@ -35,9 +35,9 @@ export default function StickyHeader() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3">
-            <Logo className="w-10 h-10" />
+            <Logo className="w-8 h-8" />
             <div className="flex flex-col">
-              <span className={`font-bold text-lg leading-tight ${
+              <span className={`font-bold text-base leading-tight ${
                 isScrolled ? 'text-slate-900' : 'text-white'
               }`}>
                 KFS
@@ -45,16 +45,16 @@ export default function StickyHeader() {
               <span className={`text-xs ${
                 isScrolled ? 'text-slate-600' : 'text-blue-200'
               }`}>
-                Financial Services
+                Financial Consultants
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             {navigation.map((item) => (
               <Link key={item.name} href={item.href}>
-                <span className={`font-medium transition-colors ${
+                <span className={`text-sm font-medium transition-colors ${
                   location === item.href
                     ? (isScrolled ? 'text-blue-600' : 'text-yellow-300')
                     : (isScrolled ? 'text-slate-700 hover:text-blue-600' : 'text-white hover:text-yellow-300')
@@ -65,35 +65,16 @@ export default function StickyHeader() {
             ))}
           </div>
 
-          {/* Contact Info & CTA */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <div className="flex items-center space-x-4 text-sm">
-              <a 
-                href="tel:+919876543210" 
-                className={`flex items-center space-x-1 ${
-                  isScrolled ? 'text-gray-600 hover:text-kfs-primary' : 'text-blue-200 hover:text-white'
-                }`}
-              >
-                <Phone className="w-4 h-4" />
-                <span>+91 98765 43210</span>
-              </a>
-              <a 
-                href="mailto:info@kfs.com" 
-                className={`flex items-center space-x-1 ${
-                  isScrolled ? 'text-gray-600 hover:text-kfs-primary' : 'text-blue-200 hover:text-white'
-                }`}
-              >
-                <Mail className="w-4 h-4" />
-                <span>info@kfs.com</span>
-              </a>
-            </div>
+          {/* CTA Button */}
+          <div className="hidden lg:flex items-center">
             <Link href="/loan-application">
               <Button 
                 size="sm" 
-                className={isScrolled 
-                  ? "bg-kfs-primary hover:bg-kfs-secondary text-white"
-                  : "bg-yellow-400 hover:bg-yellow-300 text-kfs-dark"
-                }
+                className={`${
+                  isScrolled 
+                    ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                    : 'bg-white/20 hover:bg-white/30 text-white border border-white/30'
+                } transition-all`}
               >
                 Apply Now
               </Button>

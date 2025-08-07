@@ -10,6 +10,8 @@ import Consultation from "./pages/consultation";
 import ApplicationStatus from "./pages/application-status";
 import LoginPage from "./pages/login";
 import CompleteProfilePage from "./pages/complete-profile";
+import PrivacyPolicy from "./pages/privacy-policy";
+import TermsOfService from "./pages/terms-of-service";
 import NotFound from "./pages/not-found";
 
 function Router() {
@@ -21,6 +23,8 @@ function Router() {
       <Route path="/loan-application" component={LoanApplication} />
       <Route path="/consultation" component={Consultation} />
       <Route path="/application-status/:id?" component={ApplicationStatus} />
+      <Route path="/privacy-policy" component={PrivacyPolicy} />
+      <Route path="/terms-of-service" component={TermsOfService} />
       <Route component={NotFound} />
     </Switch>
   );

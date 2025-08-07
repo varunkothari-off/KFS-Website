@@ -6,9 +6,9 @@ export default function TrustBuildingSection() {
   const leadership = [
     {
       name: "Shree Arun Kothari",
-      role: "Founder & CEO",
-      experience: "25+ years in financial services",
-      statement: "Building trust through transparency and delivering exceptional financial solutions for every entrepreneur's growth journey.",
+      role: "Founder & Chief Financial Advisor",
+      experience: "40+ years in financial services",
+      statement: "Four decades of experience in guiding businesses through complex financial landscapes. My commitment is to ensure every entrepreneur finds the right financial solution for their vision.",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400"
     },
     {
