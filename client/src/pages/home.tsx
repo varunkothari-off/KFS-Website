@@ -85,7 +85,7 @@ export default function Home() {
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <span className="text-kfs-accent mt-1">📍</span>
-                  <span className="text-gray-300">123 Business District, Kolkata, West Bengal 700001</span>
+                  <span className="text-gray-300">14/1 Sir Hariram Goenka Street, Kolkata - 700007</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <span className="text-kfs-accent">📞</span>
