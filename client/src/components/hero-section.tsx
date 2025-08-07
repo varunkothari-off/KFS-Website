@@ -65,7 +65,7 @@ export default function HeroSection() {
       </div>
       
       {/* Randomized shooting stars */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 100 }}>
         {shootingStars.map((star) => (
           <div
             key={star.id}
@@ -140,7 +140,7 @@ export default function HeroSection() {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-2 border-white text-white bg-white/15 hover:bg-white hover:text-blue-700 backdrop-blur-sm px-10 py-4 text-lg font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl"
+                className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-blue-700 backdrop-blur-sm px-10 py-4 text-lg font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl"
                 asChild
               >
                 <Link href="/consultation">
