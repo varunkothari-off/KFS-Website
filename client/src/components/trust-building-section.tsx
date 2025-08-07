@@ -1,7 +1,4 @@
 export default function TrustBuildingSection() {
-  const bankPartners = [
-    "HDFC Bank", "ICICI Bank", "State Bank of India", "Axis Bank", "Kotak Mahindra", "Yes Bank"
-  ];
 
   const leadership = [
     {
@@ -56,27 +53,6 @@ export default function TrustBuildingSection() {
                 <blockquote className="text-slate-700 text-sm leading-relaxed">
                   "{leader.statement}"
                 </blockquote>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Trusted By Section */}
-        <div className="text-center">
-          <h2 className="text-3xl font-semibold text-slate-900 mb-4">
-            Trusted By Leading Financial Institutions
-          </h2>
-          <p className="text-lg text-slate-600 mb-12 max-w-2xl mx-auto">
-            We maintain partnerships with 20+ banks and NBFCs to secure the most competitive rates and terms for our clients.
-          </p>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center max-w-5xl mx-auto">
-            {bankPartners.map((bank, index) => (
-              <div 
-                key={index} 
-                className="h-16 bg-white rounded-xl flex items-center justify-center shadow-sm hover:shadow-md transition-all duration-300 grayscale hover:grayscale-0 group"
-              >
-                <span className="text-slate-600 group-hover:text-slate-900 font-medium text-sm transition-colors">{bank}</span>
               </div>
             ))}
           </div>

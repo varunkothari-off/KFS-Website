@@ -1,7 +1,6 @@
 import StickyHeader from "@/components/sticky-header";
 import HeroSection from "@/components/hero-section";
 import AnimatedStatsSection from "@/components/animated-stats-section";
-import PartnerBanksSection from "@/components/partner-banks-section";
 import TrustBuildingSection from "@/components/trust-building-section";
 import ServicesSection from "@/components/services-section";
 import TestimonialsSection from "@/components/testimonials-section";
@@ -16,7 +15,6 @@ export default function Home() {
       <StickyHeader />
       <HeroSection />
       <AnimatedStatsSection />
-      <PartnerBanksSection />
       <TrustBuildingSection />
       <LoanQuestionnaire />
       <TestimonialsSection />

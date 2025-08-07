@@ -37,55 +37,48 @@ export default function HeroSection() {
         </div>
       </div>
       
-      {/* Shooting stars - increased quantity */}
+      {/* Shooting stars - 15+ with movement and disappearing animations */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full opacity-70 shadow-lg" style={{
+        <div className="shooting-star" style={{ top: '10%', left: '-5%', animationDelay: '0s' }}></div>
+        <div className="shooting-star" style={{ top: '20%', left: '-5%', animationDelay: '0.5s' }}></div>
+        <div className="shooting-star" style={{ top: '30%', left: '-5%', animationDelay: '1s' }}></div>
+        <div className="shooting-star" style={{ top: '15%', left: '-5%', animationDelay: '1.5s' }}></div>
+        <div className="shooting-star" style={{ top: '40%', left: '-5%', animationDelay: '2s' }}></div>
+        <div className="shooting-star" style={{ top: '5%', left: '-5%', animationDelay: '2.5s' }}></div>
+        <div className="shooting-star" style={{ top: '25%', left: '-5%', animationDelay: '3s' }}></div>
+        <div className="shooting-star" style={{ top: '35%', left: '-5%', animationDelay: '3.5s' }}></div>
+        
+        <div className="shooting-star shooting-star-reverse" style={{ top: '10%', right: '-5%', animationDelay: '0.3s' }}></div>
+        <div className="shooting-star shooting-star-reverse" style={{ top: '20%', right: '-5%', animationDelay: '0.8s' }}></div>
+        <div className="shooting-star shooting-star-reverse" style={{ top: '30%', right: '-5%', animationDelay: '1.3s' }}></div>
+        <div className="shooting-star shooting-star-reverse" style={{ top: '15%', right: '-5%', animationDelay: '1.8s' }}></div>
+        <div className="shooting-star shooting-star-reverse" style={{ top: '40%', right: '-5%', animationDelay: '2.3s' }}></div>
+        <div className="shooting-star shooting-star-reverse" style={{ top: '5%', right: '-5%', animationDelay: '2.8s' }}></div>
+        <div className="shooting-star shooting-star-reverse" style={{ top: '25%', right: '-5%', animationDelay: '3.3s' }}></div>
+        <div className="shooting-star shooting-star-reverse" style={{ top: '35%', right: '-5%', animationDelay: '3.8s' }}></div>
+        
+        {/* Additional static twinkling stars for depth */}
+        <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full opacity-70" style={{
           boxShadow: '0 0 8px rgba(255, 255, 255, 0.6)',
-          animation: 'float 6s ease-in-out infinite'
+          animation: 'pulse 2s ease-in-out infinite'
         }}></div>
-        <div className="absolute top-3/5 right-1/3 w-0.5 h-0.5 bg-blue-200 rounded-full opacity-60" style={{
+        <div className="absolute top-3/4 right-1/3 w-0.5 h-0.5 bg-blue-200 rounded-full opacity-60" style={{
           boxShadow: '0 0 6px rgba(191, 219, 254, 0.5)',
-          animation: 'float 8s ease-in-out infinite reverse'
-        }}></div>
-        <div className="absolute top-1/3 right-1/5 w-0.5 h-0.5 bg-purple-200 rounded-full opacity-50" style={{
-          boxShadow: '0 0 4px rgba(196, 181, 253, 0.4)',
-          animation: 'float 10s ease-in-out infinite'
-        }}></div>
-        <div className="absolute bottom-1/3 left-1/5 w-1 h-1 bg-white/60 rounded-full opacity-40" style={{
-          animation: 'float 12s ease-in-out infinite reverse'
-        }}></div>
-        <div className="absolute top-1/5 right-2/3 w-0.5 h-0.5 bg-white/80 rounded-full opacity-50" style={{
-          boxShadow: '0 0 4px rgba(255, 255, 255, 0.4)',
-          animation: 'float 7s ease-in-out infinite'
-        }}></div>
-        <div className="absolute bottom-1/4 right-1/6 w-1 h-1 bg-blue-300 rounded-full opacity-45" style={{
-          boxShadow: '0 0 6px rgba(147, 197, 253, 0.3)',
-          animation: 'float 9s ease-in-out infinite reverse'
-        }}></div>
-        <div className="absolute top-2/3 left-1/6 w-0.5 h-0.5 bg-purple-300 rounded-full opacity-35" style={{
-          animation: 'float 11s ease-in-out infinite'
-        }}></div>
-        <div className="absolute top-1/6 left-2/3 w-1 h-1 bg-white/50 rounded-full opacity-60" style={{
-          boxShadow: '0 0 5px rgba(255, 255, 255, 0.3)',
-          animation: 'float 13s ease-in-out infinite reverse'
-        }}></div>
-        <div className="absolute bottom-2/5 left-2/5 w-0.5 h-0.5 bg-blue-100 rounded-full opacity-40" style={{
-          animation: 'float 14s ease-in-out infinite'
-        }}></div>
-        <div className="absolute top-3/4 right-2/5 w-1 h-1 bg-purple-100 rounded-full opacity-30" style={{
-          animation: 'float 15s ease-in-out infinite reverse'
+          animation: 'pulse 2.5s ease-in-out infinite'
         }}></div>
       </div>
       
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center">
-            {/* Pre-Header: Trust Signal in rounded box */}
+            {/* Pre-Header: Trust Signal in rounded box with better spacing */}
             <div className="flex items-center justify-center mb-8">
-              <div className="bg-white/15 backdrop-blur-md border border-white/20 rounded-xl px-4 py-2 shadow-lg">
-                <div className="flex items-center gap-2 text-white/90 text-sm">
-                  <Check className="w-4 h-4 text-green-400" />
-                  <span>Trusted by 5000+ Businesses • 40+ Years Experience</span>
+              <div className="bg-white/15 backdrop-blur-md border border-white/20 rounded-xl px-6 py-3 shadow-lg">
+                <div className="flex items-center gap-3 text-white/90 text-sm md:text-base">
+                  <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
+                  <span className="whitespace-nowrap">Trusted by 5000+ Businesses</span>
+                  <span className="text-white/60">•</span>
+                  <span className="whitespace-nowrap">40+ Years Experience</span>
                 </div>
               </div>
             </div>
@@ -115,12 +108,12 @@ export default function HeroSection() {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm px-10 py-4 text-lg font-semibold rounded-xl transition-all"
+                className="border-2 border-white text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm px-10 py-4 text-lg font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl"
                 asChild
               >
                 <Link href="/consultation">
                   <Calendar className="mr-2 h-5 w-5" />
-                  Book a Free Consultation
+                  Book Free Consultation
                 </Link>
               </Button>
             </div>
