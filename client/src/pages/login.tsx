@@ -1,45 +1,75 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useLocation } from "wouter";
-import { SiGoogle, SiLinkedin } from "react-icons/si";
-import { Building2, ArrowRight } from "lucide-react";
+import { Building2, ArrowRight, Phone, Shield } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { queryClient } from "@/lib/queryClient";
 
 export default function LoginPage() {
   const [, setLocation] = useLocation();
-  const [isLoading, setIsLoading] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [otp, setOtp] = useState("");
+  const [showOtpInput, setShowOtpInput] = useState(false);
   const { toast } = useToast();
 
-  const handleSocialLogin = async (provider: 'google' | 'linkedin' | 'microsoft') => {
-    setIsLoading(provider);
-    
+  const handleSendOtp = async () => {
+    if (!mobileNumber || mobileNumber.length !== 10) {
+      toast({
+        title: "Invalid mobile number",
+        description: "Please enter a valid 10-digit mobile number",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
     try {
-      // Mock social login for demo - in production, this would redirect to OAuth provider
-      const mockCode = `mock_${provider}_code_${Date.now()}`;
-      const response = await fetch('/api/auth/social-login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          provider,
-          code: mockCode,
-          redirectUri: `${window.location.origin}/auth/callback`
-        }),
+      await apiRequest("/api/users/register", {
+        method: "POST",
+        body: { mobileNumber },
       });
 
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
-      }
+      setShowOtpInput(true);
+      toast({
+        title: "OTP sent successfully",
+        description: `A 6-digit OTP has been sent to +91 ${mobileNumber}`,
+      });
+    } catch (error) {
+      toast({
+        title: "Failed to send OTP",
+        description: error instanceof Error ? error.message : "Please try again",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    if (!otp || otp.length !== 6) {
+      toast({
+        title: "Invalid OTP",
+        description: "Please enter the 6-digit OTP",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await apiRequest("/api/users/verify-otp", {
+        method: "POST",
+        body: { mobileNumber, otp },
+      }) as { token: string; needsProfileCompletion?: boolean };
 
       // Store the authentication token
-      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("authToken", response.token);
       
       // Invalidate and refetch user query
       await queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
@@ -50,7 +80,7 @@ export default function LoginPage() {
       });
 
       // Check if profile completion is needed
-      if (data.needsProfileCompletion) {
+      if (response.needsProfileCompletion) {
         setLocation("/complete-profile");
       } else {
         // Check if there's a redirect path stored
@@ -63,48 +93,17 @@ export default function LoginPage() {
         }
       }
     } catch (error) {
-      console.error('Login error:', error);
       toast({
-        title: "Login failed",
-        description: error instanceof Error ? error.message : "An unexpected error occurred",
+        title: "Verification failed",
+        description: error instanceof Error ? error.message : "Invalid OTP. Please try again",
         variant: "destructive",
       });
     } finally {
-      setIsLoading(null);
+      setIsLoading(false);
     }
   };
 
-  const getSocialIcon = (provider: string) => {
-    switch (provider) {
-      case 'google':
-        return <SiGoogle className="w-5 h-5" />;
-      case 'linkedin':
-        return <SiLinkedin className="w-5 h-5" />;
-      case 'microsoft':
-        return <Building2 className="w-5 h-5" />; // Using Building2 as placeholder for Microsoft
-      default:
-        return null;
-    }
-  };
 
-  const getSocialColor = (provider: string) => {
-    switch (provider) {
-      case 'google':
-        return "hover:bg-red-50 hover:text-red-600 hover:border-red-200";
-      case 'linkedin':
-        return "hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200";
-      case 'microsoft':
-        return "hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200";
-      default:
-        return "";
-    }
-  };
-
-  const providers = [
-    { id: 'google' as const, name: 'Google', description: 'Continue with Google account' },
-    { id: 'linkedin' as const, name: 'LinkedIn', description: 'Continue with LinkedIn profile' },
-    { id: 'microsoft' as const, name: 'Microsoft', description: 'Continue with Microsoft account' }
-  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-4">
@@ -122,47 +121,121 @@ export default function LoginPage() {
 
         <Card className="shadow-xl border-0 bg-white/95 backdrop-blur-sm">
           <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-xl">Choose your preferred login method</CardTitle>
+            <CardTitle className="text-xl">Sign in with your mobile number</CardTitle>
             <CardDescription>
               Quick and secure access to your KFS account
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {providers.map((provider) => (
-              <Button
-                key={provider.id}
-                variant="outline"
-                className={`w-full h-14 flex items-center justify-between p-4 text-left border-2 transition-all duration-200 ${getSocialColor(provider.id)}`}
-                onClick={() => handleSocialLogin(provider.id)}
-                disabled={isLoading !== null}
-              >
-                <div className="flex items-center gap-4">
-                  {getSocialIcon(provider.id)}
-                  <div>
-                    <div className="font-semibold">{provider.name}</div>
-                    <div className="text-sm text-gray-500">{provider.description}</div>
+            {!showOtpInput ? (
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="mobile">Mobile Number</Label>
+                  <div className="flex gap-2">
+                    <div className="flex items-center px-3 bg-gray-50 rounded-md border">
+                      <span className="text-gray-600">+91</span>
+                    </div>
+                    <Input
+                      id="mobile"
+                      type="tel"
+                      placeholder="Enter 10-digit mobile number"
+                      value={mobileNumber}
+                      onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                      className="flex-1"
+                      disabled={isLoading}
+                    />
                   </div>
                 </div>
-                {isLoading === provider.id ? (
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-current"></div>
-                ) : (
-                  <ArrowRight className="w-5 h-5 opacity-50 group-hover:opacity-100" />
-                )}
-              </Button>
-            ))}
-
-            <div className="relative my-6">
-              <Separator />
-              <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-sm text-gray-500">
-                or
-              </span>
+                
+                <Button 
+                  onClick={handleSendOtp}
+                  className="w-full bg-kfs-primary hover:bg-kfs-secondary"
+                  disabled={isLoading || !mobileNumber || mobileNumber.length !== 10}
+                >
+                  {isLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Sending OTP...
+                    </>
+                  ) : (
+                    <>
+                      <Phone className="w-4 h-4 mr-2" />
+                      Send OTP
+                    </>
+                  )}
+                </Button>
+                
+                <div className="text-center text-sm text-gray-500">
+                  <Shield className="w-4 h-4 inline mr-1 text-green-600" />
+                  We'll send you a 6-digit verification code
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="otp">Enter OTP</Label>
+                  <Input
+                    id="otp"
+                    type="text"
+                    placeholder="Enter 6-digit OTP"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    className="text-center text-2xl tracking-widest"
+                    disabled={isLoading}
+                    maxLength={6}
+                  />
+                  <p className="text-sm text-gray-600">
+                    OTP sent to +91 {mobileNumber}
+                  </p>
+                </div>
+                
+                <Button 
+                  onClick={handleVerifyOtp}
+                  className="w-full bg-kfs-primary hover:bg-kfs-secondary"
+                  disabled={isLoading || !otp || otp.length !== 6}
+                >
+                  {isLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Verifying...
+                    </>
+                  ) : (
+                    <>
+                      <Shield className="w-4 h-4 mr-2" />
+                      Verify & Login
+                    </>
+                  )}
+                </Button>
+                
+                <div className="flex justify-between text-sm">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowOtpInput(false);
+                      setOtp("");
+                    }}
+                    className="text-kfs-primary hover:underline"
+                    disabled={isLoading}
+                  >
+                    Change Number
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSendOtp}
+                    className="text-gray-600 hover:underline"
+                    disabled={isLoading}
+                  >
+                    Resend OTP
+                  </button>
+                </div>
+              </div>
+            )}
+            
+            <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+              <p className="text-xs text-blue-800">
+                <strong>Demo Mode:</strong> Use OTP <code className="bg-blue-100 px-1 rounded">123456</code> for testing
+              </p>
             </div>
-
-            <Link href="/phone-login">
-              <Button variant="outline" className="w-full h-12" disabled={isLoading !== null}>
-                Continue with Phone Number
-              </Button>
-            </Link>
           </CardContent>
         </Card>
 

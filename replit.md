@@ -6,21 +6,24 @@ The system is designed to serve entrepreneurs and businesses looking for various
 
 # Recent Changes
 
-## Deployment Fixes Applied (August 07, 2025)
-- **Health Check Endpoints**: Added `/health` and `/ready` endpoints for deployment monitoring with comprehensive status information
-- **Error Handling**: Enhanced server startup error handling with proper logging and graceful shutdown (SIGTERM/SIGINT)
-- **Environment Configuration**: Automatic NODE_ENV setup for production deployments with fallback to 'production'
-- **Port Binding**: Server properly binds to 0.0.0.0 for all interfaces (addresses deployment networking requirements)
-- **Static File Serving**: Fixed static file path resolution - files now properly copied from `dist/public` to `server/public` for production deployment
-- **Production Build Process**: Created deployment script (`scripts/deploy.sh`) to handle complete build process
-- **Startup Validation**: Verified production server starts correctly with proper health check responses
+## Latest Updates (August 07, 2025)
+- **Fixed Loan Application Continue Button**: Properly bound Select component to react-hook-form to ensure form validation works correctly
+- **Replaced Social Login with OTP Authentication**: Removed non-functional Google/LinkedIn login buttons and implemented mobile OTP-based authentication that matches backend API
+- **Added Favicon**: Created KFS-branded SVG favicon for the website
+- **Updated Company Address**: Changed to 14/1 Sir Hariram Goenka Street, Kolkata - 700007
+- **Enhanced Form Validation**: Added error message display for form fields in loan application
 
-### Deployment Status: ✅ READY
-- Production build completes successfully
-- Static assets properly served
-- Health endpoints responding correctly
-- Server gracefully handles startup errors and shutdown signals
-- All deployment requirements addressed
+## UI/UX Improvements (August 07, 2025)
+- **Shooting Stars Animation**: Added 20+ randomized shooting stars with varying trail lengths, positions, speeds, and opacity
+- **Enhanced Consultation Button**: Made more visible with white border and background 
+- **Removed Bank Logos Section**: Completely removed "Trusted By Leading Financial Institutions" section per user request
+- **Improved Trust Signal Spacing**: Better responsive layout for trust indicators in hero section
+
+## Deployment Infrastructure (August 07, 2025)
+- **Health Check Endpoints**: Added `/health` and `/ready` endpoints for deployment monitoring
+- **Error Handling**: Enhanced server startup error handling with proper logging and graceful shutdown
+- **Static File Serving**: Fixed static file path resolution for production deployment
+- **Deployment Status**: ✅ READY - All deployment requirements addressed
 
 # User Preferences
 

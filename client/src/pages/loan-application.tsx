@@ -195,7 +195,10 @@ export default function LoanApplication() {
                 <form onSubmit={loanForm.handleSubmit(handleLoanDetails)} className="space-y-6">
                   <div>
                     <Label>Loan Type *</Label>
-                    <Select onValueChange={(value) => loanForm.setValue("loanType", value as any)}>
+                    <Select 
+                      value={loanForm.watch("loanType")}
+                      onValueChange={(value) => loanForm.setValue("loanType", value as any)}
+                    >
                       <SelectTrigger className="mt-1">
                         <SelectValue placeholder="Select loan type" />
                       </SelectTrigger>
@@ -205,6 +208,9 @@ export default function LoanApplication() {
                         <SelectItem value="cash-credit">Cash Credit</SelectItem>
                       </SelectContent>
                     </Select>
+                    {loanForm.formState.errors.loanType && (
+                      <p className="text-red-500 text-sm mt-1">{loanForm.formState.errors.loanType.message}</p>
+                    )}
                   </div>
 
                   <div>
@@ -215,6 +221,9 @@ export default function LoanApplication() {
                       placeholder="10,00,000"
                       className="mt-1"
                     />
+                    {loanForm.formState.errors.loanAmount && (
+                      <p className="text-red-500 text-sm mt-1">{loanForm.formState.errors.loanAmount.message}</p>
+                    )}
                   </div>
 
                   <Button 
