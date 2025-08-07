@@ -64,16 +64,18 @@ export default function HeroSection() {
       </div>
       
       {/* Randomized shooting stars */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 5 }}>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {shootingStars.map((star) => (
           <div
             key={star.id}
             className={`shooting-star ${star.isReverse ? 'shooting-star-reverse' : ''}`}
             style={{
+              position: 'absolute',
               top: star.top,
               left: star.left,
               animationDelay: star.animationDelay,
               animationDuration: star.animationDuration,
+              zIndex: 2,
             }}
           />
         ))}
