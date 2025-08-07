@@ -11,22 +11,23 @@ export default function HeroSection() {
   // Generate random shooting stars with varying trail lengths
   const shootingStars = useMemo(() => {
     const stars = [];
-    const starCount = 15; // Visible star count
+    const starCount = 20; // Increased count for more stars
     
     for (let i = 0; i < starCount; i++) {
       const isReverse = Math.random() > 0.5;
-      const randomTop = Math.random() * 50; // Random position from 0% to 50% of screen height
-      const randomLeft = Math.random() * 100; // Random horizontal position
-      const randomDelay = Math.random() * 5; // Random delay from 0 to 5 seconds
-      const randomDuration = 2 + Math.random() * 2; // Duration between 2-4 seconds
+      const randomTop = Math.random() * 60; // Random position from 0% to 60% of screen height
+      const randomDelay = Math.random() * 6; // Random delay from 0 to 6 seconds
+      const randomDuration = 1.5 + Math.random() * 2.5; // Duration between 1.5-4 seconds
+      const trailLength = 40 + Math.random() * 160; // Trail length between 40px and 200px
       
       stars.push({
         id: i,
         top: `${randomTop}%`,
-        left: `${randomLeft}%`,
         animationDelay: `${randomDelay}s`,
         animationDuration: `${randomDuration}s`,
         isReverse,
+        opacity: 0.4 + Math.random() * 0.6, // Random opacity between 0.4 and 1
+        trailLength: `${trailLength}px`,
       });
     }
     
@@ -64,19 +65,19 @@ export default function HeroSection() {
       </div>
       
       {/* Randomized shooting stars */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden">
         {shootingStars.map((star) => (
           <div
             key={star.id}
             className={`shooting-star ${star.isReverse ? 'shooting-star-reverse' : ''}`}
             style={{
-              position: 'absolute',
               top: star.top,
-              left: star.left,
+              [star.isReverse ? 'right' : 'left']: '-10%',
               animationDelay: star.animationDelay,
               animationDuration: star.animationDuration,
-              zIndex: 2,
-            }}
+              opacity: star.opacity,
+              '--trail-length': star.trailLength,
+            } as React.CSSProperties}
           />
         ))}
         
@@ -139,12 +140,12 @@ export default function HeroSection() {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-blue-700 backdrop-blur-sm px-10 py-4 text-lg font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl"
+                className="border-2 border-white text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm px-10 py-4 text-lg font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl"
                 asChild
               >
                 <Link href="/consultation">
                   <Calendar className="mr-2 h-5 w-5" />
-                  Book Your Consultation
+                  Book Free Consultation
                 </Link>
               </Button>
             </div>

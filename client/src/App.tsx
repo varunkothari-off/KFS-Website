@@ -5,7 +5,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import StickyHeader from "@/components/sticky-header";
 import Home from "./pages/home";
-import Dashboard from "./pages/dashboard";
 import LoanApplication from "./pages/loan-application";
 import Consultation from "./pages/consultation";
 import ApplicationStatus from "./pages/application-status";
@@ -19,7 +18,6 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
-      <Route path="/dashboard" component={Dashboard} />
       <Route path="/login" component={LoginPage} />
       <Route path="/complete-profile" component={CompleteProfilePage} />
       <Route path="/loan-application" component={LoanApplication} />
