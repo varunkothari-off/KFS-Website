@@ -181,12 +181,13 @@
 
 .shooting-star {
   position: absolute;
-  width: 2px;
-  height: 2px;
+  width: 3px;
+  height: 3px;
   background: white;
   border-radius: 50%;
-  box-shadow: 0 0 6px rgba(255, 255, 255, 1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 0.8);
   animation: shootingStar 3s linear infinite;
+  z-index: 10;
 }
 
 .shooting-star-reverse {

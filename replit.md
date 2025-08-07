@@ -7,11 +7,11 @@ The system is designed to serve entrepreneurs and businesses looking for various
 # Recent Changes
 
 ## Latest Updates (August 07, 2025)
-- **Fixed Loan Application Continue Button**: Properly bound Select component to react-hook-form to ensure form validation works correctly
-- **Replaced Social Login with OTP Authentication**: Removed non-functional Google/LinkedIn login buttons and implemented mobile OTP-based authentication that matches backend API
-- **Added Favicon**: Created KFS-branded SVG favicon for the website
-- **Updated Company Address**: Changed to 14/1 Sir Hariram Goenka Street, Kolkata - 700007
-- **Enhanced Form Validation**: Added error message display for form fields in loan application
+- **Fixed Favicon Display**: Properly configured server to serve KFS logo as favicon with multiple format support
+- **Enhanced Shooting Stars Animation**: Fixed visibility issues by adding proper z-index and making stars more prominent with enhanced glow effects
+- **Consultation Button Update**: Changed text back to "Book Your Consultation" with improved visibility (white background on hover)
+- **Dual Authentication System**: Supports both OTP and social login (Google, LinkedIn, Microsoft)
+- **Member Dashboard**: Created personalized dashboard page for logged-in users with profile info and quick actions
 
 ## UI/UX Improvements (August 07, 2025)
 - **Shooting Stars Animation**: Added 20+ randomized shooting stars with varying trail lengths, positions, speeds, and opacity
