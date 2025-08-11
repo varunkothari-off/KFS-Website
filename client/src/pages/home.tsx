@@ -12,7 +12,7 @@ import LoanQuestionnaire from "@/components/loan-questionnaire";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#0a0b1e]">
       <StickyHeader />
       <HeroSection />
       <ModernFeaturesSection />

@@ -182,28 +182,45 @@ export default function HeroSection() {
               </div>
             </div>
             
+            {/* SWAGATAM - Welcome message */}
+            <h2 className="text-2xl lg:text-3xl text-white/90 mb-2 font-light tracking-widest">
+              SWAGATAM!
+            </h2>
+            
             {/* Main headline with gradient text effect */}
-            <h1 className="text-5xl lg:text-7xl font-bold mb-6 tracking-tight">
+            <h1 className="text-4xl lg:text-6xl font-bold mb-4 tracking-tight">
+              <span className="text-white">Welcome to the home of</span>
+            </h1>
+            
+            {/* Company Name with Gradient */}
+            <h1 className="text-5xl lg:text-7xl font-bold mb-8 tracking-tight">
               <span className="bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
-                OPEN
+                Kothari Financial
               </span>
               <br />
               <span className="bg-gradient-to-r from-blue-200 via-pink-200 to-white bg-clip-text text-transparent">
-                FINANCE
+                Services
               </span>
             </h1>
             
-            <p className="text-2xl lg:text-3xl text-white/80 mb-4 font-light">
-              Financial Solutions for
-            </p>
-            <p className="text-3xl lg:text-4xl text-white mb-8 font-semibold">
-              Disruptors & Innovators
-            </p>
+            {/* Geometric Logo */}
+            <div className="flex justify-center mb-8">
+              <div className="relative w-24 h-24 lg:w-32 lg:h-32">
+                {/* Animated geometric logo inspired by the original */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative transform hover:scale-110 transition-transform duration-500">
+                    <div className="absolute w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-blue-500 to-purple-600 transform rotate-45 rounded-lg opacity-80"></div>
+                    <div className="absolute w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-purple-500 to-pink-500 transform rotate-45 translate-x-4 translate-y-4 rounded-lg opacity-80"></div>
+                    <div className="relative w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-blue-400 to-cyan-500 transform rotate-45 -translate-x-2 -translate-y-2 rounded-lg"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
             
             {/* Supporting text */}
-            <p className="text-lg lg:text-xl text-white/70 mb-12 max-w-3xl mx-auto">
-              Open banking is evolving. Get approved loans, manage cash flow, and scale your business 
-              with our comprehensive financial platform.
+            <p className="text-lg lg:text-xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed">
+              With over thirty years of experience providing loans from partner nationalised and 
+              private banks, NBFCs and Investors, KFS is here to solve all your financial worries
             </p>
             
             {/* Two-Button CTA Structure */}
@@ -211,21 +228,21 @@ export default function HeroSection() {
               <Button 
                 onClick={handleStartApplication}
                 size="lg" 
-                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 text-lg px-10 py-6 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 text-lg px-10 py-6 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
               >
-                Get Started
+                Consult Now
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-2 border-white/30 text-white bg-white/5 hover:bg-white/10 backdrop-blur-sm px-10 py-6 text-lg font-medium rounded-full transition-all"
+                className="border-2 border-white/30 text-white bg-white/5 hover:bg-white/10 backdrop-blur-sm px-10 py-6 text-lg font-medium rounded-lg transition-all"
                 asChild
               >
-                <Link href="/consultation">
-                  <Calendar className="mr-2 h-5 w-5" />
-                  Book Consultation
+                <Link href="/loan-application">
+                  <CreditCard className="mr-2 h-5 w-5" />
+                  Apply for Loan
                 </Link>
               </Button>
             </div>
