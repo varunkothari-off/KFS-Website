@@ -52,17 +52,17 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0b1e]">
-      {/* Dark gradient background inspired by Open Finance */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0b1e] py-20">
+      {/* Dark gradient background - cleaner */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0b1e] via-[#141428] to-[#1a1b3a]"></div>
-        <div className="absolute inset-0 bg-gradient-to-tl from-purple-900/20 via-transparent to-blue-900/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0b1e] via-[#0f1020] to-[#141428]"></div>
+        <div className="absolute inset-0 bg-gradient-to-tl from-purple-900/10 via-transparent to-blue-900/5"></div>
         
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 opacity-5">
+        {/* Very subtle grid pattern */}
+        <div className="absolute inset-0 opacity-[0.02]">
           <div className="absolute inset-0" style={{
             backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
+            backgroundSize: '100px 100px'
           }}></div>
         </div>
       </div>
@@ -106,68 +106,68 @@ export default function HeroSection() {
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto relative">
           
-          {/* Floating Cards - inspired by Open Finance design */}
+          {/* Floating Cards - smaller and better positioned */}
           <div className="absolute inset-0 pointer-events-none">
             {/* Top Left - Quick Application Card */}
-            <div className="absolute top-10 left-0 lg:left-10 hidden lg:block">
-              <div className="bg-gradient-to-br from-purple-600/20 to-blue-600/20 backdrop-blur-xl border border-white/10 rounded-2xl p-4 w-56 transform -rotate-6 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
-                    <Zap className="w-5 h-5 text-white" />
+            <div className="absolute top-20 left-0 lg:left-10 hidden xl:block">
+              <div className="bg-gradient-to-br from-purple-600/15 to-blue-600/15 backdrop-blur-xl border border-white/10 rounded-xl p-3 w-48 transform -rotate-6 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+                    <Zap className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-white font-semibold">Quick Process</span>
+                  <span className="text-white text-sm font-semibold">Quick Process</span>
                 </div>
-                <p className="text-white/60 text-sm">Get approved within 48 hours</p>
+                <p className="text-white/50 text-xs">Approved within 48 hours</p>
               </div>
             </div>
             
             {/* Top Right - Secure Platform Card */}
-            <div className="absolute top-10 right-0 lg:right-10 hidden lg:block">
-              <div className="bg-gradient-to-br from-green-600/20 to-teal-600/20 backdrop-blur-xl border border-white/10 rounded-2xl p-4 w-56 transform rotate-6 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-teal-500 rounded-lg flex items-center justify-center">
-                    <Shield className="w-5 h-5 text-white" />
+            <div className="absolute top-20 right-0 lg:right-10 hidden xl:block">
+              <div className="bg-gradient-to-br from-green-600/15 to-teal-600/15 backdrop-blur-xl border border-white/10 rounded-xl p-3 w-48 transform rotate-6 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-teal-500 rounded-lg flex items-center justify-center">
+                    <Shield className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-white font-semibold">Bank-Level Security</span>
+                  <span className="text-white text-sm font-semibold">Secure</span>
                 </div>
-                <p className="text-white/60 text-sm">Your data is always protected</p>
+                <p className="text-white/50 text-xs">Bank-level protection</p>
               </div>
             </div>
             
             {/* Bottom Left - Analytics Card */}
-            <div className="absolute bottom-32 left-0 lg:left-20 hidden lg:block">
-              <div className="bg-gradient-to-br from-orange-600/20 to-red-600/20 backdrop-blur-xl border border-white/10 rounded-2xl p-4 w-56 transform rotate-3 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
-                    <TrendingUp className="w-5 h-5 text-white" />
+            <div className="absolute bottom-40 left-0 lg:left-20 hidden xl:block">
+              <div className="bg-gradient-to-br from-orange-600/15 to-red-600/15 backdrop-blur-xl border border-white/10 rounded-xl p-3 w-48 transform rotate-3 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+                    <TrendingUp className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-white font-semibold">Smart Analytics</span>
+                  <span className="text-white text-sm font-semibold">Analytics</span>
                 </div>
-                <p className="text-white/60 text-sm">Track your loan progress</p>
+                <p className="text-white/50 text-xs">Track loan progress</p>
               </div>
             </div>
             
             {/* Bottom Right - Support Card */}
-            <div className="absolute bottom-32 right-0 lg:right-20 hidden lg:block">
-              <div className="bg-gradient-to-br from-blue-600/20 to-indigo-600/20 backdrop-blur-xl border border-white/10 rounded-2xl p-4 w-56 transform -rotate-3 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
-                    <Users className="w-5 h-5 text-white" />
+            <div className="absolute bottom-40 right-0 lg:right-20 hidden xl:block">
+              <div className="bg-gradient-to-br from-blue-600/15 to-indigo-600/15 backdrop-blur-xl border border-white/10 rounded-xl p-3 w-48 transform -rotate-3 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
+                    <Users className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-white font-semibold">Expert Support</span>
+                  <span className="text-white text-sm font-semibold">Support</span>
                 </div>
-                <p className="text-white/60 text-sm">Dedicated advisors for you</p>
+                <p className="text-white/50 text-xs">Dedicated advisors</p>
               </div>
             </div>
           </div>
           
-          {/* Central Gradient Pill - inspired by Open Finance */}
+          {/* Central Gradient Pill - more subtle */}
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
             <div className="relative">
-              {/* Large gradient pill shape */}
-              <div className="w-64 h-96 lg:w-80 lg:h-[480px] bg-gradient-to-b from-purple-500/30 via-pink-500/20 to-blue-500/30 rounded-full blur-3xl opacity-60"></div>
-              {/* Inner glow */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-72 lg:w-60 lg:h-96 bg-gradient-to-b from-white/10 to-transparent rounded-full blur-2xl"></div>
+              {/* Subtle gradient pill shape */}
+              <div className="w-56 h-80 lg:w-64 lg:h-96 bg-gradient-to-b from-purple-500/10 via-pink-500/5 to-blue-500/10 rounded-full blur-3xl opacity-50"></div>
+              {/* Inner glow - very subtle */}
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-60 lg:w-48 lg:h-72 bg-gradient-to-b from-white/5 to-transparent rounded-full blur-2xl"></div>
             </div>
           </div>
           
@@ -183,17 +183,17 @@ export default function HeroSection() {
             </div>
             
             {/* SWAGATAM - Welcome message */}
-            <h2 className="text-2xl lg:text-3xl text-white/90 mb-2 font-light tracking-widest">
+            <h2 className="text-xl lg:text-2xl text-white/70 mb-6 font-light tracking-[0.3em] uppercase">
               SWAGATAM!
             </h2>
             
-            {/* Main headline with gradient text effect */}
-            <h1 className="text-4xl lg:text-6xl font-bold mb-4 tracking-tight">
-              <span className="text-white">Welcome to the home of</span>
+            {/* Main headline with better spacing */}
+            <h1 className="text-3xl lg:text-5xl font-medium mb-6 text-white/90">
+              Welcome to the home of
             </h1>
             
-            {/* Company Name with Gradient */}
-            <h1 className="text-5xl lg:text-7xl font-bold mb-8 tracking-tight">
+            {/* Company Name with Gradient - reduced size */}
+            <h1 className="text-4xl lg:text-6xl font-bold mb-12 tracking-tight">
               <span className="bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
                 Kothari Financial
               </span>
@@ -203,32 +203,31 @@ export default function HeroSection() {
               </span>
             </h1>
             
-            {/* Geometric Logo */}
-            <div className="flex justify-center mb-8">
-              <div className="relative w-24 h-24 lg:w-32 lg:h-32">
-                {/* Animated geometric logo inspired by the original */}
+            {/* Geometric Logo - smaller and cleaner */}
+            <div className="flex justify-center mb-12">
+              <div className="relative w-20 h-20 lg:w-24 lg:h-24">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="relative transform hover:scale-110 transition-transform duration-500">
-                    <div className="absolute w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-blue-500 to-purple-600 transform rotate-45 rounded-lg opacity-80"></div>
-                    <div className="absolute w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-purple-500 to-pink-500 transform rotate-45 translate-x-4 translate-y-4 rounded-lg opacity-80"></div>
-                    <div className="relative w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-blue-400 to-cyan-500 transform rotate-45 -translate-x-2 -translate-y-2 rounded-lg"></div>
+                    <div className="absolute w-12 h-12 lg:w-16 lg:h-16 bg-gradient-to-br from-blue-500 to-purple-600 transform rotate-45 rounded-lg opacity-80"></div>
+                    <div className="absolute w-12 h-12 lg:w-16 lg:h-16 bg-gradient-to-br from-purple-500 to-pink-500 transform rotate-45 translate-x-3 translate-y-3 rounded-lg opacity-80"></div>
+                    <div className="relative w-12 h-12 lg:w-16 lg:h-16 bg-gradient-to-br from-blue-400 to-cyan-500 transform rotate-45 -translate-x-1.5 -translate-y-1.5 rounded-lg"></div>
                   </div>
                 </div>
               </div>
             </div>
             
-            {/* Supporting text */}
-            <p className="text-lg lg:text-xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed">
+            {/* Supporting text - more concise */}
+            <p className="text-base lg:text-lg text-white/70 mb-16 max-w-3xl mx-auto leading-relaxed">
               With over thirty years of experience providing loans from partner nationalised and 
               private banks, NBFCs and Investors, KFS is here to solve all your financial worries
             </p>
             
-            {/* Two-Button CTA Structure */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+            {/* Two-Button CTA Structure with more spacing */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-32">
               <Button 
                 onClick={handleStartApplication}
                 size="lg" 
-                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 text-lg px-10 py-6 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 text-base px-8 py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
               >
                 Consult Now
                 <ArrowRight className="w-5 h-5 ml-2" />
@@ -237,7 +236,7 @@ export default function HeroSection() {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-2 border-white/30 text-white bg-white/5 hover:bg-white/10 backdrop-blur-sm px-10 py-6 text-lg font-medium rounded-lg transition-all"
+                className="border-2 border-white/20 text-white/80 bg-transparent hover:bg-white/10 backdrop-blur-sm px-8 py-4 text-base font-medium rounded-lg transition-all"
                 asChild
               >
                 <Link href="/loan-application">
@@ -250,15 +249,15 @@ export default function HeroSection() {
           </div>
         </div>
         
-        {/* Scroll indicator - moved to absolute bottom */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        {/* Scroll indicator - separated with more space */}
+        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2">
           <button
             onClick={scrollToServices}
-            className="inline-flex flex-col items-center text-white/70 hover:text-white transition-colors group"
+            className="inline-flex flex-col items-center text-white/50 hover:text-white/70 transition-colors group"
             aria-label="Scroll to services"
           >
-            <span className="text-sm font-medium mb-2">Discover Our Services</span>
-            <ChevronDown className="w-6 h-6 animate-bounce group-hover:translate-y-1 transition-transform" />
+            <span className="text-xs font-light tracking-wider uppercase mb-1">Discover Our Services</span>
+            <ChevronDown className="w-5 h-5 animate-bounce group-hover:translate-y-1 transition-transform" />
           </button>
         </div>
       </div>
