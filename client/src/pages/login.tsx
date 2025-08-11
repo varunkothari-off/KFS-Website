@@ -13,6 +13,12 @@ export default function Login() {
   const [showEmailLogin, setShowEmailLogin] = useState(false);
 
   const handleSocialLogin = (provider: string) => {
+    // Store redirect destination if available
+    const redirectTo = sessionStorage.getItem('redirectAfterLogin');
+    if (redirectTo) {
+      // Store it in a more persistent way for post-OAuth redirect
+      localStorage.setItem('postAuthRedirect', redirectTo);
+    }
     // Redirect to OAuth endpoint
     window.location.href = `/api/auth/${provider}`;
   };

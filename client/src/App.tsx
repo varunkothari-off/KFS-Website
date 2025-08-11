@@ -10,6 +10,7 @@ import ApplicationStatus from "./pages/application-status";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
+import ComprehensiveDashboard from "./pages/comprehensive-dashboard";
 import PrivacyPolicy from "./pages/privacy-policy";
 import TermsOfService from "./pages/terms-of-service";
 import NotFound from "./pages/not-found";
@@ -20,7 +21,8 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/dashboard" component={ComprehensiveDashboard} />
+      <Route path="/dashboard-old" component={Dashboard} />
       <Route path="/loan-application" component={LoanApplication} />
       <Route path="/consultation" component={Consultation} />
       <Route path="/application-status/:id?" component={ApplicationStatus} />

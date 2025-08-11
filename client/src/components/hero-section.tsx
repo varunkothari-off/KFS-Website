@@ -41,13 +41,23 @@ export default function HeroSection() {
     }
   };
 
-  const handleStartApplication = () => {
+  const handleConsultNow = () => {
     if (!isAuthenticated) {
+      // Store intended destination for post-login redirect
+      sessionStorage.setItem('redirectAfterLogin', '/dashboard?tab=consultation');
       setLocation('/login');
-    } else if (user && !user.isProfileComplete) {
-      setLocation('/complete-profile');
     } else {
-      setLocation('/loan-application');
+      setLocation('/dashboard?tab=consultation');
+    }
+  };
+
+  const handleApplyForLoan = () => {
+    if (!isAuthenticated) {
+      // Store intended destination for post-login redirect
+      sessionStorage.setItem('redirectAfterLogin', '/dashboard?tab=loans');
+      setLocation('/login');
+    } else {
+      setLocation('/dashboard?tab=loans');
     }
   };
 
@@ -225,7 +235,7 @@ export default function HeroSection() {
             {/* Two-Button CTA Structure with more spacing */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 md:mb-32">
               <Button 
-                onClick={handleStartApplication}
+                onClick={handleConsultNow}
                 size="lg" 
                 className="w-full sm:w-auto bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
               >
@@ -234,15 +244,13 @@ export default function HeroSection() {
               </Button>
               
               <Button 
+                onClick={handleApplyForLoan}
                 variant="outline" 
                 size="lg"
                 className="w-full sm:w-auto border-2 border-white/20 text-white/80 bg-transparent hover:bg-white/10 backdrop-blur-sm px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-medium rounded-lg transition-all"
-                asChild
               >
-                <Link href="/loan-application">
-                  <CreditCard className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-                  Apply for Loan
-                </Link>
+                <CreditCard className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                Apply for Loan
               </Button>
             </div>
 
