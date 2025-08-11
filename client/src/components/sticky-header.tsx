@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, Phone, Mail } from "lucide-react";
+import { Menu, X, Phone, Mail, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "./logo";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function StickyHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [location] = useLocation();
+  const { user, isAuthenticated } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,19 +68,50 @@ export default function StickyHeader() {
           </div>
 
           {/* CTA Button */}
-          <div className="hidden lg:flex items-center">
-            <Link href="/loan-application">
-              <Button 
-                size="sm" 
-                className={`${
-                  isScrolled 
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white' 
-                    : 'bg-white/20 hover:bg-white/30 text-white border border-white/30'
-                } transition-all`}
-              >
-                Apply Now
-              </Button>
-            </Link>
+          <div className="hidden lg:flex items-center gap-3">
+            {isAuthenticated ? (
+              <>
+                <Link href="/dashboard">
+                  <Button 
+                    size="sm" 
+                    variant="ghost"
+                    className={`${
+                      isScrolled 
+                        ? 'text-gray-700 hover:bg-gray-100' 
+                        : 'text-white hover:bg-white/10'
+                    } transition-all`}
+                  >
+                    <User className="w-4 h-4 mr-2" />
+                    Dashboard
+                  </Button>
+                </Link>
+                <Button 
+                  size="sm" 
+                  variant="ghost"
+                  onClick={() => window.location.href = '/api/auth/logout'}
+                  className={`${
+                    isScrolled 
+                      ? 'text-gray-700 hover:bg-gray-100' 
+                      : 'text-white hover:bg-white/10'
+                  } transition-all`}
+                >
+                  <LogOut className="w-4 h-4" />
+                </Button>
+              </>
+            ) : (
+              <Link href="/login">
+                <Button 
+                  size="sm" 
+                  className={`${
+                    isScrolled 
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                      : 'bg-white/20 hover:bg-white/30 text-white border border-white/30'
+                  } transition-all`}
+                >
+                  Sign In
+                </Button>
+              </Link>
+            )}
           </div>
 
           {/* Mobile menu button */}

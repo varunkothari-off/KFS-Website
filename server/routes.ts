@@ -1,9 +1,14 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { authService, type SocialProfile } from "./auth";
+import { AuthService } from "./auth";
 import { insertUserSchema, insertLoanApplicationSchema, insertConsultationSchema } from "@shared/schema";
 import { z } from "zod";
+import passport from "./passport-config";
+import session from "express-session";
+import { setupDemoAuth } from "./demo-auth";
+
+const authService = new AuthService();
 
 const otpVerificationSchema = z.object({
   mobile: z.string().min(10),
@@ -49,6 +54,24 @@ async function authenticateUser(req: Request & { user?: any }, res: Response, ne
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Session configuration
+  app.use(session({
+    secret: process.env.SESSION_SECRET || 'kfs-secret-key-change-in-production',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+      maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+    }
+  }));
+
+  // Initialize Passport
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  // Setup demo authentication for development
+  setupDemoAuth(app);
   
   // User registration and OTP verification
   app.post("/api/users/register", async (req, res) => {
@@ -97,33 +120,67 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Social authentication routes
-  app.post("/api/auth/social-login", async (req, res) => {
-    try {
-      const { provider, code, redirectUri } = socialLoginSchema.parse(req.body);
-      
-      // Mock social login - In production, you would exchange code for profile data
-      // This is a simplified version for demo purposes
-      const mockProfile: SocialProfile = {
-        id: `${provider}_${Date.now()}`,
-        name: `User from ${provider}`,
-        email: `user@${provider}.com`,
-        picture: `https://via.placeholder.com/100`,
-        provider
-      };
-      
-      const user = await authService.createOrUpdateUserFromSocial(mockProfile);
+  // OAuth Routes - Google
+  app.get('/api/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+  
+  app.get('/api/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    async (req, res) => {
+      // Successful authentication
+      const user = req.user as any;
       const sessionToken = await authService.createSession(user.id);
       
-      res.json({ 
-        user, 
-        token: sessionToken,
-        needsProfileCompletion: authService.needsProfileCompletion(user)
-      });
-    } catch (error) {
-      console.error("Social login error:", error);
-      res.status(400).json({ message: "Social login failed" });
+      // Check if profile is complete
+      if (!user.mobile || !user.isProfileComplete) {
+        res.redirect('/dashboard?complete-profile=true');
+      } else {
+        res.redirect('/dashboard');
+      }
     }
+  );
+
+  // OAuth Routes - LinkedIn
+  app.get('/api/auth/linkedin', passport.authenticate('linkedin'));
+  
+  app.get('/api/auth/linkedin/callback',
+    passport.authenticate('linkedin', { failureRedirect: '/login' }),
+    async (req, res) => {
+      const user = req.user as any;
+      const sessionToken = await authService.createSession(user.id);
+      
+      if (!user.mobile || !user.isProfileComplete) {
+        res.redirect('/dashboard?complete-profile=true');
+      } else {
+        res.redirect('/dashboard');
+      }
+    }
+  );
+
+  // OAuth Routes - Microsoft
+  app.get('/api/auth/microsoft', passport.authenticate('microsoft'));
+  
+  app.get('/api/auth/microsoft/callback',
+    passport.authenticate('microsoft', { failureRedirect: '/login' }),
+    async (req, res) => {
+      const user = req.user as any;
+      const sessionToken = await authService.createSession(user.id);
+      
+      if (!user.mobile || !user.isProfileComplete) {
+        res.redirect('/dashboard?complete-profile=true');
+      } else {
+        res.redirect('/dashboard');
+      }
+    }
+  );
+
+  // Logout route for OAuth
+  app.get('/api/auth/logout', (req, res) => {
+    req.logout((err) => {
+      if (err) {
+        console.error('Logout error:', err);
+      }
+      res.redirect('/');
+    });
   });
 
   app.post("/api/auth/complete-profile", authenticateUser, async (req: Request & { user?: any }, res: Response) => {
@@ -138,8 +195,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/auth/user", authenticateUser, async (req: Request & { user?: any }, res: Response) => {
-    res.json({ user: req.user });
+  app.get("/api/auth/user", async (req: Request & { user?: any }, res: Response) => {
+    // Check if user is authenticated via passport session
+    if (req.isAuthenticated()) {
+      res.json({ user: req.user });
+    } else {
+      // Fall back to token authentication
+      const authHeader = req.headers.authorization;
+      const token = authHeader?.split(' ')[1];
+      
+      if (!token) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+      
+      try {
+        const user = await authService.validateSession(token);
+        if (!user) {
+          return res.status(401).json({ message: "Invalid session" });
+        }
+        res.json({ user });
+      } catch (error) {
+        return res.status(401).json({ message: "Authentication failed" });
+      }
+    }
   });
 
   app.post("/api/auth/logout", authenticateUser, async (req: Request & { user?: any }, res: Response) => {

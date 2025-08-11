@@ -1,34 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { useEffect } from "react";
-import { apiRequest } from "@/lib/queryClient";
 
 export function useAuth() {
-  const { data: user, isLoading, error } = useQuery({
+  const { data: authData, isLoading, error } = useQuery({
     queryKey: ["/api/auth/user"],
-    queryFn: async () => {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
-        throw new Error("No auth token");
-      }
-      const response = await apiRequest("GET", "/api/auth/user", null, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      if (!response.ok) {
-        throw new Error("Not authenticated");
-      }
-      const data = await response.json();
-      return data.user;
-    },
     retry: false,
   });
 
   return {
-    user,
+    user: authData?.user || authData,
     isLoading,
-    isAuthenticated: !!user && !error,
+    isAuthenticated: !!authData && !error,
   };
 }
 

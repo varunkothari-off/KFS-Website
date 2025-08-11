@@ -1,175 +1,162 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Link, useLocation } from "wouter";
-import { SiGoogle, SiLinkedin } from "react-icons/si";
-import { Building2, ArrowRight } from "lucide-react";
-import { apiRequest } from "@/lib/queryClient";
-import { queryClient } from "@/lib/queryClient";
+import { Chrome, Linkedin, Mail, ArrowLeft } from "lucide-react";
+import { FaMicrosoft } from "react-icons/fa";
 
-export default function LoginPage() {
-  const [, setLocation] = useLocation();
-  const [isLoading, setIsLoading] = useState<string | null>(null);
-  const { toast } = useToast();
+export default function Login() {
+  const [location, setLocation] = useLocation();
+  const [email, setEmail] = useState("");
+  const [showEmailLogin, setShowEmailLogin] = useState(false);
 
-  const handleSocialLogin = async (provider: 'google' | 'linkedin' | 'microsoft') => {
-    setIsLoading(provider);
-    
-    try {
-      // Mock social login for demo - in production, this would redirect to OAuth provider
-      const mockCode = `mock_${provider}_code_${Date.now()}`;
-      const response = await fetch('/api/auth/social-login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          provider,
-          code: mockCode,
-          redirectUri: `${window.location.origin}/auth/callback`
-        }),
-      });
-
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
-      }
-
-      // Store the authentication token
-      localStorage.setItem("authToken", data.token);
-      
-      // Invalidate and refetch user query
-      await queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
-
-      toast({
-        title: "Login successful!",
-        description: "Welcome to Kothari Financial Services",
-      });
-
-      // Check if profile completion is needed
-      if (data.needsProfileCompletion) {
-        setLocation("/complete-profile");
-      } else {
-        // Check if there's a redirect path stored
-        const redirectPath = localStorage.getItem("redirectAfterLogin");
-        if (redirectPath) {
-          localStorage.removeItem("redirectAfterLogin");
-          setLocation(redirectPath);
-        } else {
-          setLocation("/loan-application");
-        }
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      toast({
-        title: "Login failed",
-        description: error instanceof Error ? error.message : "An unexpected error occurred",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(null);
-    }
+  const handleSocialLogin = (provider: string) => {
+    // Redirect to OAuth endpoint
+    window.location.href = `/api/auth/${provider}`;
   };
 
-  const getSocialIcon = (provider: string) => {
-    switch (provider) {
-      case 'google':
-        return <SiGoogle className="w-5 h-5" />;
-      case 'linkedin':
-        return <SiLinkedin className="w-5 h-5" />;
-      case 'microsoft':
-        return <Building2 className="w-5 h-5" />; // Using Building2 as placeholder for Microsoft
-      default:
-        return null;
-    }
+  const handleEmailLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // For now, just redirect to registration
+    // In a full implementation, you'd check if user exists first
+    setLocation(`/register?email=${encodeURIComponent(email)}`);
   };
-
-  const getSocialColor = (provider: string) => {
-    switch (provider) {
-      case 'google':
-        return "hover:bg-red-50 hover:text-red-600 hover:border-red-200";
-      case 'linkedin':
-        return "hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200";
-      case 'microsoft':
-        return "hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200";
-      default:
-        return "";
-    }
-  };
-
-  const providers = [
-    { id: 'google' as const, name: 'Google', description: 'Continue with Google account' },
-    { id: 'linkedin' as const, name: 'LinkedIn', description: 'Continue with LinkedIn profile' },
-    { id: 'microsoft' as const, name: 'Microsoft', description: 'Continue with Microsoft account' }
-  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <Link href="/">
-            <div className="inline-flex items-center gap-3 mb-6 hover:opacity-80 transition-opacity">
-              <Building2 className="w-8 h-8 text-kfs-primary" />
-              <span className="text-2xl font-bold text-kfs-dark">KFS</span>
-            </div>
-          </Link>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-          <p className="text-gray-600">Sign in to continue your loan application</p>
-        </div>
+    <div className="min-h-screen bg-[#0a0b1e] flex items-center justify-center p-4">
+      {/* Background gradient */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0b1e] via-[#141428] to-[#1a1b3a]"></div>
+        <div className="absolute inset-0 bg-gradient-to-tl from-purple-900/10 via-transparent to-blue-900/5"></div>
+      </div>
 
-        <Card className="shadow-xl border-0 bg-white/95 backdrop-blur-sm">
-          <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-xl">Choose your preferred login method</CardTitle>
-            <CardDescription>
-              Quick and secure access to your KFS account
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {providers.map((provider) => (
-              <Button
-                key={provider.id}
-                variant="outline"
-                className={`w-full h-14 flex items-center justify-between p-4 text-left border-2 transition-all duration-200 ${getSocialColor(provider.id)}`}
-                onClick={() => handleSocialLogin(provider.id)}
-                disabled={isLoading !== null}
-              >
-                <div className="flex items-center gap-4">
-                  {getSocialIcon(provider.id)}
-                  <div>
-                    <div className="font-semibold">{provider.name}</div>
-                    <div className="text-sm text-gray-500">{provider.description}</div>
+      <Card className="w-full max-w-md bg-gradient-to-br from-[#141428]/90 to-[#1a1b3a]/90 backdrop-blur-xl border-white/10 relative z-10">
+        <CardHeader className="text-center">
+          <Link href="/">
+            <a className="inline-block mb-4">
+              <div className="relative w-16 h-16 mx-auto">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative transform">
+                    <div className="absolute w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 transform rotate-45 rounded-lg opacity-80"></div>
+                    <div className="absolute w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 transform rotate-45 translate-x-2 translate-y-2 rounded-lg opacity-80"></div>
+                    <div className="relative w-10 h-10 bg-gradient-to-br from-blue-400 to-cyan-500 transform rotate-45 -translate-x-1 -translate-y-1 rounded-lg"></div>
                   </div>
                 </div>
-                {isLoading === provider.id ? (
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-current"></div>
-                ) : (
-                  <ArrowRight className="w-5 h-5 opacity-50 group-hover:opacity-100" />
-                )}
+              </div>
+            </a>
+          </Link>
+          <CardTitle className="text-2xl font-bold text-white">Welcome Back</CardTitle>
+          <CardDescription className="text-white/60">
+            Sign in to access your dashboard and loan applications
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {!showEmailLogin ? (
+            <>
+              {/* Social Login Buttons */}
+              <Button
+                onClick={() => handleSocialLogin('google')}
+                variant="outline"
+                className="w-full bg-white/10 border-white/20 text-white hover:bg-white/20"
+              >
+                <Chrome className="w-5 h-5 mr-2" />
+                Continue with Google
               </Button>
-            ))}
 
-            <div className="relative my-6">
-              <Separator />
-              <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-sm text-gray-500">
-                or
-              </span>
-            </div>
-
-            <Link href="/phone-login">
-              <Button variant="outline" className="w-full h-12" disabled={isLoading !== null}>
-                Continue with Phone Number
+              <Button
+                onClick={() => handleSocialLogin('linkedin')}
+                variant="outline"
+                className="w-full bg-white/10 border-white/20 text-white hover:bg-white/20"
+              >
+                <Linkedin className="w-5 h-5 mr-2" />
+                Continue with LinkedIn
               </Button>
-            </Link>
-          </CardContent>
-        </Card>
 
-        <div className="text-center mt-6 text-sm text-gray-500">
-          <p>New to KFS? <Link href="/"><span className="text-kfs-primary hover:underline">Go back to home</span></Link></p>
-        </div>
-      </div>
+              <Button
+                onClick={() => handleSocialLogin('microsoft')}
+                variant="outline"
+                className="w-full bg-white/10 border-white/20 text-white hover:bg-white/20"
+              >
+                <FaMicrosoft className="w-5 h-5 mr-2" />
+                Continue with Microsoft
+              </Button>
+
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-white/10" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-[#141428] px-2 text-white/40">Or</span>
+                </div>
+              </div>
+
+              <Button
+                onClick={() => setShowEmailLogin(true)}
+                variant="outline"
+                className="w-full bg-white/10 border-white/20 text-white hover:bg-white/20"
+              >
+                <Mail className="w-5 h-5 mr-2" />
+                Continue with Email
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                onClick={() => setShowEmailLogin(false)}
+                variant="ghost"
+                size="sm"
+                className="text-white/60 hover:text-white hover:bg-white/10"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to options
+              </Button>
+
+              <form onSubmit={handleEmailLogin} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-white/80">
+                    Email Address
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/40"
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+                >
+                  Continue
+                </Button>
+              </form>
+            </>
+          )}
+
+          <div className="text-center">
+            <p className="text-sm text-white/60">
+              Don't have an account?{" "}
+              <Link href="/register">
+                <a className="text-purple-400 hover:text-purple-300 font-medium">
+                  Sign up
+                </a>
+              </Link>
+            </p>
+          </div>
+
+          <div className="text-center pt-4 border-t border-white/10">
+            <p className="text-xs text-white/40">
+              By continuing, you agree to our Terms of Service and Privacy Policy
+            </p>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
