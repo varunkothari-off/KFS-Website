@@ -28,7 +28,7 @@ export default function StickyHeader() {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? 'bg-white/95 backdrop-blur-lg shadow-sm border-b border-gray-100 translate-y-0 opacity-100' 
+        ? 'bg-[#0a0b1e]/95 backdrop-blur-lg shadow-lg border-b border-white/10 translate-y-0 opacity-100' 
         : 'bg-transparent -translate-y-full opacity-0'
     }`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

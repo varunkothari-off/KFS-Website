@@ -1,6 +1,7 @@
 import StickyHeader from "@/components/sticky-header";
 import HeroSection from "@/components/hero-section";
 import AnimatedStatsSection from "@/components/animated-stats-section";
+import ModernFeaturesSection from "@/components/modern-features-section";
 import TrustBuildingSection from "@/components/trust-building-section";
 import ServicesSection from "@/components/services-section";
 import TestimonialsSection from "@/components/testimonials-section";
@@ -14,6 +15,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50">
       <StickyHeader />
       <HeroSection />
+      <ModernFeaturesSection />
       <AnimatedStatsSection />
       <TrustBuildingSection />
       <LoanQuestionnaire />

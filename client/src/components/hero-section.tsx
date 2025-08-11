@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useLocation, Link } from "wouter";
-import { ArrowRight, ChevronDown, Check, Calendar } from "lucide-react";
+import { ArrowRight, ChevronDown, Check, Calendar, CreditCard, Shield, TrendingUp, Zap, Lock, Users } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useMemo } from "react";
 
@@ -52,15 +52,18 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated gradient background */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0b1e]">
+      {/* Dark gradient background inspired by Open Finance */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800"></div>
-        <div className="absolute inset-0 bg-gradient-to-tl from-purple-600/30 via-transparent to-blue-500/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0b1e] via-[#141428] to-[#1a1b3a]"></div>
+        <div className="absolute inset-0 bg-gradient-to-tl from-purple-900/20 via-transparent to-blue-900/10"></div>
         
-        {/* Animated gradient overlay */}
-        <div className="absolute inset-0 opacity-70">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/40 via-purple-600/30 to-blue-800/40 animate-pulse"></div>
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}></div>
         </div>
       </div>
       
@@ -101,51 +104,128 @@ export default function HeroSection() {
       </div>
       
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center">
-            {/* Pre-Header: Trust Signal in rounded box with better spacing */}
+        <div className="max-w-7xl mx-auto relative">
+          
+          {/* Floating Cards - inspired by Open Finance design */}
+          <div className="absolute inset-0 pointer-events-none">
+            {/* Top Left - Quick Application Card */}
+            <div className="absolute top-10 left-0 lg:left-10 hidden lg:block">
+              <div className="bg-gradient-to-br from-purple-600/20 to-blue-600/20 backdrop-blur-xl border border-white/10 rounded-2xl p-4 w-56 transform -rotate-6 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+                    <Zap className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="text-white font-semibold">Quick Process</span>
+                </div>
+                <p className="text-white/60 text-sm">Get approved within 48 hours</p>
+              </div>
+            </div>
+            
+            {/* Top Right - Secure Platform Card */}
+            <div className="absolute top-10 right-0 lg:right-10 hidden lg:block">
+              <div className="bg-gradient-to-br from-green-600/20 to-teal-600/20 backdrop-blur-xl border border-white/10 rounded-2xl p-4 w-56 transform rotate-6 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-teal-500 rounded-lg flex items-center justify-center">
+                    <Shield className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="text-white font-semibold">Bank-Level Security</span>
+                </div>
+                <p className="text-white/60 text-sm">Your data is always protected</p>
+              </div>
+            </div>
+            
+            {/* Bottom Left - Analytics Card */}
+            <div className="absolute bottom-32 left-0 lg:left-20 hidden lg:block">
+              <div className="bg-gradient-to-br from-orange-600/20 to-red-600/20 backdrop-blur-xl border border-white/10 rounded-2xl p-4 w-56 transform rotate-3 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+                    <TrendingUp className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="text-white font-semibold">Smart Analytics</span>
+                </div>
+                <p className="text-white/60 text-sm">Track your loan progress</p>
+              </div>
+            </div>
+            
+            {/* Bottom Right - Support Card */}
+            <div className="absolute bottom-32 right-0 lg:right-20 hidden lg:block">
+              <div className="bg-gradient-to-br from-blue-600/20 to-indigo-600/20 backdrop-blur-xl border border-white/10 rounded-2xl p-4 w-56 transform -rotate-3 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
+                    <Users className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="text-white font-semibold">Expert Support</span>
+                </div>
+                <p className="text-white/60 text-sm">Dedicated advisors for you</p>
+              </div>
+            </div>
+          </div>
+          
+          {/* Central Gradient Pill - inspired by Open Finance */}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+            <div className="relative">
+              {/* Large gradient pill shape */}
+              <div className="w-64 h-96 lg:w-80 lg:h-[480px] bg-gradient-to-b from-purple-500/30 via-pink-500/20 to-blue-500/30 rounded-full blur-3xl opacity-60"></div>
+              {/* Inner glow */}
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-72 lg:w-60 lg:h-96 bg-gradient-to-b from-white/10 to-transparent rounded-full blur-2xl"></div>
+            </div>
+          </div>
+          
+          <div className="text-center relative">
+            {/* Pre-Header: Trust Signal */}
             <div className="flex items-center justify-center mb-8">
-              <div className="bg-white/15 backdrop-blur-md border border-white/20 rounded-xl px-6 py-3 shadow-lg">
-                <div className="flex items-center gap-3 text-white/90 text-sm md:text-base">
-                  <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
-                  <span className="whitespace-nowrap">Trusted by 5000+ Businesses</span>
-                  <span className="text-white/60">•</span>
-                  <span className="whitespace-nowrap">40+ Years Experience</span>
+              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-2 shadow-lg">
+                <div className="flex items-center gap-3 text-white/90 text-sm">
+                  <Check className="w-4 h-4 text-green-400" />
+                  <span>Trusted by 5000+ Businesses</span>
                 </div>
               </div>
             </div>
             
-            {/* Main headline - Visual hierarchy priority #1 */}
-            <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-8 tracking-tight">
-              Get Your Business Financed Today
+            {/* Main headline with gradient text effect */}
+            <h1 className="text-5xl lg:text-7xl font-bold mb-6 tracking-tight">
+              <span className="bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
+                OPEN
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-blue-200 via-pink-200 to-white bg-clip-text text-transparent">
+                FINANCE
+              </span>
             </h1>
             
+            <p className="text-2xl lg:text-3xl text-white/80 mb-4 font-light">
+              Financial Solutions for
+            </p>
+            <p className="text-3xl lg:text-4xl text-white mb-8 font-semibold">
+              Disruptors & Innovators
+            </p>
+            
             {/* Supporting text */}
-            <p className="text-xl lg:text-2xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-normal">
-              From property loans to working capital, we connect you with the right financial solutions. 
-              <span className="text-white font-medium"> Fast approvals, competitive rates, expert guidance.</span>
+            <p className="text-lg lg:text-xl text-white/70 mb-12 max-w-3xl mx-auto">
+              Open banking is evolving. Get approved loans, manage cash flow, and scale your business 
+              with our comprehensive financial platform.
             </p>
             
             {/* Two-Button CTA Structure */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-32">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
               <Button 
                 onClick={handleStartApplication}
                 size="lg" 
-                className="bg-white text-blue-700 hover:bg-blue-50 text-lg px-10 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all"
+                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 text-lg px-10 py-6 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
               >
-                Start Your Application
+                Get Started
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-2 border-white text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm px-10 py-4 text-lg font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl"
+                className="border-2 border-white/30 text-white bg-white/5 hover:bg-white/10 backdrop-blur-sm px-10 py-6 text-lg font-medium rounded-full transition-all"
                 asChild
               >
                 <Link href="/consultation">
                   <Calendar className="mr-2 h-5 w-5" />
-                  Book Free Consultation
+                  Book Consultation
                 </Link>
               </Button>
             </div>
