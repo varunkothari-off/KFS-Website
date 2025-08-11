@@ -1,318 +1,340 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Calendar, Clock, CheckCircle } from "lucide-react";
-import { Link } from "wouter";
+import { format } from "date-fns";
+import { CalendarIcon, Clock, Video, Phone, MessageSquare, ArrowLeft, Check } from "lucide-react";
+import { Link, useLocation } from "wouter";
 import { apiRequest } from "@/lib/queryClient";
-import { insertConsultationSchema } from "@shared/schema";
-import { useState } from "react";
+import { cn } from "@/lib/utils";
 
-type ConsultationForm = z.infer<typeof insertConsultationSchema>;
+const consultationSchema = z.object({
+  name: z.string().min(2, "Name is required"),
+  mobile: z.string().min(10, "Valid mobile number required"),
+  email: z.string().email("Valid email required"),
+  businessName: z.string().optional(),
+  preferredDate: z.date({
+    required_error: "Please select a date",
+  }),
+  preferredTime: z.string().min(1, "Please select a time"),
+  consultationType: z.enum(["video", "phone", "in-person"]),
+  message: z.string().optional(),
+});
+
+type ConsultationData = z.infer<typeof consultationSchema>;
 
 const timeSlots = [
-  "10:00 AM - 11:00 AM",
-  "11:00 AM - 12:00 PM",
-  "2:00 PM - 3:00 PM",
-  "3:00 PM - 4:00 PM",
-  "4:00 PM - 5:00 PM",
+  "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
+  "12:00 PM", "2:00 PM", "2:30 PM", "3:00 PM",
+  "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM"
 ];
 
 export default function Consultation() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [consultationId, setConsultationId] = useState<string>("");
+  const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const form = useForm<ConsultationForm>({
-    resolver: zodResolver(insertConsultationSchema),
+  const form = useForm<ConsultationData>({
+    resolver: zodResolver(consultationSchema),
+    defaultValues: {
+      consultationType: "video",
+    },
   });
 
   const consultationMutation = useMutation({
-    mutationFn: async (data: ConsultationForm) => {
-      const response = await apiRequest("POST", "/api/consultations", data);
-      return response.json();
+    mutationFn: async (data: ConsultationData) => {
+      return apiRequest("/api/consultations", {
+        method: "POST",
+        body: JSON.stringify({
+          ...data,
+          preferredDate: format(data.preferredDate, "yyyy-MM-dd"),
+        }),
+      });
     },
-    onSuccess: (data) => {
-      setConsultationId(data.id);
+    onSuccess: () => {
       setIsSubmitted(true);
       toast({
         title: "Consultation Booked!",
-        description: "We'll confirm your appointment within 2 hours.",
+        description: "We'll contact you shortly to confirm your appointment.",
       });
     },
     onError: () => {
       toast({
         title: "Booking Failed",
-        description: "Please try again or contact support.",
+        description: "Please try again or contact us directly.",
         variant: "destructive",
       });
     },
   });
 
-  const handleSubmit = async (data: ConsultationForm) => {
+  const onSubmit = (data: ConsultationData) => {
     consultationMutation.mutate(data);
   };
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        {/* Header */}
-        <header className="bg-white shadow-sm">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div className="flex items-center justify-between">
-              <Link href="/" className="flex items-center space-x-2 text-kfs-primary">
-                <ArrowLeft className="w-5 h-5" />
-                <span>Back to Home</span>
-              </Link>
-              <h1 className="text-2xl font-bold text-kfs-dark">Consultation Booked</h1>
-              <div className="w-24" />
+      <div className="min-h-screen bg-[#0a0b1e] flex items-center justify-center p-4">
+        <Card className="max-w-md w-full bg-gradient-to-br from-[#141428]/90 to-[#1a1b3a]/90 backdrop-blur-xl border-white/10">
+          <CardContent className="pt-6 text-center">
+            <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Check className="w-8 h-8 text-white" />
             </div>
-          </div>
-        </header>
-
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="max-w-2xl mx-auto">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-center text-green-600">Consultation Booked Successfully!</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center space-y-4">
-                <div className="flex justify-center">
-                  <CheckCircle className="w-16 h-16 text-green-500" />
-                </div>
-                
-                <div>
-                  <p className="text-lg font-medium">Booking ID: {consultationId}</p>
-                  <p className="text-gray-600">We'll confirm your appointment within 2 hours and send you the meeting details.</p>
-                </div>
-
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <p className="text-sm text-blue-800">
-                    <Clock className="w-4 h-4 inline mr-1" />
-                    Our team will contact you on your provided mobile number to confirm the consultation time and provide the meeting link or office address.
-                  </p>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                  <Link href="/loan-application">
-                    <Button className="bg-kfs-primary hover:bg-kfs-secondary">
-                      Apply for Loan
-                    </Button>
-                  </Link>
-                  <Link href="/">
-                    <Button variant="outline">
-                      Return to Home
-                    </Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+            <h2 className="text-2xl font-bold text-white mb-2">Consultation Booked!</h2>
+            <p className="text-white/60 mb-6">
+              Your consultation has been scheduled successfully. Our team will contact you within 24 hours to confirm the details.
+            </p>
+            <div className="space-y-3">
+              <Button 
+                onClick={() => setLocation("/")}
+                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+              >
+                Back to Home
+              </Button>
+              <Button 
+                onClick={() => {
+                  setIsSubmitted(false);
+                  form.reset();
+                }}
+                variant="outline"
+                className="w-full border-white/20 text-white hover:bg-white/10"
+              >
+                Book Another Consultation
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#0a0b1e]">
+      {/* Background gradient */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0b1e] via-[#141428] to-[#1a1b3a]"></div>
+        <div className="absolute inset-0 bg-gradient-to-tl from-purple-900/10 via-transparent to-blue-900/5"></div>
+      </div>
+
       {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <header className="relative z-10 bg-gradient-to-r from-[#141428] to-[#1a1b3a] border-b border-white/10">
+        <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2 text-kfs-primary">
+            <Link href="/" className="flex items-center space-x-2 text-white hover:text-purple-400 transition-colors">
               <ArrowLeft className="w-5 h-5" />
               <span>Back to Home</span>
             </Link>
-            <h1 className="text-2xl font-bold text-kfs-dark">Book a Free Consultation</h1>
-            <div className="w-24" /> {/* Spacer for centering */}
+            <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+              Book Consultation
+            </h1>
+            <div className="w-24" />
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="relative z-10 container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
-          {/* Hero Section */}
-          <div className="text-center mb-8">
-            <Calendar className="w-12 h-12 text-kfs-primary mx-auto mb-4" />
-            <h2 className="text-3xl font-bold text-kfs-dark mb-4">Get Expert Financial Advice</h2>
-            <p className="text-lg text-gray-600">
-              Schedule a free consultation with our financial experts to discuss your business financing needs and get personalized loan recommendations.
-            </p>
+          {/* Consultation Types */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <Card className="bg-gradient-to-br from-[#141428]/60 to-[#1a1b3a]/60 backdrop-blur-sm border-white/10">
+              <CardContent className="pt-6 text-center">
+                <Video className="w-8 h-8 text-purple-400 mx-auto mb-2" />
+                <h3 className="font-semibold text-white">Video Call</h3>
+                <p className="text-xs text-white/60 mt-1">Meet virtually via Zoom</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-gradient-to-br from-[#141428]/60 to-[#1a1b3a]/60 backdrop-blur-sm border-white/10">
+              <CardContent className="pt-6 text-center">
+                <Phone className="w-8 h-8 text-blue-400 mx-auto mb-2" />
+                <h3 className="font-semibold text-white">Phone Call</h3>
+                <p className="text-xs text-white/60 mt-1">Discuss over phone</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-gradient-to-br from-[#141428]/60 to-[#1a1b3a]/60 backdrop-blur-sm border-white/10">
+              <CardContent className="pt-6 text-center">
+                <MessageSquare className="w-8 h-8 text-pink-400 mx-auto mb-2" />
+                <h3 className="font-semibold text-white">In-Person</h3>
+                <p className="text-xs text-white/60 mt-1">Visit our office</p>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Benefits */}
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-kfs-light rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-kfs-primary font-bold">1</span>
-              </div>
-              <h3 className="font-semibold text-kfs-dark mb-2">Free Consultation</h3>
-              <p className="text-sm text-gray-600">No charges for initial consultation and loan advice</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-kfs-light rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-kfs-primary font-bold">2</span>
-              </div>
-              <h3 className="font-semibold text-kfs-dark mb-2">Expert Guidance</h3>
-              <p className="text-sm text-gray-600">Get advice from experienced financial consultants</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-kfs-light rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-kfs-primary font-bold">3</span>
-              </div>
-              <h3 className="font-semibold text-kfs-dark mb-2">Personalized Solutions</h3>
-              <p className="text-sm text-gray-600">Tailored loan recommendations for your business</p>
-            </div>
-          </div>
-
-          {/* Booking Form */}
-          <Card>
+          {/* Consultation Form */}
+          <Card className="bg-gradient-to-br from-[#141428]/90 to-[#1a1b3a]/90 backdrop-blur-xl border-white/10">
             <CardHeader>
-              <CardTitle>Book Your Consultation</CardTitle>
+              <CardTitle className="text-white">Schedule Your Consultation</CardTitle>
+              <CardDescription className="text-white/60">
+                Get expert advice on your business loan needs
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="fullName">Full Name *</Label>
+                    <Label htmlFor="name" className="text-white/80">Full Name *</Label>
                     <Input
-                      id="fullName"
-                      {...form.register("fullName")}
-                      placeholder="Your full name"
-                      className="mt-1"
+                      id="name"
+                      {...form.register("name")}
+                      className="bg-white/10 border-white/20 text-white placeholder:text-white/40"
+                      placeholder="Enter your name"
                     />
-                    {form.formState.errors.fullName && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {form.formState.errors.fullName.message}
-                      </p>
+                    {form.formState.errors.name && (
+                      <p className="text-red-400 text-xs mt-1">{form.formState.errors.name.message}</p>
                     )}
                   </div>
 
                   <div>
-                    <Label htmlFor="companyName">Company Name *</Label>
+                    <Label htmlFor="mobile" className="text-white/80">Mobile Number *</Label>
                     <Input
-                      id="companyName"
-                      {...form.register("companyName")}
-                      placeholder="Company name"
-                      className="mt-1"
+                      id="mobile"
+                      {...form.register("mobile")}
+                      className="bg-white/10 border-white/20 text-white placeholder:text-white/40"
+                      placeholder="10-digit mobile number"
                     />
-                    {form.formState.errors.companyName && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {form.formState.errors.companyName.message}
-                      </p>
+                    {form.formState.errors.mobile && (
+                      <p className="text-red-400 text-xs mt-1">{form.formState.errors.mobile.message}</p>
                     )}
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="mobile">Contact Number *</Label>
-                    <Input
-                      id="mobile"
-                      {...form.register("mobile")}
-                      placeholder="+91 98765 43210"
-                      className="mt-1"
-                    />
-                    {form.formState.errors.mobile && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {form.formState.errors.mobile.message}
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="email">Email Address *</Label>
+                    <Label htmlFor="email" className="text-white/80">Email Address *</Label>
                     <Input
                       id="email"
                       type="email"
                       {...form.register("email")}
+                      className="bg-white/10 border-white/20 text-white placeholder:text-white/40"
                       placeholder="your@email.com"
-                      className="mt-1"
                     />
                     {form.formState.errors.email && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {form.formState.errors.email.message}
-                      </p>
+                      <p className="text-red-400 text-xs mt-1">{form.formState.errors.email.message}</p>
                     )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="businessName" className="text-white/80">Business Name</Label>
+                    <Input
+                      id="businessName"
+                      {...form.register("businessName")}
+                      className="bg-white/10 border-white/20 text-white placeholder:text-white/40"
+                      placeholder="Your company name"
+                    />
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-white/80">Consultation Type *</Label>
+                  <Select 
+                    onValueChange={(value) => form.setValue("consultationType", value as any)}
+                    defaultValue="video"
+                  >
+                    <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[#141428] border-white/20">
+                      <SelectItem value="video" className="text-white hover:bg-white/10">Video Call</SelectItem>
+                      <SelectItem value="phone" className="text-white hover:bg-white/10">Phone Call</SelectItem>
+                      <SelectItem value="in-person" className="text-white hover:bg-white/10">In-Person Meeting</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="preferredDate">Preferred Date *</Label>
-                    <Input
-                      id="preferredDate"
-                      type="date"
-                      {...form.register("preferredDate")}
-                      min={new Date().toISOString().split('T')[0]}
-                      className="mt-1"
-                    />
+                    <Label className="text-white/80">Preferred Date *</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full justify-start text-left font-normal bg-white/10 border-white/20",
+                            !form.watch("preferredDate") && "text-white/40"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {form.watch("preferredDate") ? (
+                            format(form.watch("preferredDate"), "PPP")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0 bg-[#141428] border-white/20">
+                        <Calendar
+                          mode="single"
+                          selected={form.watch("preferredDate")}
+                          onSelect={(date) => form.setValue("preferredDate", date!)}
+                          disabled={(date) =>
+                            date < new Date() || date < new Date("1900-01-01")
+                          }
+                          initialFocus
+                          className="bg-[#141428] text-white"
+                        />
+                      </PopoverContent>
+                    </Popover>
                     {form.formState.errors.preferredDate && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {form.formState.errors.preferredDate.message}
-                      </p>
+                      <p className="text-red-400 text-xs mt-1">{form.formState.errors.preferredDate.message}</p>
                     )}
                   </div>
 
                   <div>
-                    <Label>Preferred Time *</Label>
+                    <Label className="text-white/80">Preferred Time *</Label>
                     <Select onValueChange={(value) => form.setValue("preferredTime", value)}>
-                      <SelectTrigger className="mt-1">
-                        <SelectValue placeholder="Select time slot" />
+                      <SelectTrigger className="bg-white/10 border-white/20 text-white">
+                        <SelectValue placeholder="Select time" />
                       </SelectTrigger>
-                      <SelectContent>
-                        {timeSlots.map((slot) => (
-                          <SelectItem key={slot} value={slot}>
-                            {slot}
+                      <SelectContent className="bg-[#141428] border-white/20">
+                        {timeSlots.map((time) => (
+                          <SelectItem key={time} value={time} className="text-white hover:bg-white/10">
+                            {time}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                     {form.formState.errors.preferredTime && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {form.formState.errors.preferredTime.message}
-                      </p>
+                      <p className="text-red-400 text-xs mt-1">{form.formState.errors.preferredTime.message}</p>
                     )}
                   </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="requirement">Brief Description of Requirement</Label>
+                  <Label htmlFor="message" className="text-white/80">Additional Message</Label>
                   <Textarea
-                    id="requirement"
-                    {...form.register("requirement")}
-                    placeholder="Tell us about your financing needs..."
+                    id="message"
+                    {...form.register("message")}
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/40"
+                    placeholder="Tell us briefly about your loan requirements..."
                     rows={4}
-                    className="mt-1"
                   />
                 </div>
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-kfs-primary hover:bg-kfs-secondary text-lg py-4"
                   disabled={consultationMutation.isPending}
+                  className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
                 >
                   {consultationMutation.isPending ? (
-                    "Booking Consultation..."
+                    <>
+                      <Clock className="w-4 h-4 mr-2 animate-spin" />
+                      Booking...
+                    </>
                   ) : (
                     <>
-                      <Calendar className="w-5 h-5 mr-2" />
-                      Book Free Consultation
+                      <CalendarIcon className="w-4 h-4 mr-2" />
+                      Book Consultation
                     </>
                   )}
                 </Button>
-
-                <p className="text-sm text-gray-600 text-center mt-4">
-                  <Clock className="w-4 h-4 inline mr-1" />
-                  We'll confirm your appointment within 2 hours
-                </p>
               </form>
             </CardContent>
           </Card>

@@ -8,6 +8,7 @@ import LoanApplication from "./pages/loan-application";
 import Consultation from "./pages/consultation";
 import ApplicationStatus from "./pages/application-status";
 import Login from "./pages/login";
+import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
 import PrivacyPolicy from "./pages/privacy-policy";
 import TermsOfService from "./pages/terms-of-service";
@@ -18,6 +19,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/loan-application" component={LoanApplication} />
       <Route path="/consultation" component={Consultation} />

@@ -123,16 +123,16 @@ export default function LoanApplication() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#0a0b1e]">
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-gradient-to-r from-[#141428] to-[#1a1b3a] border-b border-white/10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2 text-kfs-primary">
+            <Link href="/" className="flex items-center space-x-2 text-white hover:text-purple-400 transition-colors">
               <ArrowLeft className="w-5 h-5" />
               <span>Back to Home</span>
             </Link>
-            <h1 className="text-2xl font-bold text-kfs-dark">Loan Application</h1>
+            <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">Loan Application</h1>
             <div className="w-24" /> {/* Spacer for centering */}
           </div>
         </div>
@@ -148,10 +148,10 @@ export default function LoanApplication() {
                   <div className={`
                     flex items-center justify-center w-10 h-10 rounded-full font-bold text-sm
                     ${currentStep >= step.id 
-                      ? 'bg-kfs-primary text-white' 
+                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' 
                       : currentStep === step.id 
-                        ? 'bg-kfs-secondary text-white' 
-                        : 'bg-gray-200 text-gray-600'
+                        ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white' 
+                        : 'bg-white/10 text-white/50'
                     }
                   `}>
                     {currentStep > step.id ? (
@@ -161,13 +161,13 @@ export default function LoanApplication() {
                     )}
                   </div>
                   <div className="ml-2 hidden md:block">
-                    <div className={`text-sm font-medium ${currentStep >= step.id ? 'text-kfs-primary' : 'text-gray-500'}`}>
+                    <div className={`text-sm font-medium ${currentStep >= step.id ? 'text-purple-400' : 'text-white/50'}`}>
                       {step.title}
                     </div>
-                    <div className="text-xs text-gray-500">{step.description}</div>
+                    <div className="text-xs text-white/40">{step.description}</div>
                   </div>
                   {index < steps.length - 1 && (
-                    <div className={`w-8 h-0.5 mx-4 ${currentStep > step.id ? 'bg-kfs-primary' : 'bg-gray-200'}`} />
+                    <div className={`w-8 h-0.5 mx-4 ${currentStep > step.id ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 'bg-white/10'}`} />
                   )}
                 </div>
               ))}
@@ -177,49 +177,49 @@ export default function LoanApplication() {
 
         {/* Show loading while checking auth */}
         {authLoading ? (
-          <Card>
+          <Card className="bg-gradient-to-br from-[#141428]/90 to-[#1a1b3a]/90 backdrop-blur-xl border-white/10">
             <CardContent className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-kfs-primary" />
-              <span className="ml-2">Loading...</span>
+              <Loader2 className="h-8 w-8 animate-spin text-purple-400" />
+              <span className="ml-2 text-white">Loading...</span>
             </CardContent>
           </Card>
         ) : (
           <div className="max-w-2xl mx-auto">
             {/* Step 1: Loan Type Selection */}
             {currentStep === 1 && (
-            <Card>
+            <Card className="bg-gradient-to-br from-[#141428]/90 to-[#1a1b3a]/90 backdrop-blur-xl border-white/10">
               <CardHeader>
-                <CardTitle>Select Loan Type</CardTitle>
+                <CardTitle className="text-white">Select Loan Type</CardTitle>
               </CardHeader>
               <CardContent>
                 <form onSubmit={loanForm.handleSubmit(handleLoanDetails)} className="space-y-6">
                   <div>
-                    <Label>Loan Type *</Label>
+                    <Label className="text-white/80">Loan Type *</Label>
                     <Select onValueChange={(value) => loanForm.setValue("loanType", value as any)}>
-                      <SelectTrigger className="mt-1">
-                        <SelectValue placeholder="Select loan type" />
+                      <SelectTrigger className="mt-1 bg-white/10 border-white/20 text-white">
+                        <SelectValue placeholder="Select loan type" className="text-white/60" />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="property">Loan Against Property</SelectItem>
-                        <SelectItem value="business">Unsecured Business Loan</SelectItem>
-                        <SelectItem value="cash-credit">Cash Credit</SelectItem>
+                      <SelectContent className="bg-[#141428] border-white/20">
+                        <SelectItem value="property" className="text-white hover:bg-white/10">Loan Against Property</SelectItem>
+                        <SelectItem value="business" className="text-white hover:bg-white/10">Unsecured Business Loan</SelectItem>
+                        <SelectItem value="cash-credit" className="text-white hover:bg-white/10">Cash Credit</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
                   <div>
-                    <Label htmlFor="loanAmount">Loan Amount Required (₹) *</Label>
+                    <Label htmlFor="loanAmount" className="text-white/80">Loan Amount Required (₹) *</Label>
                     <Input
                       id="loanAmount"
                       {...loanForm.register("loanAmount")}
                       placeholder="10,00,000"
-                      className="mt-1"
+                      className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/40"
                     />
                   </div>
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-kfs-primary hover:bg-kfs-secondary"
+                    className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
                   >
                     Continue <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
@@ -230,45 +230,45 @@ export default function LoanApplication() {
 
             {/* Step 2: Loan Details */}
             {currentStep === 2 && (
-            <Card>
+            <Card className="bg-gradient-to-br from-[#141428]/90 to-[#1a1b3a]/90 backdrop-blur-xl border-white/10">
               <CardHeader>
-                <CardTitle>Loan Application Details</CardTitle>
+                <CardTitle className="text-white">Loan Application Details</CardTitle>
               </CardHeader>
               <CardContent>
                 <form onSubmit={loanForm.handleSubmit(handleApplicationSubmit)} className="space-y-4">
                   <div>
-                    <Label htmlFor="businessType">Business Type</Label>
+                    <Label htmlFor="businessType" className="text-white/80">Business Type</Label>
                     <Select onValueChange={(value) => loanForm.setValue("businessType", value)}>
-                      <SelectTrigger className="mt-1">
-                        <SelectValue placeholder="Select business type" />
+                      <SelectTrigger className="mt-1 bg-white/10 border-white/20 text-white">
+                        <SelectValue placeholder="Select business type" className="text-white/60" />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="manufacturing">Manufacturing</SelectItem>
-                        <SelectItem value="trading">Trading</SelectItem>
-                        <SelectItem value="services">Services</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
+                      <SelectContent className="bg-[#141428] border-white/20">
+                        <SelectItem value="manufacturing" className="text-white hover:bg-white/10">Manufacturing</SelectItem>
+                        <SelectItem value="trading" className="text-white hover:bg-white/10">Trading</SelectItem>
+                        <SelectItem value="services" className="text-white hover:bg-white/10">Services</SelectItem>
+                        <SelectItem value="other" className="text-white hover:bg-white/10">Other</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
                   <div>
-                    <Label htmlFor="monthlyIncome">Monthly Income (₹)</Label>
+                    <Label htmlFor="monthlyIncome" className="text-white/80">Monthly Income (₹)</Label>
                     <Input
                       id="monthlyIncome"
                       {...loanForm.register("monthlyIncome")}
                       placeholder="2,50,000"
-                      className="mt-1"
+                      className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/40"
                     />
                   </div>
 
                   {loanForm.watch("loanType") === "property" && (
                     <div>
-                      <Label htmlFor="propertyValue">Property Value (₹)</Label>
+                      <Label htmlFor="propertyValue" className="text-white/80">Property Value (₹)</Label>
                       <Input
                         id="propertyValue"
                         {...loanForm.register("propertyValue")}
                         placeholder="50,00,000"
-                        className="mt-1"
+                        className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/40"
                       />
                     </div>
                   )}
