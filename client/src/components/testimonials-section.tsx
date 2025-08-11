@@ -26,59 +26,69 @@ export default function TestimonialsSection() {
   ];
 
   return (
-    <section className="py-24 bg-slate-50">
-      <div className="container mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-semibold text-slate-900 mb-4">Real Success Stories</h2>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+    <section className="py-12 md:py-24 bg-gradient-to-b from-[#141428] to-[#0a0b1e] relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 right-1/3 w-64 h-64 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
+        <div className="absolute bottom-20 left-1/4 w-64 h-64 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-4000"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-8 md:mb-16">
+          <h2 className="text-2xl md:text-3xl font-semibold mb-3 md:mb-4">
+            <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+              Real Success Stories
+            </span>
+          </h2>
+          <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto px-4">
             See how we've helped businesses like yours achieve their financial goals with trusted partnerships and expert guidance.
           </p>
         </div>
         
         {/* Featured Testimonial */}
-        <div className="max-w-4xl mx-auto mb-16 bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
+        <div className="max-w-4xl mx-auto mb-8 md:mb-16 bg-gradient-to-br from-[#141428]/90 to-[#1a1b3a]/90 backdrop-blur-xl rounded-2xl border border-white/10 p-8 md:p-12 text-center">
           <div className="flex justify-center mb-6">
-            <div className="flex text-yellow-500">
+            <div className="flex text-yellow-400">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-6 h-6 fill-current" />
+                <Star key={i} className="w-5 md:w-6 h-5 md:h-6 fill-current" />
               ))}
             </div>
           </div>
-          <blockquote className="text-2xl lg:text-3xl text-slate-900 font-medium leading-relaxed mb-8">
+          <blockquote className="text-xl md:text-2xl lg:text-3xl text-white font-medium leading-relaxed mb-8">
             "KFS made our loan process incredibly smooth. What would have taken months was completed in just 2 weeks. Their team understood our business needs perfectly."
           </blockquote>
           <div className="flex items-center justify-center">
             <img 
               src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
               alt="Rajesh Agarwal testimonial" 
-              className="w-16 h-16 rounded-full mr-4 object-cover" 
+              className="w-16 h-16 rounded-full mr-4 object-cover border-2 border-purple-500/30" 
             />
             <div className="text-left">
-              <div className="font-bold text-slate-900">Rajesh Agarwal</div>
-              <div className="text-slate-600">Manufacturing Business Owner</div>
+              <div className="font-bold text-white">Rajesh Agarwal</div>
+              <div className="text-gray-400">Manufacturing Business Owner</div>
             </div>
           </div>
         </div>
 
         {/* Additional Testimonials Grid */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
           {testimonials.slice(1).map((testimonial, index) => (
-            <div key={index} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-              <div className="flex text-yellow-500 mb-4">
+            <div key={index} className="bg-gradient-to-br from-[#141428]/50 to-[#1a1b3a]/50 backdrop-blur-sm rounded-2xl border border-white/10 p-6 md:p-8 hover:border-purple-500/30 transition-all">
+              <div className="flex text-yellow-400 mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
                   <Star key={i} className="w-5 h-5 fill-current" />
                 ))}
               </div>
-              <p className="text-slate-700 mb-6 leading-relaxed">"{testimonial.content}"</p>
+              <p className="text-gray-300 mb-6 leading-relaxed">"{testimonial.content}"</p>
               <div className="flex items-center">
                 <img 
                   src={testimonial.image} 
                   alt={`${testimonial.author} testimonial`} 
-                  className="w-12 h-12 rounded-full mr-4 object-cover" 
+                  className="w-12 h-12 rounded-full mr-4 object-cover border border-purple-500/30" 
                 />
                 <div>
-                  <div className="font-bold text-slate-900">{testimonial.author}</div>
-                  <div className="text-sm text-slate-600">{testimonial.role}</div>
+                  <div className="font-bold text-white">{testimonial.author}</div>
+                  <div className="text-sm text-gray-400">{testimonial.role}</div>
                 </div>
               </div>
             </div>

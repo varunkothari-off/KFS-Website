@@ -43,11 +43,11 @@ function StatItem({ value, label, animatedValue }: StatItemProps) {
   };
   
   return (
-    <div className="text-center">
-      <div className="text-4xl lg:text-5xl font-bold text-slate-900 mb-2">
+    <div className="text-center group">
+      <div className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
         {animatedValue !== undefined ? formatValue(displayValue) : value}
       </div>
-      <div className="text-slate-600 text-sm lg:text-base">{label}</div>
+      <div className="text-gray-400 text-sm lg:text-base">{label}</div>
     </div>
   );
 }
@@ -77,38 +77,47 @@ export default function AnimatedStatsSection() {
   }, [isVisible]);
   
   const stats = [
-    { value: "₹500+ Cr", label: "Loans Facilitated", animatedValue: 500 },
-    { value: "500+", label: "Happy Clients", animatedValue: 500 },
-    { value: "20+", label: "Bank Partners", animatedValue: 20 },
-    { value: "98%", label: "Approval Rate", animatedValue: 98 }
+    { value: "₹8000+ Cr", label: "Loans Disbursed", animatedValue: 8000 },
+    { value: "5000+", label: "Happy Clients", animatedValue: 5000 },
+    { value: "50+", label: "Bank Partners", animatedValue: 50 },
+    { value: "89%", label: "Approval Rate", animatedValue: 89 }
   ];
   
   return (
     <section 
       ref={sectionRef}
-      className={`py-20 bg-white transform transition-all duration-1000 ${
+      className={`py-16 md:py-20 bg-gradient-to-b from-[#0a0b1e] to-[#141428] relative overflow-hidden transform transition-all duration-1000 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
       }`}
     >
-      <div className="container mx-auto px-6 lg:px-8">
+      {/* Background decoration */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-10 left-1/2 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
+        <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-semibold text-slate-900 mb-4">
-              Discover Our Services
+            <h2 className="text-2xl md:text-3xl font-semibold mb-4">
+              <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                Discover Our Impact
+              </span>
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto px-4">
               Trusted by businesses across India for comprehensive financial solutions and expert guidance.
             </p>
           </div>
           
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-12">
             {stats.map((stat, index) => (
-              <StatItem
-                key={index}
-                value={stat.value}
-                label={stat.label}
-                animatedValue={isVisible ? stat.animatedValue : undefined}
-              />
+              <div key={index} className="bg-gradient-to-br from-[#141428]/50 to-[#1a1b3a]/50 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-purple-500/30 transition-all">
+                <StatItem
+                  value={stat.value}
+                  label={stat.label}
+                  animatedValue={isVisible ? stat.animatedValue : undefined}
+                />
+              </div>
             ))}
           </div>
         </div>
