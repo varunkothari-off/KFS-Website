@@ -39,14 +39,10 @@ export default function StickyHeader() {
           <Link href="/" className="flex items-center space-x-3">
             <Logo className="w-8 h-8" />
             <div className="flex flex-col">
-              <span className={`font-bold text-base leading-tight ${
-                isScrolled ? 'text-slate-900' : 'text-white'
-              }`}>
+              <span className="font-bold text-base leading-tight text-white">
                 KFS
               </span>
-              <span className={`text-xs ${
-                isScrolled ? 'text-slate-600' : 'text-blue-200'
-              }`}>
+              <span className="text-xs text-blue-200">
                 Financial Consultants
               </span>
             </div>
@@ -58,8 +54,8 @@ export default function StickyHeader() {
               <Link key={item.name} href={item.href}>
                 <span className={`text-sm font-medium transition-colors ${
                   location === item.href
-                    ? (isScrolled ? 'text-blue-600' : 'text-yellow-300')
-                    : (isScrolled ? 'text-slate-700 hover:text-blue-600' : 'text-white hover:text-yellow-300')
+                    ? 'text-yellow-300'
+                    : 'text-white hover:text-yellow-300'
                 }`}>
                   {item.name}
                 </span>

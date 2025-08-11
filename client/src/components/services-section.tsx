@@ -31,18 +31,18 @@ export default function ServicesSection() {
   ];
 
   return (
-    <section id="services" className="py-24 bg-white">
-      <div className="container mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-semibold text-slate-900 mb-4">Core Services</h2>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+    <section id="services" className="py-12 md:py-24 bg-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8 md:mb-16">
+          <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-3 md:mb-4">Core Services</h2>
+          <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto px-4">
             Comprehensive financial solutions designed to fuel your business growth and success.
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
           {services.map((service, index) => (
-            <div key={index} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-lg hover:border-gray-200 transition-all">
+            <div key={index} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 hover:shadow-lg hover:border-gray-200 transition-all">
               <div className={`w-16 h-16 ${service.iconBg} rounded-2xl flex items-center justify-center mb-6`}>
                 <service.icon className={`${service.iconColor} w-8 h-8`} />
               </div>

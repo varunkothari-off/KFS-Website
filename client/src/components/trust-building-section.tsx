@@ -25,23 +25,23 @@ export default function TrustBuildingSection() {
   ];
 
   return (
-    <section id="about" className="py-24 bg-slate-50">
-      <div className="container mx-auto px-6 lg:px-8">
+    <section id="about" className="py-12 md:py-24 bg-slate-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Meet Your Financial Partners Section */}
-        <div className="mb-24">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-semibold text-slate-900 mb-4">
+        <div className="mb-12 md:mb-24">
+          <div className="text-center mb-8 md:mb-16">
+            <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-3 md:mb-4">
               Meet Your Financial Partners
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto px-4">
               Experienced professionals dedicated to understanding your business and connecting you with the right financial solutions.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-12 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 max-w-6xl mx-auto">
             {leadership.map((leader, index) => (
-              <div key={index} className="text-center bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow">
+              <div key={index} className="text-center bg-white rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-lg transition-shadow">
                 <img 
                   src={leader.image} 
                   alt={`${leader.name} - ${leader.role}`} 

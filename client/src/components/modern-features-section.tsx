@@ -1,4 +1,4 @@
-import { CreditCard, Shield, TrendingUp, Wallet, Lock, FileCheck } from "lucide-react";
+import { CreditCard, Shield, TrendingUp, Wallet, Lock, FileCheck, Users } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function ModernFeaturesSection() {
@@ -51,8 +51,8 @@ export default function ModernFeaturesSection() {
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+        <div className="text-center mb-12 md:mb-16 px-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
             <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
               Financial Future for
             </span>
@@ -61,9 +61,9 @@ export default function ModernFeaturesSection() {
               Disruptors & Innovators
             </span>
           </h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Get full-stack bank accounts, automated cash management, and instant loan approvals 
-            in one powerful platform designed for modern businesses.
+          <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto px-4">
+            Partner with us to unlock your business potential. We help you navigate financial challenges 
+            and achieve your goals with personalized loan solutions and expert guidance.
           </p>
         </div>
 
@@ -96,82 +96,90 @@ export default function ModernFeaturesSection() {
           ))}
         </div>
 
-        {/* Card Showcase Section - inspired by the second website */}
-        <div className="mt-20 bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-12 relative overflow-hidden">
-          {/* Background pattern */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `linear-gradient(45deg, #fff 25%, transparent 25%), linear-gradient(-45deg, #fff 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #fff 75%), linear-gradient(-45deg, transparent 75%, #fff 75%)`,
-              backgroundSize: '20px 20px',
-              backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px'
-            }}></div>
+        {/* Partnership Call-to-Action Section */}
+        <div className="mt-16 md:mt-20 bg-gradient-to-br from-purple-900/20 to-pink-900/20 rounded-2xl md:rounded-3xl p-6 md:p-12 relative overflow-hidden border border-purple-500/20">
+          {/* Animated gradient background */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-blue-600/20 animate-gradient-x"></div>
           </div>
           
-          <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
             <div>
-              <h3 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-                Get Full-Stack Bank Accounts
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 md:mb-6">
+                Partner With Us Today
               </h3>
-              <p className="text-gray-300 text-lg mb-8">
-                Open OTC capital accounts that scale with your business. 
-                Track 99% mobile money flow, manage employee cards, and more.
+              <p className="text-gray-300 text-base md:text-lg mb-6 md:mb-8">
+                Let us help you achieve your financial goals. With 30+ years of expertise, 
+                we're here to guide you through every step of your business loan journey.
               </p>
               
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-green-500"></div>
-                  <span className="text-white">Instant account opening</span>
+                  <div className="w-5 h-5 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 animate-pulse"></div>
+                  <span className="text-white text-sm md:text-base">Personalized financial consultation</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-green-500"></div>
-                  <span className="text-white">Virtual & physical cards</span>
+                  <div className="w-5 h-5 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 animate-pulse"></div>
+                  <span className="text-white text-sm md:text-base">Access to 30+ partner banks</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-green-500"></div>
-                  <span className="text-white">Real-time transaction monitoring</span>
+                  <div className="w-5 h-5 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 animate-pulse"></div>
+                  <span className="text-white text-sm md:text-base">End-to-end loan support</span>
                 </div>
               </div>
               
-              <button className="mt-8 bg-white text-gray-900 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                Get a Demo →
+              <button className="mt-6 md:mt-8 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:from-purple-600 hover:to-pink-600 transition-all transform hover:scale-105 w-full md:w-auto">
+                Start Your Journey →
               </button>
             </div>
             
-            {/* Card Visual */}
-            <div className="relative">
-              <div className="relative transform rotate-6 hover:rotate-3 transition-transform duration-500">
-                {/* Black Card */}
-                <div className="bg-gradient-to-br from-gray-800 to-black rounded-2xl p-8 shadow-2xl">
-                  <div className="flex justify-between items-start mb-12">
-                    <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded"></div>
-                    <span className="text-gray-400 text-sm">VISA</span>
-                  </div>
-                  <div className="space-y-2 mb-8">
-                    <div className="flex gap-2">
-                      <span className="text-gray-400">•••• •••• ••••</span>
-                      <span className="text-white">1234</span>
+            {/* Partnership Visual */}
+            <div className="relative flex items-center justify-center">
+              <div className="relative w-full max-w-sm mx-auto">
+                {/* Animated circles representing partnership */}
+                <div className="relative h-64 md:h-80">
+                  {/* Central partnership icon */}
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+                    <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center shadow-2xl animate-pulse">
+                      <Users className="w-10 h-10 md:w-12 md:h-12 text-white" />
                     </div>
                   </div>
-                  <div className="flex justify-between items-end">
-                    <div>
-                      <p className="text-gray-400 text-xs">CARD HOLDER</p>
-                      <p className="text-white">John Business</p>
+                  
+                  {/* Orbiting elements */}
+                  <div className="absolute inset-0 animate-spin-slow">
+                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
+                      <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center shadow-lg">
+                        <TrendingUp className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-gray-400 text-xs">EXPIRES</p>
-                      <p className="text-white">12/29</p>
+                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
+                      <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
+                        <Shield className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                      </div>
+                    </div>
+                    <div className="absolute top-1/2 left-0 transform -translate-y-1/2">
+                      <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-lg">
+                        <CreditCard className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                      </div>
+                    </div>
+                    <div className="absolute top-1/2 right-0 transform -translate-y-1/2">
+                      <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg">
+                        <Lock className="w-6 h-6 md:w-7 md:h-7 text-white" />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              
-              {/* Silver Card (behind) */}
-              <div className="absolute top-8 left-8 transform -rotate-6 opacity-70">
-                <div className="bg-gradient-to-br from-gray-300 to-gray-400 rounded-2xl p-8 shadow-xl w-full h-full">
-                  <div className="flex justify-between items-start mb-12">
-                    <div className="w-12 h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded"></div>
-                    <span className="text-gray-600 text-sm">VISA</span>
-                  </div>
+                  
+                  {/* Connection lines */}
+                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
+                    <circle cx="100" cy="100" r="60" fill="none" stroke="url(#gradient)" strokeWidth="1" strokeDasharray="5,5" className="animate-rotate-reverse opacity-30" />
+                    <circle cx="100" cy="100" r="80" fill="none" stroke="url(#gradient)" strokeWidth="1" strokeDasharray="3,7" className="animate-rotate opacity-20" />
+                    <defs>
+                      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#a855f7" />
+                        <stop offset="100%" stopColor="#ec4899" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
                 </div>
               </div>
             </div>

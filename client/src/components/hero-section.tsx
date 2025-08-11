@@ -103,13 +103,13 @@ export default function HeroSection() {
         ))}
       </div>
       
-      <div className="container mx-auto px-6 lg:px-8 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto relative">
           
-          {/* Floating Cards - smaller and better positioned */}
-          <div className="absolute inset-0 pointer-events-none">
+          {/* Floating Cards - smaller and better positioned - hide on mobile */}
+          <div className="absolute inset-0 pointer-events-none hidden lg:block">
             {/* Top Left - Quick Application Card */}
-            <div className="absolute top-20 left-0 lg:left-10 hidden xl:block">
+            <div className="absolute top-20 left-0 lg:left-10 xl:block">
               <div className="bg-gradient-to-br from-purple-600/15 to-blue-600/15 backdrop-blur-xl border border-white/10 rounded-xl p-3 w-48 transform -rotate-6 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
@@ -183,17 +183,17 @@ export default function HeroSection() {
             </div>
             
             {/* SWAGATAM - Welcome message */}
-            <h2 className="text-xl lg:text-2xl text-white/70 mb-6 font-light tracking-[0.3em] uppercase">
+            <h2 className="text-lg md:text-xl lg:text-2xl text-white/70 mb-4 md:mb-6 font-light tracking-[0.2em] md:tracking-[0.3em] uppercase">
               SWAGATAM!
             </h2>
             
             {/* Main headline with better spacing */}
-            <h1 className="text-3xl lg:text-5xl font-medium mb-6 text-white/90">
+            <h1 className="text-2xl sm:text-3xl lg:text-5xl font-medium mb-4 md:mb-6 text-white/90">
               Welcome to the home of
             </h1>
             
             {/* Company Name with Gradient - reduced size */}
-            <h1 className="text-4xl lg:text-6xl font-bold mb-12 tracking-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-8 md:mb-12 tracking-tight">
               <span className="bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
                 Kothari Financial
               </span>
@@ -217,30 +217,30 @@ export default function HeroSection() {
             </div>
             
             {/* Supporting text - more concise */}
-            <p className="text-base lg:text-lg text-white/70 mb-16 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-lg text-white/70 mb-8 md:mb-16 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
               With over thirty years of experience providing loans from partner nationalised and 
               private banks, NBFCs and Investors, KFS is here to solve all your financial worries
             </p>
             
             {/* Two-Button CTA Structure with more spacing */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-32">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 md:mb-32">
               <Button 
                 onClick={handleStartApplication}
                 size="lg" 
-                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 text-base px-8 py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+                className="w-full sm:w-auto bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
               >
                 Consult Now
-                <ArrowRight className="w-5 h-5 ml-2" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
               </Button>
               
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-2 border-white/20 text-white/80 bg-transparent hover:bg-white/10 backdrop-blur-sm px-8 py-4 text-base font-medium rounded-lg transition-all"
+                className="w-full sm:w-auto border-2 border-white/20 text-white/80 bg-transparent hover:bg-white/10 backdrop-blur-sm px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-medium rounded-lg transition-all"
                 asChild
               >
                 <Link href="/loan-application">
-                  <CreditCard className="mr-2 h-5 w-5" />
+                  <CreditCard className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                   Apply for Loan
                 </Link>
               </Button>
