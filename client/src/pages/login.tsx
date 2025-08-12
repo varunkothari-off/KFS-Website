@@ -257,7 +257,14 @@ export default function Login() {
 
           <div className="text-center pt-4 border-t border-white/10">
             <p className="text-xs text-white/40">
-              By continuing, you agree to our Terms of Service and Privacy Policy
+              By continuing, you agree to our{" "}
+              <Link href="/terms-of-service" className="text-purple-400 hover:text-purple-300 underline">
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link href="/privacy-policy" className="text-purple-400 hover:text-purple-300 underline">
+                Privacy Policy
+              </Link>
             </p>
           </div>
         </CardContent>

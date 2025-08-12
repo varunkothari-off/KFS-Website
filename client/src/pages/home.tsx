@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { HelmetProvider } from "react-helmet-async";
+import { Link } from "wouter";
 import SEOHead from "@/components/seo-head";
 import StickyHeader from "@/components/sticky-header";
 import HeroSection from "@/components/hero-section";
@@ -220,8 +221,12 @@ export default function Home() {
                 &copy; 2025 Kothari Financial Services. All rights reserved.
               </p>
               <div className="flex space-x-6">
-                <a href="/privacy-policy" className="text-gray-400 hover:text-purple-400 transition-colors">Privacy Policy</a>
-                <a href="/terms-of-service" className="text-gray-400 hover:text-purple-400 transition-colors">Terms of Service</a>
+                <Link href="/privacy-policy" className="text-gray-400 hover:text-purple-400 transition-colors">
+                  Privacy Policy
+                </Link>
+                <Link href="/terms-of-service" className="text-gray-400 hover:text-purple-400 transition-colors">
+                  Terms of Service
+                </Link>
               </div>
             </div>
           </div>

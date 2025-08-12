@@ -6,7 +6,28 @@ The system is designed to serve entrepreneurs and businesses looking for various
 
 # Recent Changes
 
-## Backend Data Persistence Implementation (August 12, 2025)
+## Legal Compliance Implementation (January 13, 2025)
+- **Terms of Service Page**: Created comprehensive Terms of Service page
+  - 13 sections covering user responsibilities, service descriptions, privacy, fees, intellectual property
+  - Professional legal language appropriate for financial services
+  - Dark theme design with purple/pink gradient accents
+  - Proper navigation with back-to-home functionality
+- **Privacy Policy Page**: Implemented detailed Privacy Policy page
+  - 12 sections covering data collection, usage, security, user rights, GDPR compliance
+  - Clear categorization of personal, financial, and technical information
+  - Cyan/purple color scheme matching platform aesthetics
+  - Cross-linked with Terms of Service
+- **Legal Links Integration**: Added hyperlinks throughout platform
+  - Footer of homepage with dedicated legal links section
+  - Login page disclaimer below form
+  - Registration page agreement text with links
+  - Proper Link component usage from wouter routing
+- **UI Fixes**: Resolved chatbot and WhatsApp button positioning
+  - Chatbot positioned at bottom-28 with z-[60] index
+  - WhatsApp button remains at bottom-6 with z-50 index
+  - No overlap between floating action buttons
+
+## Backend Data Persistence Implementation (January 12, 2025)
 - **Complete Database Integration**: Transitioned from demo/mock functionality to actual PostgreSQL database storage
   - Implemented DatabaseStorage class replacing MemStorage for production use
   - All user profiles now saved persistently in PostgreSQL
