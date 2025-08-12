@@ -116,68 +116,93 @@ export default function HeroSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 h-full flex items-center justify-center">
         <div className="max-w-7xl mx-auto relative w-full">
           
-          {/* Floating Cards - smaller and better positioned - hide on mobile */}
-          <div className="absolute inset-0 pointer-events-none hidden xl:block">
+          {/* Floating Cards - positioned around the central logo */}
+          <div className="absolute inset-0 pointer-events-none hidden lg:block">
             {/* Top Left - Quick Application Card */}
-            <div className="absolute top-0 left-0 lg:left-10 xl:block">
-              <div className="bg-gradient-to-br from-purple-600/15 to-blue-600/15 backdrop-blur-xl border border-white/10 rounded-xl p-3 w-48 transform -rotate-6 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-[200px] -translate-y-[180px] xl:block">
+              <div className="bg-gradient-to-br from-purple-600/20 to-blue-600/20 backdrop-blur-xl border border-purple-400/30 rounded-xl p-3 w-44 transform -rotate-6 hover:rotate-0 transition-all duration-500 pointer-events-auto hover:scale-105 hover:border-purple-400/50">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
                     <Zap className="w-4 h-4 text-white" />
                   </div>
                   <span className="text-white text-sm font-semibold">Quick Process</span>
                 </div>
-                <p className="text-white/50 text-xs">Approved within 48 hours</p>
+                <p className="text-white/60 text-xs">Approved within 48 hours</p>
               </div>
             </div>
             
             {/* Top Right - Secure Platform Card */}
-            <div className="absolute top-0 right-0 lg:right-10 hidden xl:block">
-              <div className="bg-gradient-to-br from-green-600/15 to-teal-600/15 backdrop-blur-xl border border-white/10 rounded-xl p-3 w-48 transform rotate-6 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
+            <div className="absolute top-1/2 left-1/2 transform translate-x-[60px] -translate-y-[180px] hidden xl:block">
+              <div className="bg-gradient-to-br from-green-600/20 to-teal-600/20 backdrop-blur-xl border border-green-400/30 rounded-xl p-3 w-44 transform rotate-6 hover:rotate-0 transition-all duration-500 pointer-events-auto hover:scale-105 hover:border-green-400/50">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-teal-500 rounded-lg flex items-center justify-center">
                     <Shield className="w-4 h-4 text-white" />
                   </div>
                   <span className="text-white text-sm font-semibold">Secure</span>
                 </div>
-                <p className="text-white/50 text-xs">Bank-level protection</p>
+                <p className="text-white/60 text-xs">Bank-level protection</p>
               </div>
             </div>
             
             {/* Bottom Left - Analytics Card */}
-            <div className="absolute bottom-20 left-0 lg:left-20 hidden xl:block">
-              <div className="bg-gradient-to-br from-orange-600/15 to-red-600/15 backdrop-blur-xl border border-white/10 rounded-xl p-3 w-48 transform rotate-3 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-[200px] translate-y-[100px] hidden xl:block">
+              <div className="bg-gradient-to-br from-orange-600/20 to-red-600/20 backdrop-blur-xl border border-orange-400/30 rounded-xl p-3 w-44 transform rotate-3 hover:rotate-0 transition-all duration-500 pointer-events-auto hover:scale-105 hover:border-orange-400/50">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
                     <TrendingUp className="w-4 h-4 text-white" />
                   </div>
                   <span className="text-white text-sm font-semibold">Analytics</span>
                 </div>
-                <p className="text-white/50 text-xs">Track loan progress</p>
+                <p className="text-white/60 text-xs">Track loan progress</p>
               </div>
             </div>
             
             {/* Bottom Right - Support Card */}
-            <div className="absolute bottom-20 right-0 lg:right-20 hidden xl:block">
-              <div className="bg-gradient-to-br from-blue-600/15 to-indigo-600/15 backdrop-blur-xl border border-white/10 rounded-xl p-3 w-48 transform -rotate-3 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
+            <div className="absolute top-1/2 left-1/2 transform translate-x-[60px] translate-y-[100px] hidden xl:block">
+              <div className="bg-gradient-to-br from-blue-600/20 to-indigo-600/20 backdrop-blur-xl border border-blue-400/30 rounded-xl p-3 w-44 transform -rotate-3 hover:rotate-0 transition-all duration-500 pointer-events-auto hover:scale-105 hover:border-blue-400/50">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
                     <Users className="w-4 h-4 text-white" />
                   </div>
                   <span className="text-white text-sm font-semibold">Support</span>
                 </div>
-                <p className="text-white/50 text-xs">Dedicated advisors</p>
+                <p className="text-white/60 text-xs">Dedicated advisors</p>
               </div>
             </div>
           </div>
           
-          {/* Central Gradient Pill - more subtle */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+          {/* Central KFS Logo with glow effect */}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden lg:block">
             <div className="relative">
-              {/* Subtle gradient pill shape */}
-              <div className="w-56 h-80 lg:w-64 lg:h-96 bg-gradient-to-b from-purple-500/10 via-pink-500/5 to-blue-500/10 rounded-full blur-3xl opacity-50"></div>
-              {/* Inner glow - very subtle */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-60 lg:w-48 lg:h-72 bg-gradient-to-b from-white/5 to-transparent rounded-full blur-2xl"></div>
+              {/* Glowing background */}
+              <div className="absolute inset-0 w-32 h-32 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
+              
+              {/* KFS Logo */}
+              <div className="relative w-32 h-32 flex items-center justify-center">
+                <div className="relative transform hover:scale-110 transition-transform duration-700">
+                  {/* Outer ring */}
+                  <div className="absolute inset-0 w-28 h-28 border-4 border-white/10 rounded-full"></div>
+                  
+                  {/* Geometric shapes */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="relative">
+                      <div className="absolute w-16 h-16 bg-gradient-to-br from-blue-500/30 to-purple-600/30 transform rotate-45 rounded-lg"></div>
+                      <div className="absolute w-16 h-16 bg-gradient-to-br from-purple-500/30 to-pink-500/30 transform rotate-45 translate-x-4 translate-y-4 rounded-lg"></div>
+                      <div className="relative w-16 h-16 bg-gradient-to-br from-blue-400/40 to-cyan-500/40 transform rotate-45 -translate-x-2 -translate-y-2 rounded-lg flex items-center justify-center">
+                        <span className="transform -rotate-45 text-white font-bold text-2xl">KFS</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Orbiting dots */}
+                  <div className="absolute inset-0 animate-spin-slow">
+                    <div className="absolute top-0 left-1/2 w-2 h-2 bg-purple-400 rounded-full -translate-x-1/2"></div>
+                    <div className="absolute bottom-0 left-1/2 w-2 h-2 bg-pink-400 rounded-full -translate-x-1/2"></div>
+                    <div className="absolute left-0 top-1/2 w-2 h-2 bg-blue-400 rounded-full -translate-y-1/2"></div>
+                    <div className="absolute right-0 top-1/2 w-2 h-2 bg-cyan-400 rounded-full -translate-y-1/2"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           
