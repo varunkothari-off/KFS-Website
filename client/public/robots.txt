@@ -1,0 +1,22 @@
+# Robots.txt for Kothari Financial Services
+# Allow all bots to crawl the site
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://kotharifinancialservices.com/sitemap.xml
+
+# Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0

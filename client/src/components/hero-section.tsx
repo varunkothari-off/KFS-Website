@@ -255,8 +255,11 @@ export default function HeroSection() {
                 <div className="relative w-56 h-56 md:w-72 md:h-72 bg-white/[0.02] backdrop-blur-sm rounded-3xl p-10 border border-white/5">
                   <img 
                     src={kfsLogo} 
-                    alt="Kothari Financial Services" 
+                    alt="Kothari Financial Services Logo - Business Loan Advisory Since 1994" 
                     className="w-full h-full object-contain filter brightness-110 drop-shadow-2xl"
+                    loading="eager"
+                    width="288"
+                    height="288"
                   />
                 </div>
               </motion.div>

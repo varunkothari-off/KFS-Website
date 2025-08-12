@@ -52,8 +52,11 @@ export default function TrustBuildingSection() {
               <div key={index} className="text-center bg-gradient-to-br from-[#141428]/90 to-[#1a1b3a]/90 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-white/10 hover:border-purple-500/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/20 data-highlight">
                 <img 
                   src={leader.image} 
-                  alt={`${leader.name} - ${leader.role}`} 
-                  className="w-24 h-24 rounded-full mx-auto mb-6 object-cover border-2 border-purple-500/30" 
+                  alt={`${leader.name} - ${leader.role} at Kothari Financial Services with ${leader.experience}`} 
+                  className="w-24 h-24 rounded-full mx-auto mb-6 object-cover border-2 border-purple-500/30"
+                  loading="lazy"
+                  width="96"
+                  height="96"
                 />
                 <h3 className="text-xl font-bold text-white mb-2">{leader.name}</h3>
                 <p className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-medium mb-2">{leader.role}</p>

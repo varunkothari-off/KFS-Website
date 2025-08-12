@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { HelmetProvider } from "react-helmet-async";
+import SEOHead from "@/components/seo-head";
 import StickyHeader from "@/components/sticky-header";
 import HeroSection from "@/components/hero-section";
 import FloatingFeatures from "@/components/floating-features";
@@ -24,9 +26,16 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0b1e] relative overflow-hidden">
-      <PageLoader />
-      <FloatingParticles />
+    <HelmetProvider>
+      <div className="min-h-screen bg-[#0a0b1e] relative overflow-hidden">
+        <SEOHead 
+          title="Business Loans & Financial Advisory | Get Loans in 24 Hours - Kothari Financial Services"
+          description="Apply for business loans up to ₹50 Cr with 24-hour approval. Kothari Financial Services offers property loans, cash credit, working capital at lowest interest rates. 30+ years expertise, 30+ partner banks."
+          keywords="business loan, property loan, cash credit, working capital loan, term loan, loan against property, business finance, MSME loan, SME loan, loan consultant India, financial advisor, lowest interest rates, quick loan approval, Kothari Financial Services"
+          canonical="https://kotharifinancialservices.com/"
+        />
+        <PageLoader />
+        <FloatingParticles />
       
       {showContent && (
         <div className="relative z-10">
@@ -193,6 +202,7 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </HelmetProvider>
   );
 }

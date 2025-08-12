@@ -60,8 +60,11 @@ export default function TestimonialsSection() {
           <div className="flex items-center justify-center">
             <img 
               src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" 
-              alt="Rajesh Agarwal testimonial" 
-              className="w-16 h-16 rounded-full mr-4 object-cover border-2 border-purple-500/30" 
+              alt="Rajesh Agarwal - Manufacturing Business Owner - 5 star review for Kothari Financial Services loan process" 
+              className="w-16 h-16 rounded-full mr-4 object-cover border-2 border-purple-500/30"
+              loading="lazy"
+              width="64"
+              height="64" 
             />
             <div className="text-left">
               <div className="font-bold text-white">Rajesh Agarwal</div>

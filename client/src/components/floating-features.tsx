@@ -68,9 +68,9 @@ export default function FloatingFeatures() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-            Why Choose KFS?
-          </h2>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+            Why Choose Kothari Financial Services?
+          </h1>
           <p className="text-white/60 text-lg max-w-2xl mx-auto">
             Experience the difference with our comprehensive financial solutions
           </p>
