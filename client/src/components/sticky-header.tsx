@@ -42,7 +42,7 @@ export default function StickyHeader() {
               <span className="font-bold text-base leading-tight text-white">
                 KFS
               </span>
-              <span className="text-xs text-blue-200">
+              <span className="text-xs text-cyan-400">
                 Financial Consultants
               </span>
             </div>
@@ -54,8 +54,8 @@ export default function StickyHeader() {
               <Link key={item.name} href={item.href}>
                 <span className={`text-sm font-medium transition-colors ${
                   location === item.href
-                    ? 'text-yellow-300'
-                    : 'text-white hover:text-yellow-300'
+                    ? 'text-orange-400'
+                    : 'text-white hover:text-cyan-400'
                 }`}>
                   {item.name}
                 </span>

@@ -77,7 +77,7 @@ export default function HeroSection() {
         baseY: y,
         size: Math.random() * 2 + 0.5,
         opacity: Math.random() * 0.8 + 0.2,
-        color: ['#a855f7', '#ec4899', '#3b82f6', '#06b6d4'][Math.floor(Math.random() * 4)]
+        color: ['#8B5CF6', '#06B6D4', '#FB923C', '#8B5CF6'][Math.floor(Math.random() * 4)]
       });
     }
     
@@ -188,10 +188,10 @@ export default function HeroSection() {
         style={{ zIndex: 1 }}
       />
       
-      {/* Background gradients */}
+      {/* Background gradients - using triadic colors */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0b1e] via-[#0f1020] to-[#141428]"></div>
-        <div className="absolute inset-0 bg-gradient-to-tl from-purple-900/10 via-transparent to-blue-900/5"></div>
+        <div className="absolute inset-0 bg-gradient-to-tl from-purple-600/10 via-cyan-600/5 to-orange-600/5"></div>
       </div>
       
       {/* Very subtle comet easter egg */}
@@ -248,8 +248,8 @@ export default function HeroSection() {
                 }}
                 style={{ transformStyle: 'preserve-3d' }}
               >
-                {/* Subtle glow */}
-                <div className="absolute inset-0 w-56 h-56 md:w-72 md:h-72 bg-gradient-to-r from-purple-500/5 to-pink-500/5 rounded-full blur-3xl"></div>
+                {/* Subtle glow - using primary and secondary colors */}
+                <div className="absolute inset-0 w-56 h-56 md:w-72 md:h-72 bg-gradient-to-r from-purple-600/10 to-cyan-600/10 rounded-full blur-3xl"></div>
                 
                 {/* Logo Container */}
                 <div className="relative w-56 h-56 md:w-72 md:h-72 bg-white/[0.02] backdrop-blur-sm rounded-3xl p-10 border border-white/5">
@@ -287,10 +287,10 @@ export default function HeroSection() {
                 className="space-y-1"
               >
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
-                  <span className="block bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+                  <span className="block bg-gradient-to-r from-white via-purple-300 to-cyan-300 bg-clip-text text-transparent">
                     Kothari
                   </span>
-                  <span className="block text-white/50 text-2xl md:text-3xl lg:text-4xl font-light mt-2">
+                  <span className="block text-white/70 text-2xl md:text-3xl lg:text-4xl font-light mt-2">
                     Financial Services
                   </span>
                 </h1>
@@ -301,7 +301,7 @@ export default function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 }}
-                className="text-white/40 text-lg md:text-xl font-light leading-relaxed max-w-md"
+                className="text-white/60 text-lg md:text-xl font-light leading-relaxed max-w-md"
               >
                 30+ years of trust.
                 <br/>
@@ -317,7 +317,7 @@ export default function HeroSection() {
               >
                 <Button 
                   onClick={handleConsultNow}
-                  className="bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-all px-8 py-6 text-base rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
+                  className="bg-gradient-to-r from-purple-600 to-cyan-600 text-white hover:from-purple-700 hover:to-cyan-700 transition-all px-8 py-6 text-base rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
                   Start Consultation
                 </Button>
@@ -325,7 +325,7 @@ export default function HeroSection() {
                 <Button 
                   onClick={handleApplyForLoan}
                   variant="ghost"
-                  className="text-white/60 hover:text-white hover:bg-white/5 transition-all px-8 py-6 text-base rounded-xl"
+                  className="text-white/70 hover:text-white hover:bg-white/10 border border-white/20 transition-all px-8 py-6 text-base rounded-xl"
                 >
                   Apply for Loan
                   <ArrowRight className="w-4 h-4 ml-2" />

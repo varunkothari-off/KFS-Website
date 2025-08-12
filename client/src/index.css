@@ -24,12 +24,16 @@
   --ring: hsl(20, 14.3%, 4.1%);
   --radius: 0.5rem;
 
-  /* KFS Custom Colors */
-  --kfs-primary: hsl(207, 90%, 54%);
-  --kfs-secondary: hsl(213, 94%, 68%);
-  --kfs-accent: hsl(214, 95%, 73%);
-  --kfs-light: hsl(214, 100%, 92%);
-  --kfs-dark: hsl(215, 25%, 27%);
+  /* KFS Custom Colors - Triadic Color Scheme */
+  --kfs-primary: hsl(252, 94%, 67%); /* Purple #8B5CF6 */
+  --kfs-secondary: hsl(187, 92%, 42%); /* Cyan #06B6D4 */
+  --kfs-tertiary: hsl(24, 95%, 61%); /* Orange #FB923C */
+  --kfs-primary-light: hsl(252, 94%, 80%); /* Lighter purple */
+  --kfs-secondary-light: hsl(187, 92%, 60%); /* Lighter cyan */
+  --kfs-tertiary-light: hsl(24, 95%, 75%); /* Lighter orange */
+  --kfs-dark: hsl(240, 15%, 10%); /* Dark background */
+  --kfs-text-light: hsl(0, 0%, 95%); /* Light text for dark backgrounds */
+  --kfs-text-muted: hsl(0, 0%, 70%); /* Muted text */
 }
 
 .dark {

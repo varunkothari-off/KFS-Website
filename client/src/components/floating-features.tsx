@@ -21,7 +21,7 @@ export default function FloatingFeatures() {
       icon: Zap,
       title: "Quick Process",
       description: "24-hour approval",
-      gradient: "from-green-500 to-emerald-500",
+      gradient: "from-purple-600 to-purple-500",
       delay: 0,
       rotation: 3
     },
@@ -29,7 +29,7 @@ export default function FloatingFeatures() {
       icon: TrendingUp,
       title: "Low Rates",
       description: "Best interest rates",
-      gradient: "from-purple-500 to-pink-500",
+      gradient: "from-cyan-600 to-cyan-500",
       delay: 0.1,
       rotation: -3
     },
@@ -37,7 +37,7 @@ export default function FloatingFeatures() {
       icon: Shield,
       title: "100% Secure",
       description: "Data protection",
-      gradient: "from-orange-500 to-red-500",
+      gradient: "from-orange-600 to-orange-500",
       delay: 0.2,
       rotation: -2
     },
@@ -45,7 +45,7 @@ export default function FloatingFeatures() {
       icon: Users,
       title: "Support",
       description: "Dedicated advisors",
-      gradient: "from-blue-500 to-indigo-500",
+      gradient: "from-purple-600 to-cyan-600",
       delay: 0.3,
       rotation: 3
     }
@@ -53,9 +53,11 @@ export default function FloatingFeatures() {
 
   return (
     <section className="relative py-20 overflow-hidden bg-gradient-to-b from-[#0a0b1e] to-[#141428]">
-      {/* Background elements */}
+      {/* Background elements - triadic color accents */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/5 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-600/5 to-transparent"></div>
+        <div className="absolute top-0 left-1/4 w-64 h-64 bg-cyan-600/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-orange-600/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
@@ -69,7 +71,7 @@ export default function FloatingFeatures() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
             Why Choose KFS?
           </h2>
-          <p className="text-white/50 text-lg max-w-2xl mx-auto">
+          <p className="text-white/60 text-lg max-w-2xl mx-auto">
             Experience the difference with our comprehensive financial solutions
           </p>
         </motion.div>
@@ -98,9 +100,9 @@ export default function FloatingFeatures() {
               }}
               className="relative group"
             >
-              <div className="bg-gradient-to-br from-purple-600/10 to-pink-600/10 backdrop-blur-xl border border-purple-400/20 rounded-2xl p-6 h-full hover:border-purple-400/40 transition-all duration-300">
+              <div className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 h-full hover:border-white/40 transition-all duration-300">
                 {/* Glow effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-cyan-600/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
                 <div className="relative">
                   <div className={`w-14 h-14 bg-gradient-to-br ${feature.gradient} rounded-xl flex items-center justify-center mb-4 shadow-lg`}>
