@@ -338,19 +338,33 @@ export default function HeroSection() {
           </div>
         </div>
         
-        {/* Scroll Indicator */}
+        {/* Scroll Indicator - Discover Our Services */}
         <motion.div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2 }}
         >
           <button
             onClick={scrollToServices}
-            className="text-white/20 hover:text-white/40 transition-all"
-            aria-label="Scroll to services"
+            className="flex flex-col items-center gap-2 text-white/40 hover:text-white/80 transition-all group"
+            aria-label="Scroll to discover our services"
           >
-            <ChevronDown className="w-6 h-6 animate-pulse" />
+            <span className="text-sm sm:text-base md:text-lg font-light tracking-wider group-hover:text-purple-400 transition-colors">
+              Discover Our Services
+            </span>
+            <motion.div
+              animate={{
+                y: [0, 8, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 group-hover:text-purple-400 transition-colors" />
+            </motion.div>
           </button>
         </motion.div>
       </div>
