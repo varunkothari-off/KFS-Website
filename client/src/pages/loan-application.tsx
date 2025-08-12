@@ -100,6 +100,21 @@ export default function LoanApplication() {
   });
 
   const handleLoanDetails = async (data: LoanDetails) => {
+    // Validate that required fields are filled
+    if (!data.loanType || !data.loanAmount) {
+      toast({
+        title: "Missing Information",
+        description: "Please select loan type and enter loan amount.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Store the loan details
+    loanForm.setValue("loanType", data.loanType);
+    loanForm.setValue("loanAmount", data.loanAmount);
+    
+    // Move to next step
     setCurrentStep(2);
   };
 
@@ -195,7 +210,11 @@ export default function LoanApplication() {
                 <form onSubmit={loanForm.handleSubmit(handleLoanDetails)} className="space-y-6">
                   <div>
                     <Label className="text-white/80">Loan Type *</Label>
-                    <Select onValueChange={(value) => loanForm.setValue("loanType", value as any)}>
+                    <Select 
+                      value={loanForm.watch("loanType")}
+                      onValueChange={(value) => loanForm.setValue("loanType", value as any)}
+                      required
+                    >
                       <SelectTrigger className="mt-1 bg-white/10 border-white/20 text-white">
                         <SelectValue placeholder="Select loan type" className="text-white/60" />
                       </SelectTrigger>
@@ -211,9 +230,10 @@ export default function LoanApplication() {
                     <Label htmlFor="loanAmount" className="text-white/80">Loan Amount Required (₹) *</Label>
                     <Input
                       id="loanAmount"
-                      {...loanForm.register("loanAmount")}
+                      {...loanForm.register("loanAmount", { required: true })}
                       placeholder="10,00,000"
                       className="mt-1 bg-white/10 border-white/20 text-white placeholder:text-white/40"
+                      required
                     />
                   </div>
 

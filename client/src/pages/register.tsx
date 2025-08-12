@@ -34,10 +34,17 @@ export default function Register() {
 
   const registerMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
-      return apiRequest("/api/users/register", {
+      const response = await fetch("/api/users/register", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(data),
       });
+      if (!response.ok) {
+        throw new Error("Registration failed");
+      }
+      return response.json();
     },
     onSuccess: (data) => {
       toast({
@@ -57,22 +64,29 @@ export default function Register() {
 
   const verifyOtpMutation = useMutation({
     mutationFn: async (otp: string) => {
-      return apiRequest("/api/users/verify-otp", {
+      const response = await fetch("/api/users/verify-otp", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ mobile: formData.mobile, otp }),
       });
+      if (!response.ok) {
+        throw new Error("OTP verification failed");
+      }
+      return response.json();
     },
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       if (data.token) {
         localStorage.setItem("authToken", data.token);
       }
       toast({
         title: "Registration Successful",
-        description: "Welcome to Kothari Financial Services!",
+        description: "Let's set up your profile with document verification.",
       });
-      // Redirect to dashboard after a short delay to show the success message
+      // Redirect to document upload for profile creation
       setTimeout(() => {
-        setLocation("/dashboard");
+        setLocation("/document-upload");
       }, 1000);
     },
     onError: () => {
