@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Bot, User, Phone, Mail } from "lucide-react";
+import { MessageCircle, X, Send, Bot, User, Phone, Mail, GripHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -24,6 +24,25 @@ export default function LiveChatWidget() {
   ]);
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  
+  // Resizable chat dimensions with localStorage persistence
+  const [chatDimensions, setChatDimensions] = useState(() => {
+    const saved = localStorage.getItem('chatDimensions');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        // Fallback to defaults if parse fails
+      }
+    }
+    return {
+      width: 384, // Default w-96 (24rem = 384px)
+      height: 480 // Default height
+    };
+  });
+  const [isResizing, setIsResizing] = useState(false);
+  const chatRef = useRef<HTMLDivElement>(null);
+  const startPos = useRef({ x: 0, y: 0, width: 0, height: 0 });
 
   // Auto-show chat widget after 30 seconds
   useEffect(() => {
@@ -32,6 +51,52 @@ export default function LiveChatWidget() {
     }, 30000);
     return () => clearTimeout(timer);
   }, []);
+
+  // Handle resize start
+  const handleResizeStart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsResizing(true);
+    startPos.current = {
+      x: e.clientX,
+      y: e.clientY,
+      width: chatDimensions.width,
+      height: chatDimensions.height
+    };
+  };
+
+  // Handle resize move
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizing) return;
+      
+      const deltaX = startPos.current.x - e.clientX;
+      const deltaY = startPos.current.y - e.clientY;
+      
+      const newWidth = Math.min(800, Math.max(320, startPos.current.width + deltaX));
+      const newHeight = Math.min(700, Math.max(400, startPos.current.height + deltaY));
+      
+      setChatDimensions({
+        width: newWidth,
+        height: newHeight
+      });
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+      // Save dimensions to localStorage when resize ends
+      localStorage.setItem('chatDimensions', JSON.stringify(chatDimensions));
+    };
+
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizing]);
 
   const quickResponses = [
     "Check loan eligibility",
@@ -117,13 +182,38 @@ export default function LiveChatWidget() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            ref={chatRef}
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-28 right-6 z-[60] w-96 max-w-[calc(100vw-3rem)]"
+            className="fixed bottom-28 right-6 z-[60]"
+            style={{ 
+              width: `${chatDimensions.width}px`,
+              maxWidth: 'calc(100vw - 3rem)'
+            }}
           >
-            <Card className="bg-[#141428] border-white/10 shadow-2xl overflow-hidden">
+            <Card 
+              className={`bg-[#141428] border-white/10 shadow-2xl overflow-hidden relative ${isResizing ? 'select-none' : ''}`}
+              style={{ height: `${chatDimensions.height}px` }}
+            >
+              {/* Resize Handle */}
+              <div
+                onMouseDown={handleResizeStart}
+                className="absolute top-0 left-0 w-24 h-6 cursor-nw-resize flex items-center justify-center group hover:bg-white/5 transition-colors rounded-tl-lg"
+                style={{ zIndex: 10 }}
+                title="Drag to resize"
+              >
+                <GripHorizontal className="h-4 w-4 text-white/40 group-hover:text-white/70 transition-colors rotate-45" />
+              </div>
+
+              {/* Size indicator when resizing */}
+              {isResizing && (
+                <div className="absolute top-12 left-4 bg-black/80 text-white text-xs px-2 py-1 rounded z-20">
+                  {chatDimensions.width} × {chatDimensions.height}px
+                </div>
+              )}
+
               {/* Header */}
               <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -146,7 +236,10 @@ export default function LiveChatWidget() {
               </div>
 
               {/* Messages */}
-              <div className="h-96 overflow-y-auto p-4 space-y-4">
+              <div 
+                className="overflow-y-auto p-4 space-y-4 bg-[#0a0b1e]/50"
+                style={{ height: `${chatDimensions.height - 200}px` }}
+              >
                 {messages.map((message) => (
                   <motion.div
                     key={message.id}
