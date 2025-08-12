@@ -13,17 +13,17 @@ export default function HeroSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   
-  // Generate random shooting stars with varying trail lengths
+  // Generate subtle shooting stars as easter egg
   const shootingStars = useMemo(() => {
     const stars = [];
-    const starCount = 20; // Increased count for more stars
+    const starCount = 3; // Very few stars for subtlety
     
     for (let i = 0; i < starCount; i++) {
       const isReverse = Math.random() > 0.5;
-      const randomTop = Math.random() * 60; // Random position from 0% to 60% of screen height
-      const randomDelay = Math.random() * 6; // Random delay from 0 to 6 seconds
-      const randomDuration = 1.5 + Math.random() * 2.5; // Duration between 1.5-4 seconds
-      const trailLength = 40 + Math.random() * 160; // Trail length between 40px and 200px
+      const randomTop = Math.random() * 60;
+      const randomDelay = Math.random() * 15 + 5; // Longer delays between 5-20 seconds
+      const randomDuration = 2 + Math.random() * 2; // Duration between 2-4 seconds
+      const trailLength = 30 + Math.random() * 50; // Shorter trails
       
       stars.push({
         id: i,
@@ -31,7 +31,7 @@ export default function HeroSection() {
         animationDelay: `${randomDelay}s`,
         animationDuration: `${randomDuration}s`,
         isReverse,
-        opacity: 0.4 + Math.random() * 0.6, // Random opacity between 0.4 and 1
+        opacity: 0.05 + Math.random() * 0.1, // Very low opacity 0.05-0.15
         trailLength: `${trailLength}px`,
       });
     }
@@ -39,19 +39,9 @@ export default function HeroSection() {
     return stars;
   }, []);
 
-  // Dynamic color themes based on time of day
+  // Keep default theme
   useEffect(() => {
-    const hour = new Date().getHours();
-    
-    if (hour >= 5 && hour < 12) {
-      setColorTheme('morning'); // Warm orange/yellow
-    } else if (hour >= 12 && hour < 17) {
-      setColorTheme('day'); // Purple/pink (default)
-    } else if (hour >= 17 && hour < 20) {
-      setColorTheme('evening'); // Deep blues/purples
-    } else {
-      setColorTheme('night'); // Darker with more glow
-    }
+    setColorTheme('default');
   }, []);
 
   // Parallax effect for mouse movement
@@ -180,45 +170,14 @@ export default function HeroSection() {
     }
   };
 
-  // Get color scheme based on theme
-  const getThemeColors = () => {
-    switch(colorTheme) {
-      case 'morning':
-        return {
-          bg: 'from-[#1a0f0a] via-[#2d1810] to-[#3d2820]',
-          cards: 'from-orange-600/20 to-yellow-600/20',
-          cardBorder: 'border-orange-400/30',
-          logo: 'from-orange-500/30 to-yellow-500/30',
-          glow: 'from-orange-500/20 via-yellow-500/20 to-amber-500/20'
-        };
-      case 'evening':
-        return {
-          bg: 'from-[#0a0a1e] via-[#10102d] to-[#1a1a3e]',
-          cards: 'from-indigo-600/20 to-purple-800/20',
-          cardBorder: 'border-indigo-400/30',
-          logo: 'from-indigo-500/30 to-purple-700/30',
-          glow: 'from-indigo-500/20 via-purple-500/20 to-violet-500/20'
-        };
-      case 'night':
-        return {
-          bg: 'from-[#050510] via-[#0a0a18] to-[#0f0f20]',
-          cards: 'from-blue-900/20 to-indigo-900/20',
-          cardBorder: 'border-blue-600/30',
-          logo: 'from-blue-700/30 to-indigo-800/30',
-          glow: 'from-blue-600/30 via-indigo-600/30 to-purple-600/30'
-        };
-      default: // day
-        return {
-          bg: 'from-[#0a0b1e] via-[#0f1020] to-[#141428]',
-          cards: 'from-purple-600/20 to-pink-600/20',
-          cardBorder: 'border-purple-400/30',
-          logo: 'from-purple-500/30 to-pink-500/30',
-          glow: 'from-purple-500/20 via-pink-500/20 to-blue-500/20'
-        };
-    }
+  // Use default purple/pink theme colors
+  const themeColors = {
+    bg: 'from-[#0a0b1e] via-[#0f1020] to-[#141428]',
+    cards: 'from-purple-600/20 to-pink-600/20',
+    cardBorder: 'border-purple-400/30',
+    logo: 'from-purple-500/30 to-pink-500/30',
+    glow: 'from-purple-500/20 via-pink-500/20 to-blue-500/20'
   };
-
-  const themeColors = getThemeColors();
 
   return (
     <section ref={sectionRef} className="relative h-screen max-h-screen flex items-center justify-center overflow-hidden bg-[#0a0b1e]">
@@ -229,9 +188,9 @@ export default function HeroSection() {
         style={{ zIndex: 1 }}
       />
       
-      {/* Dynamic gradient background based on time */}
+      {/* Original gradient background */}
       <div className="absolute inset-0">
-        <div className={`absolute inset-0 bg-gradient-to-br ${themeColors.bg} transition-all duration-3000`}></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0b1e] via-[#0f1020] to-[#141428]"></div>
         <div className="absolute inset-0 bg-gradient-to-tl from-purple-900/10 via-transparent to-blue-900/5"></div>
         
         {/* Very subtle grid pattern */}
@@ -243,8 +202,8 @@ export default function HeroSection() {
         </div>
       </div>
       
-      {/* Randomized shooting stars */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* Subtle shooting stars easter egg */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {shootingStars.map((star) => (
           <div
             key={star.id}
@@ -257,24 +216,6 @@ export default function HeroSection() {
               opacity: star.opacity,
               '--trail-length': star.trailLength,
             } as React.CSSProperties}
-          />
-        ))}
-        
-        {/* Additional random twinkling stars for depth */}
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={`twinkle-${i}`}
-            className="absolute rounded-full bg-white"
-            style={{
-              top: `${Math.random() * 80}%`,
-              left: `${Math.random() * 90 + 5}%`,
-              width: `${Math.random() * 2 + 0.5}px`,
-              height: `${Math.random() * 2 + 0.5}px`,
-              opacity: Math.random() * 0.7 + 0.3,
-              boxShadow: `0 0 ${Math.random() * 6 + 2}px rgba(255, 255, 255, ${Math.random() * 0.6 + 0.4})`,
-              animation: `pulse ${Math.random() * 2 + 1.5}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 3}s`,
-            }}
           />
         ))}
       </div>
@@ -439,16 +380,7 @@ export default function HeroSection() {
           </motion.div>
           
           <div className="text-center relative">
-            {/* Theme Indicator - subtle display of current theme */}
-            <div className="absolute top-0 right-0 hidden lg:block">
-              <div className="text-xs text-white/30 uppercase tracking-wider">
-                {colorTheme === 'morning' && '🌅 Morning Theme'}
-                {colorTheme === 'day' && '☀️ Day Theme'}
-                {colorTheme === 'evening' && '🌆 Evening Theme'}
-                {colorTheme === 'night' && '🌙 Night Theme'}
-              </div>
-            </div>
-            
+
             {/* Pre-Header: Trust Signal */}
             <div className="flex items-center justify-center mb-3 md:mb-6">
               <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 md:px-6 py-1.5 md:py-2 shadow-lg">
