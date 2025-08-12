@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useLocation } from "wouter";
 import { Progress } from "@/components/ui/progress";
+import Logo from "@/components/logo";
 import { 
   FileText, 
   Calendar, 
@@ -208,7 +209,7 @@ export default function ComprehensiveDashboard() {
           <div className="flex justify-between items-center">
             <Link href="/">
               <a className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg"></div>
+                <Logo className="w-10 h-10" />
                 <span className="text-xl font-bold text-white">KFS Dashboard</span>
               </a>
             </Link>

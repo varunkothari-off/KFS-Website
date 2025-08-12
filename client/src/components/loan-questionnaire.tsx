@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { CheckCircle, Send } from "lucide-react";
+import { CheckCircle, Send, Check } from "lucide-react";
 
 interface QuestionnaireData {
   name: string;
@@ -32,15 +32,15 @@ export default function LoanQuestionnaire() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const hurdles = [
-    "Complex documentation requirements",
-    "High interest rates from traditional banks",
-    "Lack of collateral or guarantees",
-    "Poor credit history or low credit score",
-    "Long approval and processing times",
-    "Insufficient business revenue history",
-    "Understanding loan terms and conditions",
-    "Finding the right lender for my business type",
-    "Other (please specify in additional details)"
+    { id: "documentation", label: "Complex Documentation", description: "Struggling with paperwork requirements" },
+    { id: "interest", label: "High Interest Rates", description: "Need competitive rates for sustainability" },
+    { id: "collateral", label: "Collateral Shortage", description: "Limited assets for loan security" },
+    { id: "credit", label: "Credit Score Issues", description: "Working to improve credit history" },
+    { id: "approval", label: "Slow Processing", description: "Need faster approval times" },
+    { id: "revenue", label: "Revenue History", description: "New business with limited track record" },
+    { id: "terms", label: "Complex Terms", description: "Need clarity on loan conditions" },
+    { id: "lender", label: "Finding Right Lender", description: "Matching with suitable financial partners" },
+    { id: "other", label: "Other Challenges", description: "Different hurdle (please specify)" }
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -89,20 +89,37 @@ export default function LoanQuestionnaire() {
   }
 
   return (
-    <section className="py-12 bg-gradient-to-br from-[#0a0b1e] via-[#141428] to-[#0a0b1e]">
-      <div className="container mx-auto px-6 lg:px-8">
+    <section className="py-16 bg-gradient-to-br from-[#0a0b1e] via-[#141428] to-[#0a0b1e] relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-5"></div>
+        <div className="absolute bottom-20 right-10 w-72 h-72 bg-cyan-600 rounded-full mix-blend-multiply filter blur-3xl opacity-5"></div>
+      </div>
+      
+      <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            What's Your Biggest Hurdle in Securing a Loan?
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-600/20 rounded-full border border-purple-500/30 mb-6">
+            <span className="text-purple-400 text-sm font-medium">Personalized Solutions</span>
+          </div>
+          <h2 className="text-4xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent">
+              Overcome Your Loan Challenges
+            </span>
           </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Help us understand your challenges so we can provide the most relevant financial solutions for your business.
+          <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+            Every business faces unique hurdles when seeking financing. Share your primary challenge, 
+            and our expert advisors will craft a tailored solution to help you secure the funding you need.
           </p>
         </div>
 
-        <Card className="max-w-3xl mx-auto bg-[#141428]/90 border-white/10">
-          <CardHeader>
-            <CardTitle className="text-xl text-white">Quick Assessment</CardTitle>
+        <Card className="max-w-4xl mx-auto bg-[#141428]/90 backdrop-blur-xl border-white/10">
+          <CardHeader className="pb-6">
+            <CardTitle className="text-2xl text-white">
+              Personalized Business Assessment
+            </CardTitle>
+            <CardDescription className="text-gray-400 mt-2">
+              Complete this quick assessment to receive tailored financial solutions
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -165,23 +182,44 @@ export default function LoanQuestionnaire() {
                 </div>
               </div>
 
-              {/* Main Question */}
+              {/* Biggest Hurdle - Professional Grid Layout */}
               <div>
-                <Label className="text-base font-medium">What's your biggest hurdle in securing a loan?*</Label>
-                <RadioGroup 
-                  value={formData.biggestHurdle} 
-                  onValueChange={(value) => setFormData(prev => ({ ...prev, biggestHurdle: value }))}
-                  className="mt-4 space-y-3"
-                >
-                  {hurdles.map((hurdle, index) => (
-                    <div key={index} className="flex items-center space-x-2 p-3 rounded-lg hover:bg-white/5 border border-transparent hover:border-white/10 transition-all">
-                      <RadioGroupItem value={hurdle} id={`hurdle-${index}`} className="border-white/20 text-purple-400" />
-                      <Label htmlFor={`hurdle-${index}`} className="text-sm cursor-pointer flex-1 text-gray-300">
-                        {hurdle}
-                      </Label>
+                <Label className="text-base font-semibold text-white mb-4 block">
+                  Select Your Primary Challenge*
+                </Label>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {hurdles.map((hurdle) => (
+                    <div 
+                      key={hurdle.id}
+                      onClick={() => setFormData(prev => ({ ...prev, biggestHurdle: hurdle.label }))}
+                      className={`
+                        relative p-4 rounded-lg border-2 cursor-pointer transition-all duration-200
+                        ${formData.biggestHurdle === hurdle.label 
+                          ? 'border-purple-500 bg-purple-500/10' 
+                          : 'border-white/10 bg-[#1a1b3a]/30 hover:border-purple-500/50 hover:bg-purple-500/5'
+                        }
+                      `}
+                    >
+                      <div className="flex items-start space-x-3">
+                        <div className={`
+                          w-5 h-5 rounded-full border-2 mt-0.5 flex-shrink-0 flex items-center justify-center
+                          ${formData.biggestHurdle === hurdle.label 
+                            ? 'border-purple-500 bg-purple-500' 
+                            : 'border-white/30'
+                          }
+                        `}>
+                          {formData.biggestHurdle === hurdle.label && (
+                            <Check className="w-3 h-3 text-white" />
+                          )}
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="text-white font-medium text-sm mb-1">{hurdle.label}</h4>
+                          <p className="text-gray-400 text-xs">{hurdle.description}</p>
+                        </div>
+                      </div>
                     </div>
                   ))}
-                </RadioGroup>
+                </div>
               </div>
 
               {/* Additional Details */}

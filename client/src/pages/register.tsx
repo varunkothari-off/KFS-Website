@@ -9,6 +9,7 @@ import { FaMicrosoft } from "react-icons/fa";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import Logo from "@/components/logo";
 
 export default function Register() {
   const [location, setLocation] = useLocation();
@@ -103,17 +104,9 @@ export default function Register() {
       <Card className="w-full max-w-md bg-gradient-to-br from-[#141428]/90 to-[#1a1b3a]/90 backdrop-blur-xl border-white/10 relative z-10">
         <CardHeader className="text-center">
           <Link href="/">
-            <a className="inline-block mb-4">
-              <div className="relative w-16 h-16 mx-auto">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative transform">
-                    <div className="absolute w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 transform rotate-45 rounded-lg opacity-80"></div>
-                    <div className="absolute w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 transform rotate-45 translate-x-2 translate-y-2 rounded-lg opacity-80"></div>
-                    <div className="relative w-10 h-10 bg-gradient-to-br from-blue-400 to-cyan-500 transform rotate-45 -translate-x-1 -translate-y-1 rounded-lg"></div>
-                  </div>
-                </div>
-              </div>
-            </a>
+            <div className="inline-block mb-4">
+              <Logo className="w-16 h-16 mx-auto" />
+            </div>
           </Link>
           <CardTitle className="text-2xl font-bold text-white">
             {step === 'details' ? 'Create Account' : 'Verify Mobile'}
