@@ -377,21 +377,6 @@ export default function HeroSection() {
           </motion.div>
           
           <div className="text-center relative">
-
-            {/* Pre-Header: KFS Logo */}
-            <div className="flex items-center justify-center mb-3 md:mb-6">
-              <div className="relative">
-                <div className="w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-lg p-2 md:p-2.5">
-                  <img src={kfsLogo} alt="KFS" className="w-full h-full object-contain" />
-                </div>
-                <div className="absolute -bottom-5 left-1/2 transform -translate-x-1/2">
-                  <div className="flex items-center gap-1 text-white/60 text-[10px] md:text-xs whitespace-nowrap">
-                    <Check className="w-2 h-2 md:w-3 md:h-3 text-green-400" />
-                    <span>Trusted Since 1990</span>
-                  </div>
-                </div>
-              </div>
-            </div>
             
             {/* SWAGATAM - Welcome message in Sanskrit */}
             <h2 className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-2 md:mb-3 tracking-wider" style={{ fontFamily: "'Noto Sans Devanagari', serif", fontWeight: 600 }}>
