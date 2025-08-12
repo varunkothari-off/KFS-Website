@@ -1,16 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { useLocation, Link } from "wouter";
-import { ArrowRight, ChevronDown, Check, Calendar, CreditCard, Shield, TrendingUp, Zap, Lock, Users } from "lucide-react";
+import { useLocation } from "wouter";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useMemo, useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import kfsLogo from '@assets/logo_1754958364982.png';
 
 export default function HeroSection() {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [, setLocation] = useLocation();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [colorTheme, setColorTheme] = useState('default');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   
@@ -40,26 +39,7 @@ export default function HeroSection() {
     return cometList;
   }, []);
 
-  // Keep default theme
-  useEffect(() => {
-    setColorTheme('default');
-  }, []);
-
-  // Parallax effect for mouse movement
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
-      const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
-      setMousePosition({ x, y });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  // Particle flow system
+  // Mouse-controlled constellation effect
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -67,67 +47,95 @@ export default function HeroSection() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
     
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // Set canvas size
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
     
-    const particles: Array<{
+    // Stars array
+    const stars: Array<{
       x: number;
       y: number;
-      vx: number;
-      vy: number;
+      baseX: number;
+      baseY: number;
       size: number;
       opacity: number;
       color: string;
     }> = [];
     
-    // Create particles
-    for (let i = 0; i < 50; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
+    // Create stars
+    for (let i = 0; i < 80; i++) {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
+      stars.push({
+        x,
+        y,
+        baseX: x,
+        baseY: y,
         size: Math.random() * 2 + 0.5,
-        opacity: Math.random() * 0.5 + 0.2,
+        opacity: Math.random() * 0.8 + 0.2,
         color: ['#a855f7', '#ec4899', '#3b82f6', '#06b6d4'][Math.floor(Math.random() * 4)]
       });
     }
+    
+    // Mouse tracking
+    let mouseX = canvas.width / 2;
+    let mouseY = canvas.height / 2;
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 2,
+        y: (e.clientY / window.innerHeight - 0.5) * 2
+      });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
     
     let animationId: number;
     
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      particles.forEach(particle => {
-        // Move particles
-        particle.x += particle.vx;
-        particle.y += particle.vy;
+      // Update star positions based on mouse
+      stars.forEach(star => {
+        const dx = mouseX - star.baseX;
+        const dy = mouseY - star.baseY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const maxDistance = 200;
         
-        // Wrap around screen
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        if (particle.y > canvas.height) particle.y = 0;
+        if (distance < maxDistance) {
+          const force = (1 - distance / maxDistance) * 30;
+          star.x = star.baseX + (dx / distance) * force;
+          star.y = star.baseY + (dy / distance) * force;
+        } else {
+          star.x += (star.baseX - star.x) * 0.1;
+          star.y += (star.baseY - star.y) * 0.1;
+        }
         
-        // Draw particle
+        // Draw star
         ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color;
-        ctx.globalAlpha = particle.opacity;
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.fillStyle = star.color;
+        ctx.globalAlpha = star.opacity;
         ctx.fill();
         
-        // Draw connections to nearby particles
-        particles.forEach(other => {
-          const dx = particle.x - other.x;
-          const dy = particle.y - other.y;
+        // Draw connections to nearby stars
+        stars.forEach(other => {
+          const dx = star.x - other.x;
+          const dy = star.y - other.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           
-          if (distance < 100 && distance > 0) {
+          if (distance < 120 && distance > 0) {
             ctx.beginPath();
-            ctx.moveTo(particle.x, particle.y);
+            ctx.moveTo(star.x, star.y);
             ctx.lineTo(other.x, other.y);
-            ctx.strokeStyle = particle.color;
-            ctx.globalAlpha = (1 - distance / 100) * 0.2;
+            ctx.strokeStyle = star.color;
+            ctx.globalAlpha = (1 - distance / 120) * 0.3;
+            ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         });
@@ -141,6 +149,8 @@ export default function HeroSection() {
     
     return () => {
       cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
@@ -153,7 +163,6 @@ export default function HeroSection() {
 
   const handleConsultNow = () => {
     if (!isAuthenticated) {
-      // Store intended destination for post-login redirect
       sessionStorage.setItem('redirectAfterLogin', '/dashboard?tab=consultation');
       setLocation('/login');
     } else {
@@ -163,7 +172,6 @@ export default function HeroSection() {
 
   const handleApplyForLoan = () => {
     if (!isAuthenticated) {
-      // Store intended destination for post-login redirect
       sessionStorage.setItem('redirectAfterLogin', '/dashboard?tab=loans');
       setLocation('/login');
     } else {
@@ -171,36 +179,19 @@ export default function HeroSection() {
     }
   };
 
-  // Use default purple/pink theme colors
-  const themeColors = {
-    bg: 'from-[#0a0b1e] via-[#0f1020] to-[#141428]',
-    cards: 'from-purple-600/20 to-pink-600/20',
-    cardBorder: 'border-purple-400/30',
-    logo: 'from-purple-500/30 to-pink-500/30',
-    glow: 'from-purple-500/20 via-pink-500/20 to-blue-500/20'
-  };
-
   return (
-    <section ref={sectionRef} className="relative h-screen max-h-screen flex items-center justify-center overflow-hidden bg-[#0a0b1e]">
-      {/* Particle Canvas */}
+    <section ref={sectionRef} className="relative h-screen flex items-center justify-center overflow-hidden bg-[#0a0b1e]">
+      {/* Mouse-controlled constellation stars */}
       <canvas 
         ref={canvasRef}
-        className="absolute inset-0 pointer-events-none opacity-60"
+        className="absolute inset-0 pointer-events-none"
         style={{ zIndex: 1 }}
       />
       
-      {/* Original gradient background */}
+      {/* Background gradients */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0b1e] via-[#0f1020] to-[#141428]"></div>
         <div className="absolute inset-0 bg-gradient-to-tl from-purple-900/10 via-transparent to-blue-900/5"></div>
-        
-        {/* Very subtle grid pattern */}
-        <div className="absolute inset-0 opacity-[0.02]">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '100px 100px'
-          }}></div>
-        </div>
       </div>
       
       {/* Very subtle comet easter egg */}
@@ -221,231 +212,144 @@ export default function HeroSection() {
         ))}
       </div>
       
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 h-full flex items-center justify-center">
-        <div className="max-w-7xl mx-auto relative w-full" style={{ perspective: '1000px' }}>
-          
-          {/* Constellation SVG Lines */}
-          <svg className="absolute inset-0 pointer-events-none hidden lg:block" style={{ zIndex: 2 }}>
-            <defs>
-              <linearGradient id="constellation-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#a855f7" stopOpacity="0.1" />
-                <stop offset="50%" stopColor="#ec4899" stopOpacity="0.2" />
-                <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.1" />
-              </linearGradient>
-            </defs>
-            {/* Lines connecting cards to center - will be animated */}
-            <line x1="50%" y1="50%" x2="30%" y2="20%" stroke="url(#constellation-gradient)" strokeWidth="1" className="constellation-line" />
-            <line x1="50%" y1="50%" x2="70%" y2="20%" stroke="url(#constellation-gradient)" strokeWidth="1" className="constellation-line" />
-            <line x1="50%" y1="50%" x2="30%" y2="80%" stroke="url(#constellation-gradient)" strokeWidth="1" className="constellation-line" />
-            <line x1="50%" y1="50%" x2="70%" y2="80%" stroke="url(#constellation-gradient)" strokeWidth="1" className="constellation-line" />
-          </svg>
-          
-          {/* Floating Cards around KFS Logo with 3D perspective */}
-          <div className="absolute inset-0 pointer-events-none hidden lg:block" style={{ transformStyle: 'preserve-3d' }}>
-            {/* Top Left - Quick Application Card */}
+      {/* Main Content - Minimalist with Negative Space */}
+      <div className="container mx-auto px-6 lg:px-8 relative z-10">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+            
+            {/* Left Side - KFS Logo */}
             <motion.div 
-              className="absolute top-1/2 left-1/2 transform -translate-x-[280px] -translate-y-[150px] xl:block"
-              animate={{
-                rotateY: mousePosition.x * 10,
-                rotateX: -mousePosition.y * 10,
-                x: mousePosition.x * 20,
-                y: mousePosition.y * 20
-              }}
-              transition={{ type: "spring", stiffness: 100 }}
-              style={{ transformStyle: 'preserve-3d' }}
+              className="flex justify-center lg:justify-end"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
             >
-              <div className={`bg-gradient-to-br ${themeColors.cards} backdrop-blur-xl border ${themeColors.cardBorder} rounded-xl p-3 w-44 transform -rotate-6 hover:rotate-0 transition-all duration-500 pointer-events-auto hover:scale-105 card-3d`}>
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
-                    <Zap className="w-4 h-4 text-white" />
-                  </div>
-                  <span className="text-white text-sm font-semibold">Quick Process</span>
-                </div>
-                <p className="text-white/60 text-xs">Approved within 48 hours</p>
-              </div>
-            </motion.div>
-            
-            {/* Top Right - Secure Platform Card */}
-            <motion.div 
-              className="absolute top-1/2 left-1/2 transform translate-x-[100px] -translate-y-[150px] hidden xl:block"
-              animate={{
-                rotateY: mousePosition.x * 10,
-                rotateX: -mousePosition.y * 10,
-                x: mousePosition.x * 20,
-                y: mousePosition.y * 20
-              }}
-              transition={{ type: "spring", stiffness: 100 }}
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <div className={`bg-gradient-to-br ${themeColors.cards} backdrop-blur-xl border ${themeColors.cardBorder} rounded-xl p-3 w-44 transform rotate-6 hover:rotate-0 transition-all duration-500 pointer-events-auto hover:scale-105 card-3d`}>
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-teal-500 rounded-lg flex items-center justify-center">
-                    <Shield className="w-4 h-4 text-white" />
-                  </div>
-                  <span className="text-white text-sm font-semibold">Secure</span>
-                </div>
-                <p className="text-white/60 text-xs">Bank-level protection</p>
-              </div>
-            </motion.div>
-            
-            {/* Bottom Left - Analytics Card */}
-            <motion.div 
-              className="absolute top-1/2 left-1/2 transform -translate-x-[280px] translate-y-[120px] hidden xl:block"
-              animate={{
-                rotateY: mousePosition.x * 10,
-                rotateX: -mousePosition.y * 10,
-                x: mousePosition.x * 20,
-                y: mousePosition.y * 20
-              }}
-              transition={{ type: "spring", stiffness: 100 }}
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <div className={`bg-gradient-to-br ${themeColors.cards} backdrop-blur-xl border ${themeColors.cardBorder} rounded-xl p-3 w-44 transform rotate-3 hover:rotate-0 transition-all duration-500 pointer-events-auto hover:scale-105 card-3d`}>
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
-                    <TrendingUp className="w-4 h-4 text-white" />
-                  </div>
-                  <span className="text-white text-sm font-semibold">Analytics</span>
-                </div>
-                <p className="text-white/60 text-xs">Track loan progress</p>
-              </div>
-            </motion.div>
-            
-            {/* Bottom Right - Support Card */}
-            <motion.div 
-              className="absolute top-1/2 left-1/2 transform translate-x-[100px] translate-y-[120px] hidden xl:block"
-              animate={{
-                rotateY: mousePosition.x * 10,
-                rotateX: -mousePosition.y * 10,
-                x: mousePosition.x * 20,
-                y: mousePosition.y * 20
-              }}
-              transition={{ type: "spring", stiffness: 100 }}
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <div className={`bg-gradient-to-br ${themeColors.cards} backdrop-blur-xl border ${themeColors.cardBorder} rounded-xl p-3 w-44 transform -rotate-3 hover:rotate-0 transition-all duration-500 pointer-events-auto hover:scale-105 card-3d`}>
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
-                    <Users className="w-4 h-4 text-white" />
-                  </div>
-                  <span className="text-white text-sm font-semibold">Support</span>
-                </div>
-                <p className="text-white/60 text-xs">Dedicated advisors</p>
-              </div>
-            </motion.div>
-          </div>
-          
-          {/* Central KFS Logo with parallax effect */}
-          <motion.div 
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden lg:block"
-            animate={{
-              x: mousePosition.x * 30,
-              y: mousePosition.y * 30,
-              rotateY: mousePosition.x * 5,
-              rotateX: -mousePosition.y * 5
-            }}
-            transition={{ type: "spring", stiffness: 50 }}
-            style={{ transformStyle: 'preserve-3d' }}
-          >
-            <div className="relative">
-              {/* Glowing background */}
-              <div className={`absolute inset-0 w-32 h-32 bg-gradient-to-r ${themeColors.glow} rounded-full blur-3xl animate-pulse`}></div>
-              
-              {/* KFS Logo */}
-              <div className="relative w-32 h-32 flex items-center justify-center">
-                <div className="relative transform hover:scale-110 transition-transform duration-700">
-                  {/* Outer ring */}
-                  <div className="absolute inset-0 w-28 h-28 border-4 border-white/20 rounded-full"></div>
-                  
-                  {/* KFS Logo in center */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="relative w-20 h-20 bg-white/10 backdrop-blur-sm rounded-xl p-2">
-                      <img src={kfsLogo} alt="KFS" className="w-full h-full object-contain" />
-                    </div>
-                  </div>
-                  
-                  {/* Orbiting dots */}
-                  <div className="absolute inset-0 animate-spin-slow">
-                    <div className="absolute top-0 left-1/2 w-2 h-2 bg-purple-400 rounded-full -translate-x-1/2 shadow-lg shadow-purple-400/50"></div>
-                    <div className="absolute bottom-0 left-1/2 w-2 h-2 bg-pink-400 rounded-full -translate-x-1/2 shadow-lg shadow-pink-400/50"></div>
-                    <div className="absolute left-0 top-1/2 w-2 h-2 bg-blue-400 rounded-full -translate-y-1/2 shadow-lg shadow-blue-400/50"></div>
-                    <div className="absolute right-0 top-1/2 w-2 h-2 bg-cyan-400 rounded-full -translate-y-1/2 shadow-lg shadow-cyan-400/50"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-          
-          <div className="text-center relative">
-            
-            {/* SWAGATAM - Welcome message in Sanskrit */}
-            <h2 className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-2 md:mb-3 tracking-wider" style={{ fontFamily: "'Noto Sans Devanagari', serif", fontWeight: 600 }}>
-              स्वागतम्
-            </h2>
-            <p className="text-xs md:text-sm text-white/60 mb-3" style={{ fontFamily: 'Georgia, serif', letterSpacing: '0.15em' }}>
-              SWAGATAM - WELCOME
-            </p>
-            
-            {/* Main headline with better spacing */}
-            <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-medium mb-2 md:mb-3 text-white/90">
-              Welcome to the home of
-            </h1>
-            
-            {/* Company Name with Gradient - reduced size */}
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 md:mb-6 tracking-tight">
-              <span className="bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
-                Kothari Financial
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-blue-200 via-pink-200 to-white bg-clip-text text-transparent">
-                Services
-              </span>
-            </h1>
-            
-
-            
-            {/* Supporting text - more concise */}
-            <p className="text-xs sm:text-sm lg:text-base text-white/70 mb-4 md:mb-6 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
-              With over thirty years of experience providing loans from partner nationalised and 
-              private banks, NBFCs and Investors, KFS is here to solve all your financial worries
-            </p>
-            
-            {/* Two-Button CTA Structure with more spacing */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-4 md:mb-8">
-              <Button 
-                onClick={handleConsultNow}
-                size="default" 
-                className="w-full sm:w-auto bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 text-sm px-6 py-2.5 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+              <motion.div
+                className="relative"
+                animate={{
+                  y: [0, -10, 0],
+                  rotateY: mousePosition.x * 5,
+                  rotateX: -mousePosition.y * 5,
+                }}
+                transition={{
+                  y: {
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  },
+                  rotateY: {
+                    type: "spring",
+                    stiffness: 50
+                  },
+                  rotateX: {
+                    type: "spring", 
+                    stiffness: 50
+                  }
+                }}
+                style={{ transformStyle: 'preserve-3d' }}
               >
-                Consult Now
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
+                {/* Subtle glow */}
+                <div className="absolute inset-0 w-56 h-56 md:w-72 md:h-72 bg-gradient-to-r from-purple-500/5 to-pink-500/5 rounded-full blur-3xl"></div>
+                
+                {/* Logo Container */}
+                <div className="relative w-56 h-56 md:w-72 md:h-72 bg-white/[0.02] backdrop-blur-sm rounded-3xl p-10 border border-white/5">
+                  <img 
+                    src={kfsLogo} 
+                    alt="Kothari Financial Services" 
+                    className="w-full h-full object-contain filter brightness-110 drop-shadow-2xl"
+                  />
+                </div>
+              </motion.div>
+            </motion.div>
+            
+            {/* Right Side - Clean Typography */}
+            <div className="text-center lg:text-left space-y-6 lg:space-y-8">
               
-              <Button 
-                onClick={handleApplyForLoan}
-                variant="outline" 
-                size="default"
-                className="w-full sm:w-auto border-2 border-white/20 text-white/80 bg-transparent hover:bg-white/10 backdrop-blur-sm px-6 py-2.5 text-sm font-medium rounded-lg transition-all"
+              {/* Sanskrit Welcome */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
               >
-                <CreditCard className="mr-2 h-4 w-4" />
-                Apply for Loan
-              </Button>
+                <h2 
+                  className="text-4xl md:text-5xl lg:text-6xl text-white/95 font-bold" 
+                  style={{ fontFamily: "'Noto Sans Devanagari', serif" }}
+                >
+                  स्वागतम्
+                </h2>
+              </motion.div>
+              
+              {/* Company Name */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="space-y-1"
+              >
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
+                  <span className="block bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
+                    Kothari
+                  </span>
+                  <span className="block text-white/50 text-2xl md:text-3xl lg:text-4xl font-light mt-2">
+                    Financial Services
+                  </span>
+                </h1>
+              </motion.div>
+              
+              {/* Tagline */}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+                className="text-white/40 text-lg md:text-xl font-light leading-relaxed max-w-md"
+              >
+                30+ years of trust.
+                <br/>
+                Your financial journey starts here.
+              </motion.p>
+              
+              {/* CTA Buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9 }}
+                className="flex flex-col sm:flex-row gap-4 pt-6"
+              >
+                <Button 
+                  onClick={handleConsultNow}
+                  className="bg-white/5 backdrop-blur-sm text-white border border-white/10 hover:bg-white/10 transition-all px-8 py-6 text-base rounded-xl"
+                >
+                  Start Consultation
+                </Button>
+                
+                <Button 
+                  onClick={handleApplyForLoan}
+                  variant="ghost"
+                  className="text-white/60 hover:text-white hover:bg-white/5 transition-all px-8 py-6 text-base rounded-xl"
+                >
+                  Apply for Loan
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </motion.div>
             </div>
-
           </div>
         </div>
         
-        {/* Scroll indicator - separated with more space */}
-        <div className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2">
+        {/* Scroll Indicator */}
+        <motion.div 
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+        >
           <button
             onClick={scrollToServices}
-            className="inline-flex flex-col items-center text-white/50 hover:text-white/70 transition-colors group"
+            className="text-white/20 hover:text-white/40 transition-all"
             aria-label="Scroll to services"
           >
-            <span className="text-xs font-light tracking-wider uppercase mb-1">Discover Our Services</span>
-            <ChevronDown className="w-5 h-5 animate-bounce group-hover:translate-y-1 transition-transform" />
+            <ChevronDown className="w-6 h-6 animate-pulse" />
           </button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
