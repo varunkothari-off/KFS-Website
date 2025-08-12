@@ -16,6 +16,11 @@ import FloatingWhatsApp from "@/components/floating-whatsapp";
 import LoanQuestionnaire from "@/components/loan-questionnaire";
 import PageLoader from "@/components/page-loader";
 import FloatingParticles from "@/components/floating-particles";
+import TrustBadges from "@/components/trust-badges";
+import LoanCalculator from "@/components/loan-calculator";
+import LiveChatWidget from "@/components/live-chat-widget";
+import QuickStatusCheck from "@/components/quick-status-check";
+import LoanComparisonTool from "@/components/loan-comparison-tool";
 
 export default function Home() {
   const [showContent, setShowContent] = useState(false);
@@ -47,6 +52,9 @@ export default function Home() {
             <HeroSection />
             <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-[#0a0b1e]" />
           </div>
+          
+          {/* Trust Badges */}
+          <TrustBadges />
           
           {/* Floating Features - Why Choose KFS */}
           <div className="relative">
@@ -85,9 +93,19 @@ export default function Home() {
             <ServicesSection />
           </div>
           
-          {/* EMI Calculator with visual break */}
+          {/* Loan Comparison Tool */}
           <div className="relative border-t border-white/5">
-            <EMICalculator />
+            <LoanComparisonTool />
+          </div>
+          
+          {/* Loan Calculator with visual break */}
+          <div className="relative border-t border-white/5">
+            <LoanCalculator />
+          </div>
+          
+          {/* Quick Status Check */}
+          <div className="relative">
+            <QuickStatusCheck />
           </div>
           
           {/* FAQ Section */}
@@ -102,6 +120,7 @@ export default function Home() {
           </div>
           
           <FloatingWhatsApp />
+          <LiveChatWidget />
         </div>
       )}
       
