@@ -44,6 +44,27 @@ export class MemStorage implements IStorage {
 
     // Initialize with some blog posts
     this.initializeBlogPosts();
+    
+    // Initialize with a test user for development
+    this.initializeTestUser();
+  }
+
+  private initializeTestUser() {
+    const testUser: User = {
+      id: "test-user-001",
+      fullName: "Test User",
+      mobile: "9876543210",
+      email: "test@example.com",
+      profilePicture: null,
+      provider: null,
+      providerId: null,
+      isVerified: true,
+      isProfileComplete: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.users.set(testUser.id, testUser);
+    console.log("Test user initialized:", testUser.mobile);
   }
 
   private initializeBlogPosts() {
@@ -98,11 +119,17 @@ export class MemStorage implements IStorage {
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = randomUUID();
     const user: User = { 
-      ...insertUser, 
-      id, 
+      id,
+      fullName: insertUser.fullName,
+      mobile: insertUser.mobile || null,
+      email: insertUser.email,
+      profilePicture: insertUser.profilePicture || null,
+      provider: insertUser.provider || null,
+      providerId: insertUser.providerId || null,
+      isVerified: insertUser.isVerified ?? false,
+      isProfileComplete: insertUser.isProfileComplete ?? false,
       createdAt: new Date(),
-      isVerified: false,
-      email: insertUser.email || "",
+      updatedAt: new Date(),
     };
     this.users.set(id, user);
     return user;
@@ -113,7 +140,7 @@ export class MemStorage implements IStorage {
     if (!user) {
       throw new Error("User not found");
     }
-    const updatedUser = { ...user, isVerified: true };
+    const updatedUser = { ...user, isVerified: true, updatedAt: new Date() };
     this.users.set(id, updatedUser);
     return updatedUser;
   }

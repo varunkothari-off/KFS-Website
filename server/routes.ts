@@ -82,6 +82,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (userData.mobile) {
         const existingUser = await storage.getUserByMobile(userData.mobile);
         if (existingUser) {
+          // If user exists but not verified, allow re-registration (resend OTP)
+          if (!existingUser.isVerified) {
+            console.log(`OTP for ${userData.mobile}: 123456`);
+            return res.json({ userId: existingUser.id, message: "OTP sent successfully", existingUser: true });
+          }
           return res.status(400).json({ message: "User already exists with this mobile number" });
         }
       }
@@ -95,6 +100,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Registration error:", error);
       res.status(400).json({ message: "Registration failed" });
+    }
+  });
+
+  // Login with mobile and OTP
+  app.post("/api/users/login", async (req, res) => {
+    try {
+      const { mobile } = req.body;
+      
+      if (!mobile) {
+        return res.status(400).json({ message: "Mobile number is required" });
+      }
+      
+      const user = await storage.getUserByMobile(mobile);
+      if (!user) {
+        return res.status(404).json({ message: "User not found. Please register first." });
+      }
+      
+      // Send OTP for login
+      console.log(`Login OTP for ${mobile}: 123456`);
+      
+      res.json({ message: "OTP sent successfully", userId: user.id });
+    } catch (error) {
+      console.error("Login error:", error);
+      res.status(400).json({ message: "Login failed" });
     }
   });
 
@@ -113,7 +142,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       const verifiedUser = await storage.verifyUser(user.id);
-      res.json({ user: verifiedUser });
+      const token = await authService.createSession(verifiedUser.id);
+      
+      res.json({ user: verifiedUser, token });
     } catch (error) {
       console.error("OTP verification error:", error);
       res.status(400).json({ message: "OTP verification failed" });

@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link, useLocation } from "wouter";
-import { ArrowLeft, Phone, User, Mail, Building } from "lucide-react";
+import { ArrowLeft, Phone, User, Mail, Building, Chrome, Linkedin } from "lucide-react";
+import { FaMicrosoft } from "react-icons/fa";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -13,6 +14,7 @@ export default function Register() {
   const [location, setLocation] = useLocation();
   const { toast } = useToast();
   const [step, setStep] = useState<'details' | 'otp'>('details');
+  const [showEmailForm, setShowEmailForm] = useState(false);
   
   const [formData, setFormData] = useState({
     fullName: "",
@@ -21,6 +23,13 @@ export default function Register() {
     businessName: "",
     otp: ""
   });
+
+  const handleSocialSignUp = (provider: string) => {
+    // Store redirect destination for post-auth redirect
+    localStorage.setItem('postAuthRedirect', '/dashboard');
+    // Redirect to OAuth endpoint
+    window.location.href = `/api/auth/${provider}`;
+  };
 
   const registerMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
@@ -53,12 +62,17 @@ export default function Register() {
       });
     },
     onSuccess: (data) => {
-      localStorage.setItem("authToken", data.token);
+      if (data.token) {
+        localStorage.setItem("authToken", data.token);
+      }
       toast({
         title: "Registration Successful",
         description: "Welcome to Kothari Financial Services!",
       });
-      setLocation("/dashboard");
+      // Redirect to dashboard after a short delay to show the success message
+      setTimeout(() => {
+        setLocation("/dashboard");
+      }, 1000);
     },
     onError: () => {
       toast({
@@ -111,20 +125,83 @@ export default function Register() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Button
-            onClick={() => setLocation('/login')}
-            variant="ghost"
-            size="sm"
-            className="mb-4 text-white/60 hover:text-white hover:bg-white/10"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to login
-          </Button>
+          {!showEmailForm && step === 'details' ? (
+            <>
+              {/* Social Sign Up Options */}
+              <div className="space-y-4">
+                <Button
+                  onClick={() => handleSocialSignUp('google')}
+                  variant="outline"
+                  className="w-full bg-white/10 border-white/20 text-white hover:bg-white/20"
+                >
+                  <Chrome className="w-5 h-5 mr-2" />
+                  Sign up with Google
+                </Button>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {step === 'details' ? (
-              <>
-                <div className="space-y-2">
+                <Button
+                  onClick={() => handleSocialSignUp('linkedin')}
+                  variant="outline"
+                  className="w-full bg-white/10 border-white/20 text-white hover:bg-white/20"
+                >
+                  <Linkedin className="w-5 h-5 mr-2" />
+                  Sign up with LinkedIn
+                </Button>
+
+                <Button
+                  onClick={() => handleSocialSignUp('microsoft')}
+                  variant="outline"
+                  className="w-full bg-white/10 border-white/20 text-white hover:bg-white/20"
+                >
+                  <FaMicrosoft className="w-5 h-5 mr-2" />
+                  Sign up with Microsoft
+                </Button>
+
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t border-white/10" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-[#141428] px-2 text-white/40">Or sign up with email</span>
+                  </div>
+                </div>
+
+                <Button
+                  onClick={() => setShowEmailForm(true)}
+                  variant="outline"
+                  className="w-full bg-white/10 border-white/20 text-white hover:bg-white/20"
+                >
+                  <Mail className="w-5 h-5 mr-2" />
+                  Continue with Email
+                </Button>
+              </div>
+
+              <div className="mt-6 text-center">
+                <p className="text-white/60 text-sm">
+                  Already have an account?{" "}
+                  <Link href="/login">
+                    <a className="text-purple-400 hover:text-purple-300 underline">
+                      Sign in instead
+                    </a>
+                  </Link>
+                </p>
+              </div>
+            </>
+          ) : (
+            <>
+              <Button
+                onClick={() => showEmailForm ? setShowEmailForm(false) : setLocation('/login')}
+                variant="ghost"
+                size="sm"
+                className="mb-4 text-white/60 hover:text-white hover:bg-white/10"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                {showEmailForm ? 'Back to options' : 'Back to login'}
+              </Button>
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {step === 'details' ? (
+                  <>
+                    <div className="space-y-2">
                   <Label htmlFor="fullName" className="text-white/80">
                     <User className="w-4 h-4 inline mr-2" />
                     Full Name
@@ -188,9 +265,9 @@ export default function Register() {
                     className="bg-white/10 border-white/20 text-white placeholder:text-white/40"
                   />
                 </div>
-              </>
-            ) : (
-              <div className="space-y-2">
+                  </>
+                ) : (
+                  <div className="space-y-2">
                 <Label htmlFor="otp" className="text-white/80">
                   Verification Code
                 </Label>
@@ -207,10 +284,10 @@ export default function Register() {
                 <p className="text-xs text-white/40 text-center mt-2">
                   Didn't receive the code? Check your SMS or wait a moment.
                 </p>
-              </div>
-            )}
+                  </div>
+                )}
 
-            <Button
+                <Button
               type="submit"
               disabled={registerMutation.isPending || verifyOtpMutation.isPending}
               className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
@@ -237,6 +314,8 @@ export default function Register() {
               By creating an account, you agree to our Terms of Service and Privacy Policy
             </p>
           </div>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>
