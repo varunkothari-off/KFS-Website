@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import StickyHeader from "@/components/sticky-header";
 import HeroSection from "@/components/hero-section";
+import FloatingFeatures from "@/components/floating-features";
 import AnimatedStatsSection from "@/components/animated-stats-section";
 import ModernFeaturesSection from "@/components/modern-features-section";
 import TrustBuildingSection from "@/components/trust-building-section";
@@ -35,6 +36,11 @@ export default function Home() {
           <div className="relative">
             <HeroSection />
             <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-[#0a0b1e]" />
+          </div>
+          
+          {/* Floating Features - Why Choose KFS */}
+          <div className="relative">
+            <FloatingFeatures />
           </div>
           
           {/* Features Section with clear demarcation */}
