@@ -13,30 +13,30 @@ export default function HeroSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   
-  // Generate subtle shooting stars as easter egg
-  const shootingStars = useMemo(() => {
-    const stars = [];
-    const starCount = 3; // Very few stars for subtlety
+  // Generate very rare comets as easter egg
+  const comets = useMemo(() => {
+    const cometList = [];
+    const cometCount = 1; // Just one comet for extreme subtlety
     
-    for (let i = 0; i < starCount; i++) {
+    for (let i = 0; i < cometCount; i++) {
       const isReverse = Math.random() > 0.5;
-      const randomTop = Math.random() * 60;
-      const randomDelay = Math.random() * 15 + 5; // Longer delays between 5-20 seconds
-      const randomDuration = 2 + Math.random() * 2; // Duration between 2-4 seconds
-      const trailLength = 30 + Math.random() * 50; // Shorter trails
+      const randomTop = 20 + Math.random() * 40; // Middle area only
+      const randomDelay = Math.random() * 30 + 15; // Very long delays 15-45 seconds
+      const randomDuration = 3 + Math.random() * 2; // Slower movement 3-5 seconds
+      const trailLength = 20 + Math.random() * 30; // Very short trails
       
-      stars.push({
+      cometList.push({
         id: i,
         top: `${randomTop}%`,
         animationDelay: `${randomDelay}s`,
         animationDuration: `${randomDuration}s`,
         isReverse,
-        opacity: 0.05 + Math.random() * 0.1, // Very low opacity 0.05-0.15
+        opacity: 0.03 + Math.random() * 0.05, // Extremely low opacity 0.03-0.08
         trailLength: `${trailLength}px`,
       });
     }
     
-    return stars;
+    return cometList;
   }, []);
 
   // Keep default theme
@@ -202,19 +202,19 @@ export default function HeroSection() {
         </div>
       </div>
       
-      {/* Subtle shooting stars easter egg */}
+      {/* Very subtle comet easter egg */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {shootingStars.map((star) => (
+        {comets.map((comet) => (
           <div
-            key={star.id}
-            className={`shooting-star ${star.isReverse ? 'shooting-star-reverse' : ''}`}
+            key={comet.id}
+            className={`comet ${comet.isReverse ? 'comet-reverse' : ''}`}
             style={{
-              top: star.top,
-              [star.isReverse ? 'right' : 'left']: '-10%',
-              animationDelay: star.animationDelay,
-              animationDuration: star.animationDuration,
-              opacity: star.opacity,
-              '--trail-length': star.trailLength,
+              top: comet.top,
+              [comet.isReverse ? 'right' : 'left']: '-5%',
+              animationDelay: comet.animationDelay,
+              animationDuration: comet.animationDuration,
+              opacity: comet.opacity,
+              '--trail-length': comet.trailLength,
             } as React.CSSProperties}
           />
         ))}
@@ -239,11 +239,11 @@ export default function HeroSection() {
             <line x1="50%" y1="50%" x2="70%" y2="80%" stroke="url(#constellation-gradient)" strokeWidth="1" className="constellation-line" />
           </svg>
           
-          {/* Floating Cards with 3D perspective */}
+          {/* Floating Cards around KFS Logo with 3D perspective */}
           <div className="absolute inset-0 pointer-events-none hidden lg:block" style={{ transformStyle: 'preserve-3d' }}>
             {/* Top Left - Quick Application Card */}
             <motion.div 
-              className="absolute top-1/2 left-1/2 transform -translate-x-[200px] -translate-y-[180px] xl:block"
+              className="absolute top-1/2 left-1/2 transform -translate-x-[280px] -translate-y-[150px] xl:block"
               animate={{
                 rotateY: mousePosition.x * 10,
                 rotateX: -mousePosition.y * 10,
@@ -266,7 +266,7 @@ export default function HeroSection() {
             
             {/* Top Right - Secure Platform Card */}
             <motion.div 
-              className="absolute top-1/2 left-1/2 transform translate-x-[60px] -translate-y-[180px] hidden xl:block"
+              className="absolute top-1/2 left-1/2 transform translate-x-[100px] -translate-y-[150px] hidden xl:block"
               animate={{
                 rotateY: mousePosition.x * 10,
                 rotateX: -mousePosition.y * 10,
@@ -289,7 +289,7 @@ export default function HeroSection() {
             
             {/* Bottom Left - Analytics Card */}
             <motion.div 
-              className="absolute top-1/2 left-1/2 transform -translate-x-[200px] translate-y-[100px] hidden xl:block"
+              className="absolute top-1/2 left-1/2 transform -translate-x-[280px] translate-y-[120px] hidden xl:block"
               animate={{
                 rotateY: mousePosition.x * 10,
                 rotateX: -mousePosition.y * 10,
@@ -312,7 +312,7 @@ export default function HeroSection() {
             
             {/* Bottom Right - Support Card */}
             <motion.div 
-              className="absolute top-1/2 left-1/2 transform translate-x-[60px] translate-y-[100px] hidden xl:block"
+              className="absolute top-1/2 left-1/2 transform translate-x-[100px] translate-y-[120px] hidden xl:block"
               animate={{
                 rotateY: mousePosition.x * 10,
                 rotateX: -mousePosition.y * 10,
@@ -381,12 +381,17 @@ export default function HeroSection() {
           
           <div className="text-center relative">
 
-            {/* Pre-Header: Trust Signal */}
+            {/* Pre-Header: Small KFS Logo */}
             <div className="flex items-center justify-center mb-3 md:mb-6">
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 md:px-6 py-1.5 md:py-2 shadow-lg">
-                <div className="flex items-center gap-2 md:gap-3 text-white/90 text-xs md:text-sm">
-                  <Check className="w-3 md:w-4 h-3 md:h-4 text-green-400" />
-                  <span>Trusted by 5000+ Businesses</span>
+              <div className="relative">
+                <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-md border border-white/20 rounded-lg shadow-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-sm md:text-base">KFS</span>
+                </div>
+                <div className="absolute -bottom-5 left-1/2 transform -translate-x-1/2">
+                  <div className="flex items-center gap-1 text-white/60 text-[10px] md:text-xs whitespace-nowrap">
+                    <Check className="w-2 h-2 md:w-3 md:h-3 text-green-400" />
+                    <span>Trusted Since 1990</span>
+                  </div>
                 </div>
               </div>
             </div>

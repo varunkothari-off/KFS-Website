@@ -179,14 +179,51 @@
   }
 }
 
-.shooting-star {
+/* Comet animation - very subtle easter egg */
+.comet {
   position: absolute;
-  width: 2px;
-  height: 2px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 0 6px rgba(255, 255, 255, 1);
-  animation: shootingStar 3s linear infinite;
+  width: var(--trail-length, 30px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: comet 5s linear infinite;
+}
+
+.comet-reverse {
+  animation: comet-reverse 5s linear infinite;
+}
+
+@keyframes comet {
+  from {
+    transform: translateX(-30px) translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  to {
+    transform: translateX(calc(100vw + 30px)) translateY(30px);
+    opacity: 0;
+  }
+}
+
+@keyframes comet-reverse {
+  from {
+    transform: translateX(30px) translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  to {
+    transform: translateX(calc(-100vw - 30px)) translateY(30px);
+    opacity: 0;
+  }
 }
 
 /* Enhanced hover animations for data points */
