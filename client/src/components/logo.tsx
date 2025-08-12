@@ -1,4 +1,4 @@
-import logoPath from "@assets/logo_1754483758447.png";
+import logoPath from "@assets/logo_1754958364982.png";
 
 export default function Logo({ className = "w-8 h-8" }: { className?: string }) {
   return (

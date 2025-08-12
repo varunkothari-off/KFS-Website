@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import kfsLogo from '@assets/logo_1754958364982.png';
 
 export default function PageLoader() {
   const [loading, setLoading] = useState(true);
@@ -61,33 +62,20 @@ export default function PageLoader() {
             transition={{ duration: 0.5 }}
             className="relative mb-12"
           >
-            <div className="relative w-24 h-24">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0"
-              >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative transform">
-                    <motion.div 
-                      className="absolute w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 transform rotate-45 rounded-lg opacity-80"
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    />
-                    <motion.div 
-                      className="absolute w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 transform rotate-45 translate-x-3 translate-y-3 rounded-lg opacity-80"
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: 0.2 }}
-                    />
-                    <motion.div 
-                      className="relative w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 transform rotate-45 -translate-x-2 -translate-y-2 rounded-lg"
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, delay: 0.4 }}
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            </div>
+            <motion.div
+              animate={{ 
+                rotateY: [0, 360],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ 
+                duration: 3, 
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="relative w-24 h-24 bg-white/10 backdrop-blur-sm rounded-xl p-3"
+            >
+              <img src={kfsLogo} alt="KFS" className="w-full h-full object-contain" />
+            </motion.div>
           </motion.div>
 
           {/* Company Name */}

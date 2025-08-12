@@ -4,6 +4,7 @@ import { ArrowRight, ChevronDown, Check, Calendar, CreditCard, Shield, TrendingU
 import { useAuth } from "@/hooks/useAuth";
 import { useMemo, useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
+import kfsLogo from '@assets/logo_1754958364982.png';
 
 export default function HeroSection() {
   const { isAuthenticated, user } = useAuth();
@@ -356,14 +357,10 @@ export default function HeroSection() {
                   {/* Outer ring */}
                   <div className="absolute inset-0 w-28 h-28 border-4 border-white/20 rounded-full"></div>
                   
-                  {/* Geometric shapes */}
+                  {/* KFS Logo in center */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="relative">
-                      <div className={`absolute w-16 h-16 bg-gradient-to-br ${themeColors.logo} transform rotate-45 rounded-lg`}></div>
-                      <div className={`absolute w-16 h-16 bg-gradient-to-br ${themeColors.logo} transform rotate-45 translate-x-4 translate-y-4 rounded-lg`}></div>
-                      <div className={`relative w-16 h-16 bg-gradient-to-br from-blue-400/50 to-cyan-500/50 transform rotate-45 -translate-x-2 -translate-y-2 rounded-lg flex items-center justify-center`}>
-                        <span className="transform -rotate-45 text-white font-bold text-2xl drop-shadow-lg">KFS</span>
-                      </div>
+                    <div className="relative w-20 h-20 bg-white/10 backdrop-blur-sm rounded-xl p-2">
+                      <img src={kfsLogo} alt="KFS" className="w-full h-full object-contain" />
                     </div>
                   </div>
                   
@@ -381,11 +378,11 @@ export default function HeroSection() {
           
           <div className="text-center relative">
 
-            {/* Pre-Header: Small KFS Logo */}
+            {/* Pre-Header: KFS Logo */}
             <div className="flex items-center justify-center mb-3 md:mb-6">
               <div className="relative">
-                <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-md border border-white/20 rounded-lg shadow-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm md:text-base">KFS</span>
+                <div className="w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-lg p-2 md:p-2.5">
+                  <img src={kfsLogo} alt="KFS" className="w-full h-full object-contain" />
                 </div>
                 <div className="absolute -bottom-5 left-1/2 transform -translate-x-1/2">
                   <div className="flex items-center gap-1 text-white/60 text-[10px] md:text-xs whitespace-nowrap">
@@ -396,10 +393,13 @@ export default function HeroSection() {
               </div>
             </div>
             
-            {/* SWAGATAM - Welcome message */}
-            <h2 className="text-base md:text-lg lg:text-xl text-white/70 mb-2 md:mb-3 font-light tracking-[0.2em] md:tracking-[0.3em] uppercase">
-              SWAGATAM!
+            {/* SWAGATAM - Welcome message in Sanskrit */}
+            <h2 className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-2 md:mb-3 tracking-wider" style={{ fontFamily: "'Noto Sans Devanagari', serif", fontWeight: 600 }}>
+              स्वागतम्
             </h2>
+            <p className="text-xs md:text-sm text-white/60 mb-3" style={{ fontFamily: 'Georgia, serif', letterSpacing: '0.15em' }}>
+              SWAGATAM - WELCOME
+            </p>
             
             {/* Main headline with better spacing */}
             <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-medium mb-2 md:mb-3 text-white/90">
@@ -417,18 +417,7 @@ export default function HeroSection() {
               </span>
             </h1>
             
-            {/* Geometric Logo - smaller and cleaner */}
-            <div className="flex justify-center mb-3 md:mb-4">
-              <div className="relative w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative transform hover:scale-110 transition-transform duration-500">
-                    <div className="absolute w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-blue-500 to-purple-600 transform rotate-45 rounded-lg opacity-80"></div>
-                    <div className="absolute w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-purple-500 to-pink-500 transform rotate-45 translate-x-2 translate-y-2 md:translate-x-2.5 md:translate-y-2.5 rounded-lg opacity-80"></div>
-                    <div className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-blue-400 to-cyan-500 transform rotate-45 -translate-x-1 -translate-y-1 rounded-lg"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+
             
             {/* Supporting text - more concise */}
             <p className="text-xs sm:text-sm lg:text-base text-white/70 mb-4 md:mb-6 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
