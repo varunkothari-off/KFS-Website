@@ -93,14 +93,14 @@ export default function LiveChatWidget() {
 
   return (
     <>
-      {/* Chat Button */}
+      {/* Chat Button - Positioned above WhatsApp button */}
       <AnimatePresence>
         {!isOpen && (
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
-            className="fixed bottom-6 right-6 z-50"
+            className="fixed bottom-28 right-6 z-[60]"
           >
             <Button
               onClick={() => setIsOpen(true)}
@@ -113,7 +113,7 @@ export default function LiveChatWidget() {
         )}
       </AnimatePresence>
 
-      {/* Chat Window */}
+      {/* Chat Window - Higher z-index than WhatsApp */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -121,7 +121,7 @@ export default function LiveChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-6 right-6 z-50 w-96 max-w-[calc(100vw-3rem)]"
+            className="fixed bottom-28 right-6 z-[60] w-96 max-w-[calc(100vw-3rem)]"
           >
             <Card className="bg-[#141428] border-white/10 shadow-2xl overflow-hidden">
               {/* Header */}
