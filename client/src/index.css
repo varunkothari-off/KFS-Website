@@ -259,6 +259,40 @@
   }
 }
 
+/* 3D Card effects */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.card-3d:hover {
+  transform: translateZ(20px) rotateY(5deg);
+}
+
+/* Constellation line animation */
+.constellation-line {
+  stroke-dasharray: 5, 10;
+  animation: dash 20s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+/* Dynamic theme transitions */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+.duration-3000 {
+  transition-duration: 3000ms;
+}
+
 .shooting-star-reverse {
   animation: shootingStarReverse 3s linear infinite;
 }
