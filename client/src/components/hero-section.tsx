@@ -62,7 +62,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#0a0b1e] py-12">
+    <section className="relative h-screen max-h-screen flex items-center justify-center overflow-hidden bg-[#0a0b1e]">
       {/* Dark gradient background - cleaner */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0b1e] via-[#0f1020] to-[#141428]"></div>
@@ -113,13 +113,13 @@ export default function HeroSection() {
         ))}
       </div>
       
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-7xl mx-auto relative">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 h-full flex items-center justify-center">
+        <div className="max-w-7xl mx-auto relative w-full">
           
           {/* Floating Cards - smaller and better positioned - hide on mobile */}
-          <div className="absolute inset-0 pointer-events-none hidden lg:block">
+          <div className="absolute inset-0 pointer-events-none hidden xl:block">
             {/* Top Left - Quick Application Card */}
-            <div className="absolute top-20 left-0 lg:left-10 xl:block">
+            <div className="absolute top-0 left-0 lg:left-10 xl:block">
               <div className="bg-gradient-to-br from-purple-600/15 to-blue-600/15 backdrop-blur-xl border border-white/10 rounded-xl p-3 w-48 transform -rotate-6 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
@@ -132,7 +132,7 @@ export default function HeroSection() {
             </div>
             
             {/* Top Right - Secure Platform Card */}
-            <div className="absolute top-20 right-0 lg:right-10 hidden xl:block">
+            <div className="absolute top-0 right-0 lg:right-10 hidden xl:block">
               <div className="bg-gradient-to-br from-green-600/15 to-teal-600/15 backdrop-blur-xl border border-white/10 rounded-xl p-3 w-48 transform rotate-6 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-teal-500 rounded-lg flex items-center justify-center">
@@ -145,7 +145,7 @@ export default function HeroSection() {
             </div>
             
             {/* Bottom Left - Analytics Card */}
-            <div className="absolute bottom-40 left-0 lg:left-20 hidden xl:block">
+            <div className="absolute bottom-20 left-0 lg:left-20 hidden xl:block">
               <div className="bg-gradient-to-br from-orange-600/15 to-red-600/15 backdrop-blur-xl border border-white/10 rounded-xl p-3 w-48 transform rotate-3 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
@@ -158,7 +158,7 @@ export default function HeroSection() {
             </div>
             
             {/* Bottom Right - Support Card */}
-            <div className="absolute bottom-40 right-0 lg:right-20 hidden xl:block">
+            <div className="absolute bottom-20 right-0 lg:right-20 hidden xl:block">
               <div className="bg-gradient-to-br from-blue-600/15 to-indigo-600/15 backdrop-blur-xl border border-white/10 rounded-xl p-3 w-48 transform -rotate-3 hover:rotate-0 transition-transform duration-500 pointer-events-auto">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
@@ -183,27 +183,27 @@ export default function HeroSection() {
           
           <div className="text-center relative">
             {/* Pre-Header: Trust Signal */}
-            <div className="flex items-center justify-center mb-8">
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-2 shadow-lg">
-                <div className="flex items-center gap-3 text-white/90 text-sm">
-                  <Check className="w-4 h-4 text-green-400" />
+            <div className="flex items-center justify-center mb-3 md:mb-6">
+              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 md:px-6 py-1.5 md:py-2 shadow-lg">
+                <div className="flex items-center gap-2 md:gap-3 text-white/90 text-xs md:text-sm">
+                  <Check className="w-3 md:w-4 h-3 md:h-4 text-green-400" />
                   <span>Trusted by 5000+ Businesses</span>
                 </div>
               </div>
             </div>
             
             {/* SWAGATAM - Welcome message */}
-            <h2 className="text-lg md:text-xl lg:text-2xl text-white/70 mb-4 md:mb-6 font-light tracking-[0.2em] md:tracking-[0.3em] uppercase">
+            <h2 className="text-base md:text-lg lg:text-xl text-white/70 mb-2 md:mb-3 font-light tracking-[0.2em] md:tracking-[0.3em] uppercase">
               SWAGATAM!
             </h2>
             
             {/* Main headline with better spacing */}
-            <h1 className="text-2xl sm:text-3xl lg:text-5xl font-medium mb-4 md:mb-6 text-white/90">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-medium mb-2 md:mb-3 text-white/90">
               Welcome to the home of
             </h1>
             
             {/* Company Name with Gradient - reduced size */}
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-8 md:mb-12 tracking-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 md:mb-6 tracking-tight">
               <span className="bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
                 Kothari Financial
               </span>
@@ -214,42 +214,42 @@ export default function HeroSection() {
             </h1>
             
             {/* Geometric Logo - smaller and cleaner */}
-            <div className="flex justify-center mb-12">
-              <div className="relative w-20 h-20 lg:w-24 lg:h-24">
+            <div className="flex justify-center mb-3 md:mb-4">
+              <div className="relative w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="relative transform hover:scale-110 transition-transform duration-500">
-                    <div className="absolute w-12 h-12 lg:w-16 lg:h-16 bg-gradient-to-br from-blue-500 to-purple-600 transform rotate-45 rounded-lg opacity-80"></div>
-                    <div className="absolute w-12 h-12 lg:w-16 lg:h-16 bg-gradient-to-br from-purple-500 to-pink-500 transform rotate-45 translate-x-3 translate-y-3 rounded-lg opacity-80"></div>
-                    <div className="relative w-12 h-12 lg:w-16 lg:h-16 bg-gradient-to-br from-blue-400 to-cyan-500 transform rotate-45 -translate-x-1.5 -translate-y-1.5 rounded-lg"></div>
+                    <div className="absolute w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-blue-500 to-purple-600 transform rotate-45 rounded-lg opacity-80"></div>
+                    <div className="absolute w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-purple-500 to-pink-500 transform rotate-45 translate-x-2 translate-y-2 md:translate-x-2.5 md:translate-y-2.5 rounded-lg opacity-80"></div>
+                    <div className="relative w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-blue-400 to-cyan-500 transform rotate-45 -translate-x-1 -translate-y-1 rounded-lg"></div>
                   </div>
                 </div>
               </div>
             </div>
             
             {/* Supporting text - more concise */}
-            <p className="text-sm sm:text-base lg:text-lg text-white/70 mb-8 md:mb-16 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
+            <p className="text-xs sm:text-sm lg:text-base text-white/70 mb-4 md:mb-6 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
               With over thirty years of experience providing loans from partner nationalised and 
               private banks, NBFCs and Investors, KFS is here to solve all your financial worries
             </p>
             
             {/* Two-Button CTA Structure with more spacing */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 md:mb-32">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-4 md:mb-8">
               <Button 
                 onClick={handleConsultNow}
-                size="lg" 
-                className="w-full sm:w-auto bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+                size="default" 
+                className="w-full sm:w-auto bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 text-sm px-6 py-2.5 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
               >
                 Consult Now
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
+                <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
               
               <Button 
                 onClick={handleApplyForLoan}
                 variant="outline" 
-                size="lg"
-                className="w-full sm:w-auto border-2 border-white/20 text-white/80 bg-transparent hover:bg-white/10 backdrop-blur-sm px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-medium rounded-lg transition-all"
+                size="default"
+                className="w-full sm:w-auto border-2 border-white/20 text-white/80 bg-transparent hover:bg-white/10 backdrop-blur-sm px-6 py-2.5 text-sm font-medium rounded-lg transition-all"
               >
-                <CreditCard className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                <CreditCard className="mr-2 h-4 w-4" />
                 Apply for Loan
               </Button>
             </div>
@@ -258,7 +258,7 @@ export default function HeroSection() {
         </div>
         
         {/* Scroll indicator - separated with more space */}
-        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2">
+        <div className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2">
           <button
             onClick={scrollToServices}
             className="inline-flex flex-col items-center text-white/50 hover:text-white/70 transition-colors group"
