@@ -64,15 +64,15 @@ export default function LoanQuestionnaire() {
 
   if (isSubmitted) {
     return (
-      <section className="py-20 bg-gradient-to-br from-blue-50 to-purple-50">
+      <section className="py-20 bg-gradient-to-br from-[#0a0b1e] via-[#141428] to-[#0a0b1e]">
         <div className="container mx-auto px-6 lg:px-8">
-          <Card className="max-w-2xl mx-auto text-center">
+          <Card className="max-w-2xl mx-auto text-center bg-[#141428]/90 border-white/10">
             <CardContent className="p-12">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle className="w-8 h-8 text-green-600" />
+              <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle className="w-8 h-8 text-green-400" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-4">Thank You!</h3>
-              <p className="text-slate-600 mb-6">
+              <h3 className="text-2xl font-bold text-white mb-4">Thank You!</h3>
+              <p className="text-gray-400 mb-6">
                 Your response has been recorded. Our financial experts will analyze your requirements and get back to you within 24 hours with personalized loan solutions.
               </p>
               <Button 
@@ -89,20 +89,20 @@ export default function LoanQuestionnaire() {
   }
 
   return (
-    <section className="py-20 bg-gradient-to-br from-blue-50 to-purple-50">
+    <section className="py-20 bg-gradient-to-br from-[#0a0b1e] via-[#141428] to-[#0a0b1e]">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-slate-900 mb-4">
+          <h2 className="text-3xl font-bold text-white mb-4">
             What's Your Biggest Hurdle in Securing a Loan?
           </h2>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
             Help us understand your challenges so we can provide the most relevant financial solutions for your business.
           </p>
         </div>
 
-        <Card className="max-w-3xl mx-auto">
+        <Card className="max-w-3xl mx-auto bg-[#141428]/90 border-white/10">
           <CardHeader>
-            <CardTitle className="text-xl text-slate-900">Quick Assessment</CardTitle>
+            <CardTitle className="text-xl text-white">Quick Assessment</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -174,9 +174,9 @@ export default function LoanQuestionnaire() {
                   className="mt-4 space-y-3"
                 >
                   {hurdles.map((hurdle, index) => (
-                    <div key={index} className="flex items-center space-x-2 p-3 rounded-lg hover:bg-slate-50 border border-transparent hover:border-slate-200">
-                      <RadioGroupItem value={hurdle} id={`hurdle-${index}`} />
-                      <Label htmlFor={`hurdle-${index}`} className="text-sm cursor-pointer flex-1">
+                    <div key={index} className="flex items-center space-x-2 p-3 rounded-lg hover:bg-white/5 border border-transparent hover:border-white/10 transition-all">
+                      <RadioGroupItem value={hurdle} id={`hurdle-${index}`} className="border-white/20 text-purple-400" />
+                      <Label htmlFor={`hurdle-${index}`} className="text-sm cursor-pointer flex-1 text-gray-300">
                         {hurdle}
                       </Label>
                     </div>
@@ -199,7 +199,7 @@ export default function LoanQuestionnaire() {
               <Button 
                 type="submit" 
                 disabled={isSubmitting || !formData.name || !formData.email || !formData.phone || !formData.businessType || !formData.loanAmount || !formData.biggestHurdle}
-                className="w-full bg-blue-600 hover:bg-blue-700"
+                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
               >
                 {isSubmitting ? (
                   "Submitting..."
