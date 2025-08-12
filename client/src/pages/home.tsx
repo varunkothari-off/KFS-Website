@@ -22,6 +22,11 @@ import LoanCalculator from "@/components/loan-calculator";
 import LiveChatWidget from "@/components/live-chat-widget";
 import QuickStatusCheck from "@/components/quick-status-check";
 import LoanComparisonTool from "@/components/loan-comparison-tool";
+// New prototype components
+import CategorizedTestimonials from "@/components/categorized-testimonials";
+import SmartEntrySelector from "@/components/smart-entry-selector";
+import DynamicLoanSlider from "@/components/dynamic-loan-slider";
+import ProgressiveLoanForm from "@/components/progressive-loan-form";
 
 export default function Home() {
   const [showContent, setShowContent] = useState(false);
@@ -57,6 +62,9 @@ export default function Home() {
           {/* Trust Badges */}
           <TrustBadges />
           
+          {/* Smart Entry Selector (Idea #4) - Immediately after hero */}
+          <SmartEntrySelector />
+          
           {/* Floating Features - Why Choose KFS */}
           <div className="relative">
             <FloatingFeatures />
@@ -73,20 +81,25 @@ export default function Home() {
             <AnimatedStatsSection />
           </div>
           
-          {/* Trust Building Section */}
+          {/* Dynamic Loan Slider (Idea #5) - Interactive tool */}
           <div className="relative border-t border-white/5">
+            <DynamicLoanSlider />
+          </div>
+          
+          {/* Trust Building Section */}
+          <div className="relative">
             <TrustBuildingSection />
           </div>
           
-          {/* Loan Questionnaire with spacing */}
+          {/* Progressive Loan Form (Idea #6) - Replaces questionnaire */}
           <div className="relative">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-px bg-gradient-to-r from-transparent via-pink-500 to-transparent" />
-            <LoanQuestionnaire />
+            <ProgressiveLoanForm />
           </div>
           
-          {/* Testimonials Section */}
+          {/* Categorized Testimonials (Idea #3) - Replaces testimonials */}
           <div className="relative border-t border-white/5">
-            <TestimonialsSection />
+            <CategorizedTestimonials />
           </div>
           
           {/* Services Section */}

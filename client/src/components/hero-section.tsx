@@ -299,17 +299,24 @@ export default function HeroSection() {
                 </h1>
               </motion.div>
               
-              {/* Tagline */}
-              <motion.p
+              {/* Tagline with Micro-Copy Reassurance (Idea #2) */}
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 }}
-                className="text-white/60 text-lg md:text-xl font-light leading-relaxed max-w-md"
+                className="space-y-3"
               >
-                30+ years of trust.
-                <br/>
-                Your financial journey starts here.
-              </motion.p>
+                <p className="text-white/60 text-lg md:text-xl font-light leading-relaxed max-w-md">
+                  30+ years of trust.
+                  <br/>
+                  Your financial journey starts here.
+                </p>
+                <p className="text-purple-400/80 text-sm md:text-base leading-relaxed max-w-lg">
+                  Proudly serving 10,000+ small businesses across India. 
+                  <br/>
+                  <span className="text-cyan-400/80">Your first loan or your tenth - we're here for your journey.</span>
+                </p>
+              </motion.div>
               
               {/* CTA Buttons */}
               <motion.div

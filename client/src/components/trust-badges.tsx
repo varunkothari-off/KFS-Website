@@ -1,33 +1,105 @@
-import { Shield, Award, CheckCircle, Lock } from "lucide-react";
+import { Shield, Award, CheckCircle, Lock, Clock, Users, TrendingUp, HandshakeIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 export default function TrustBadges() {
-  const badges = [
-    {
-      icon: Shield,
-      title: "RBI Compliant",
-      description: "Following all RBI guidelines",
-      color: "from-green-500 to-emerald-500"
-    },
-    {
-      icon: Lock,
-      title: "256-bit SSL Secured",
-      description: "Bank-grade encryption",
-      color: "from-blue-500 to-cyan-500"
-    },
-    {
-      icon: Award,
-      title: "ISO 27001 Certified",
-      description: "Information security certified",
-      color: "from-purple-500 to-pink-500"
-    },
-    {
-      icon: CheckCircle,
-      title: "GDPR Compliant",
-      description: "Data privacy protected",
-      color: "from-orange-500 to-red-500"
-    }
-  ];
+  const [selectedSegment, setSelectedSegment] = useState("small");
+
+  // Segment-specific trust badges (Idea #7)
+  const segmentBadges = {
+    small: [
+      {
+        icon: Clock,
+        title: "15-Min Approval",
+        description: "Quick preliminary decision",
+        color: "from-cyan-500 to-blue-500"
+      },
+      {
+        icon: HandshakeIcon,
+        title: "MSME Champion 2024",
+        description: "Supporting small businesses",
+        color: "from-green-500 to-emerald-500"
+      },
+      {
+        icon: Shield,
+        title: "No Hidden Charges",
+        description: "Transparent pricing always",
+        color: "from-purple-500 to-pink-500"
+      },
+      {
+        icon: Users,
+        title: "10,000+ Small Businesses",
+        description: "Trusted by entrepreneurs",
+        color: "from-orange-500 to-red-500"
+      }
+    ],
+    medium: [
+      {
+        icon: TrendingUp,
+        title: "Growth Partner",
+        description: "Scaling businesses successfully",
+        color: "from-green-500 to-emerald-500"
+      },
+      {
+        icon: Shield,
+        title: "RBI Compliant",
+        description: "Following all guidelines",
+        color: "from-blue-500 to-cyan-500"
+      },
+      {
+        icon: Award,
+        title: "Industry Awards",
+        description: "Excellence in lending",
+        color: "from-purple-500 to-pink-500"
+      },
+      {
+        icon: Users,
+        title: "Dedicated Manager",
+        description: "Personal assistance",
+        color: "from-orange-500 to-red-500"
+      }
+    ],
+    enterprise: [
+      {
+        icon: Shield,
+        title: "RBI Compliant",
+        description: "Following all RBI guidelines",
+        color: "from-green-500 to-emerald-500"
+      },
+      {
+        icon: Lock,
+        title: "256-bit SSL Secured",
+        description: "Bank-grade encryption",
+        color: "from-blue-500 to-cyan-500"
+      },
+      {
+        icon: Award,
+        title: "ISO 27001 Certified",
+        description: "Information security certified",
+        color: "from-purple-500 to-pink-500"
+      },
+      {
+        icon: CheckCircle,
+        title: "GDPR Compliant",
+        description: "Data privacy protected",
+        color: "from-orange-500 to-red-500"
+      }
+    ]
+  };
+
+  const badges = segmentBadges[selectedSegment as keyof typeof segmentBadges] || segmentBadges.small;
+
+  // Auto-rotate segments to show different badges
+  useEffect(() => {
+    const segments = ["small", "medium", "enterprise"];
+    let index = 0;
+    const interval = setInterval(() => {
+      index = (index + 1) % segments.length;
+      setSelectedSegment(segments[index]);
+    }, 8000); // Change every 8 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section className="py-8 bg-gradient-to-b from-[#0a0b1e] to-[#141428] border-y border-white/5">

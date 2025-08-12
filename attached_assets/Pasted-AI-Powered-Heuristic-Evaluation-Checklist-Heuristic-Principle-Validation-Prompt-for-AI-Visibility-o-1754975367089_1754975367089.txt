@@ -1,0 +1,25 @@
+AI-Powered Heuristic Evaluation Checklist
+
+Heuristic/Principle	Validation Prompt for AI
+Visibility of System Status 
+
+"Review the prototype. Does it provide clear and immediate feedback after a user takes an action (e.g., clicking a button, filling a field)? If not, how could it be improved to better inform the user of the system's current state?"
+Match Between System and Real World 
+
+"Analyze the language and concepts used in the prototype. Do they align with the real-world vocabulary of a typical user like 'Priya'? Identify any jargon or system-oriented terms and suggest plain-language alternatives."
+User Control and Freedom 
+
+"Does this prototype offer users a clearly marked 'emergency exit' to leave an unwanted state? Is it easy to undo an action? Suggest improvements to enhance the user's sense of control."
+Consistency and Standards 
+
+"Evaluate the prototype for consistency. Do the interactive elements (buttons, links, forms) follow established web conventions that users would expect? Does it maintain consistency with the rest of the website's presumed style?"
+Error Prevention 
+
+"Examine the design from an error-prevention standpoint. Does it constrain choices or offer good defaults to prevent common mistakes? Propose a change that would make it more difficult for a user to make an error."
+Affordance & Mapping 
+
+"Do the visual properties of the interactive elements in the prototype give clear clues about how to use them (affordance)? Is the relationship between controls and their effects clear and natural (mapping)? Identify any ambiguity."
+Aesthetic and Minimalist Design	"Critique the prototype's design. Does every element on the page support a primary user goal? Identify any extraneous information or visual clutter that could be removed to improve clarity and focus."
+Help and Documentation 
+
+"Although we aim for a design that doesn't require explanation, is help available if needed? If this prototype were part of a larger process, where and how could you proactively offer help or documentation?

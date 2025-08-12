@@ -1,0 +1,53 @@
+We are now at Stage 5: Test.
+
+Your role is now that of a usability expert. Review the prototype you just generated. You will conduct a heuristic evaluation using the checklist below, which synthesizes principles from Jakob Nielsen and Don Norman. For each heuristic, state whether the prototype complies or violates the principle, and provide a specific, actionable recommendation for improvement if a violation is found.
+
+Heuristic Evaluation Checklist:
+
+Visibility of System Status: Does the prototype keep the user informed about what is going on?
+
+Match Between System and Real World: Does it use language and concepts familiar to the user (e.g., Priya), rather than internal jargon?
+
+User Control and Freedom: Does it allow the user to easily undo actions or exit from an unwanted state?
+
+Consistency and Standards: Are the design elements and terminology consistent with platform and industry conventions?
+
+Error Prevention: Is the design crafted to prevent the user from making common errors in the first place?
+
+Recognition Rather Than Recall: Does it minimize the user's memory load by making objects, actions, and options visible?
+
+Flexibility and Efficiency of Use: Does it cater to both inexperienced and experienced users? Are there accelerators or shortcuts?
+
+Aesthetic and Minimalist Design: Is the interface free of irrelevant or rarely needed information?
+
+Help Users Recognize, Diagnose, and Recover from Errors: Are error messages expressed in plain language and do they suggest a solution?
+
+Affordance: Do the visual clues on the elements (e.g., buttons, links) suggest how they should be used?"
+
+The following table provides the detailed checklist in a more structured format, which can be used repeatedly during the Test stage.
+
+Table 2: AI-Powered Heuristic Evaluation Checklist
+
+Heuristic/Principle	Validation Prompt for AI
+Visibility of System Status 
+
+"Review the prototype. Does it provide clear and immediate feedback after a user takes an action (e.g., clicking a button, filling a field)? If not, how could it be improved to better inform the user of the system's current state?"
+Match Between System and Real World 
+
+"Analyze the language and concepts used in the prototype. Do they align with the real-world vocabulary of a typical user like 'Priya'? Identify any jargon or system-oriented terms and suggest plain-language alternatives."
+User Control and Freedom 
+
+"Does this prototype offer users a clearly marked 'emergency exit' to leave an unwanted state? Is it easy to undo an action? Suggest improvements to enhance the user's sense of control."
+Consistency and Standards 
+
+"Evaluate the prototype for consistency. Do the interactive elements (buttons, links, forms) follow established web conventions that users would expect? Does it maintain consistency with the rest of the website's presumed style?"
+Error Prevention 
+
+"Examine the design from an error-prevention standpoint. Does it constrain choices or offer good defaults to prevent common mistakes? Propose a change that would make it more difficult for a user to make an error."
+Affordance & Mapping 
+
+"Do the visual properties of the interactive elements in the prototype give clear clues about how to use them (affordance)? Is the relationship between controls and their effects clear and natural (mapping)? Identify any ambiguity."
+Aesthetic and Minimalist Design	"Critique the prototype's design. Does every element on the page support a primary user goal? Identify any extraneous information or visual clutter that could be removed to improve clarity and focus."
+Help and Documentation 
+
+"Although we aim for a design that doesn't require explanation, is help available if needed? If this prototype were part of a larger process, where and how could you proactively offer help or documentation?"
