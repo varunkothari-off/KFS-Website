@@ -13,6 +13,10 @@ import Dashboard from "./pages/dashboard";
 import ComprehensiveDashboard from "./pages/comprehensive-dashboard";
 import PrivacyPolicy from "./pages/privacy-policy";
 import TermsOfService from "./pages/terms-of-service";
+import MumbaiPage from "./pages/locations/mumbai";
+import DelhiPage from "./pages/locations/delhi";
+import BangalorePage from "./pages/locations/bangalore";
+import KolkataPage from "./pages/locations/kolkata";
 import NotFound from "./pages/not-found";
 
 function Router() {
@@ -26,6 +30,10 @@ function Router() {
       <Route path="/loan-application" component={LoanApplication} />
       <Route path="/consultation" component={Consultation} />
       <Route path="/application-status/:id?" component={ApplicationStatus} />
+      <Route path="/locations/mumbai" component={MumbaiPage} />
+      <Route path="/locations/delhi" component={DelhiPage} />
+      <Route path="/locations/bangalore" component={BangalorePage} />
+      <Route path="/locations/kolkata" component={KolkataPage} />
       <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route path="/terms-of-service" component={TermsOfService} />
       <Route component={NotFound} />

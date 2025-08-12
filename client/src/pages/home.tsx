@@ -10,6 +10,7 @@ import TrustBuildingSection from "@/components/trust-building-section";
 import ServicesSection from "@/components/services-section";
 import TestimonialsSection from "@/components/testimonials-section";
 import EMICalculator from "@/components/emi-calculator";
+import FAQSection from "@/components/faq-section";
 import BlogPreview from "@/components/blog-preview";
 import FloatingWhatsApp from "@/components/floating-whatsapp";
 import LoanQuestionnaire from "@/components/loan-questionnaire";
@@ -87,6 +88,11 @@ export default function Home() {
           {/* EMI Calculator with visual break */}
           <div className="relative border-t border-white/5">
             <EMICalculator />
+          </div>
+          
+          {/* FAQ Section */}
+          <div className="relative border-t border-white/5">
+            <FAQSection />
           </div>
           
           {/* Blog Preview */}
