@@ -1,3 +1,5 @@
+import padmaKothariImage from "@assets/generated_images/Padma_Kothari_professional_portrait_941e74d2.png";
+
 export default function TrustBuildingSection() {
 
   const leadership = [
@@ -13,7 +15,7 @@ export default function TrustBuildingSection() {
       role: "Chief Human Resources Officer",
       experience: "20+ years in organizational development",
       statement: "Our people are our greatest asset. We nurture talent that understands and serves our clients with genuine care and expertise.",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400"
+      image: padmaKothariImage
     },
     {
       name: "Shree Varun Kothari",
