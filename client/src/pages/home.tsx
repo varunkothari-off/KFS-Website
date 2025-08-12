@@ -27,6 +27,11 @@ import CategorizedTestimonials from "@/components/categorized-testimonials";
 import SmartEntrySelector from "@/components/smart-entry-selector";
 import DynamicLoanSlider from "@/components/dynamic-loan-slider";
 import ProgressiveLoanForm from "@/components/progressive-loan-form";
+// Information architecture prototype components (Ideas #2-9)
+import SmartInfoCards from "@/components/smart-info-cards";
+import InteractiveDecisionTree from "@/components/interactive-decision-tree";
+import PersonalizedInfoDashboard from "@/components/personalized-info-dashboard";
+import ProgressiveInfoJourney from "@/components/progressive-info-journey";
 
 export default function Home() {
   const [showContent, setShowContent] = useState(false);
@@ -65,8 +70,28 @@ export default function Home() {
           {/* Smart Entry Selector (Idea #4) - Immediately after hero */}
           <SmartEntrySelector />
           
-          {/* Floating Features - Why Choose KFS */}
+          {/* Progressive Information Journey (Idea #9) - Guided experience */}
+          <div className="relative border-t border-white/5">
+            <ProgressiveInfoJourney />
+          </div>
+          
+          {/* Interactive Decision Tree (Idea #5) - Find what you need */}
           <div className="relative">
+            <InteractiveDecisionTree />
+          </div>
+          
+          {/* Smart Information Cards (Idea #4) - Collapsible info cards */}
+          <div className="relative border-t border-white/5">
+            <SmartInfoCards />
+          </div>
+          
+          {/* Personalized Information Dashboard (Idea #6) - Tailored info */}
+          <div className="relative">
+            <PersonalizedInfoDashboard />
+          </div>
+          
+          {/* Floating Features - Why Choose KFS */}
+          <div className="relative border-t border-white/5">
             <FloatingFeatures />
           </div>
           
