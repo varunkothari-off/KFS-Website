@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, ChevronDown, Zap, Shield, TrendingUp, Users } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useMemo, useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
@@ -214,8 +214,116 @@ export default function HeroSection() {
       
       {/* Main Content - Minimalist with Negative Space */}
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+        <div className="max-w-6xl mx-auto relative">
+          
+          {/* Floating Cards - Hidden on mobile, visible on desktop */}
+          <div className="absolute inset-0 pointer-events-none hidden xl:block">
+            {/* Top Left Card - Quick Process */}
+            <motion.div 
+              className="absolute top-1/2 left-1/2 transform -translate-x-[400px] -translate-y-[200px]"
+              animate={{
+                y: [0, -10, 0],
+                rotateY: mousePosition.x * 8,
+                rotateX: -mousePosition.y * 8,
+              }}
+              transition={{
+                y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+                rotateY: { type: "spring", stiffness: 50 },
+                rotateX: { type: "spring", stiffness: 50 }
+              }}
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              <div className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 backdrop-blur-xl border border-purple-400/30 rounded-xl p-3 w-44 transform rotate-3 hover:rotate-0 transition-all duration-500 pointer-events-auto hover:scale-105">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
+                    <Zap className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-white text-sm font-semibold">Quick Process</span>
+                </div>
+                <p className="text-white/60 text-xs">24-hour approval</p>
+              </div>
+            </motion.div>
+            
+            {/* Top Right Card - Low Rates */}
+            <motion.div 
+              className="absolute top-1/2 left-1/2 transform translate-x-[220px] -translate-y-[200px]"
+              animate={{
+                y: [0, -15, 0],
+                rotateY: mousePosition.x * 8,
+                rotateX: -mousePosition.y * 8,
+              }}
+              transition={{
+                y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
+                rotateY: { type: "spring", stiffness: 50 },
+                rotateX: { type: "spring", stiffness: 50 }
+              }}
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              <div className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 backdrop-blur-xl border border-purple-400/30 rounded-xl p-3 w-44 transform -rotate-3 hover:rotate-0 transition-all duration-500 pointer-events-auto hover:scale-105">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                    <TrendingUp className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-white text-sm font-semibold">Low Rates</span>
+                </div>
+                <p className="text-white/60 text-xs">Best interest rates</p>
+              </div>
+            </motion.div>
+            
+            {/* Bottom Left Card - Secure */}
+            <motion.div 
+              className="absolute top-1/2 left-1/2 transform -translate-x-[400px] translate-y-[120px]"
+              animate={{
+                y: [0, 10, 0],
+                rotateY: mousePosition.x * 8,
+                rotateX: -mousePosition.y * 8,
+              }}
+              transition={{
+                y: { duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 },
+                rotateY: { type: "spring", stiffness: 50 },
+                rotateX: { type: "spring", stiffness: 50 }
+              }}
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              <div className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 backdrop-blur-xl border border-purple-400/30 rounded-xl p-3 w-44 transform -rotate-2 hover:rotate-0 transition-all duration-500 pointer-events-auto hover:scale-105">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+                    <Shield className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-white text-sm font-semibold">100% Secure</span>
+                </div>
+                <p className="text-white/60 text-xs">Data protection</p>
+              </div>
+            </motion.div>
+            
+            {/* Bottom Right Card - Support */}
+            <motion.div 
+              className="absolute top-1/2 left-1/2 transform translate-x-[220px] translate-y-[120px]"
+              animate={{
+                y: [0, -12, 0],
+                rotateY: mousePosition.x * 8,
+                rotateX: -mousePosition.y * 8,
+              }}
+              transition={{
+                y: { duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 1.5 },
+                rotateY: { type: "spring", stiffness: 50 },
+                rotateX: { type: "spring", stiffness: 50 }
+              }}
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              <div className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 backdrop-blur-xl border border-purple-400/30 rounded-xl p-3 w-44 transform rotate-3 hover:rotate-0 transition-all duration-500 pointer-events-auto hover:scale-105">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
+                    <Users className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-white text-sm font-semibold">Support</span>
+                </div>
+                <p className="text-white/60 text-xs">Dedicated advisors</p>
+              </div>
+            </motion.div>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center relative">
             
             {/* Left Side - KFS Logo */}
             <motion.div 
@@ -317,7 +425,7 @@ export default function HeroSection() {
               >
                 <Button 
                   onClick={handleConsultNow}
-                  className="bg-white/5 backdrop-blur-sm text-white border border-white/10 hover:bg-white/10 transition-all px-8 py-6 text-base rounded-xl"
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-all px-8 py-6 text-base rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
                   Start Consultation
                 </Button>
