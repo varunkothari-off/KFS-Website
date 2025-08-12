@@ -1,4 +1,8 @@
 import {
+  users,
+  loanApplications,
+  consultations,
+  blogPosts,
   type User,
   type InsertUser,
   type LoanApplication,
@@ -7,13 +11,17 @@ import {
   type InsertConsultation,
   type BlogPost,
 } from "@shared/schema";
+import { db } from "./db";
+import { eq, desc } from "drizzle-orm";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
   // User operations
   getUser(id: string): Promise<User | undefined>;
   getUserByMobile(mobile: string): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  updateUser(id: string, data: Partial<InsertUser>): Promise<User>;
   verifyUser(id: string): Promise<User>;
 
   // Loan application operations
@@ -30,6 +38,122 @@ export interface IStorage {
   getBlogPosts(limit?: number): Promise<BlogPost[]>;
 }
 
+export class DatabaseStorage implements IStorage {
+  async getUser(id: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByMobile(mobile: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.mobile, mobile));
+    return user || undefined;
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values({
+        ...insertUser,
+        isVerified: insertUser.isVerified ?? false,
+        isProfileComplete: insertUser.isProfileComplete ?? false,
+      })
+      .returning();
+    return user;
+  }
+
+  async updateUser(id: string, data: Partial<InsertUser>): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({
+        ...data,
+        updatedAt: new Date(),
+      })
+      .where(eq(users.id, id))
+      .returning();
+    return user;
+  }
+
+  async verifyUser(id: string): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({
+        isVerified: true,
+        updatedAt: new Date(),
+      })
+      .where(eq(users.id, id))
+      .returning();
+    return user;
+  }
+
+  async createLoanApplication(insertApplication: InsertLoanApplication): Promise<LoanApplication> {
+    const [application] = await db
+      .insert(loanApplications)
+      .values(insertApplication)
+      .returning();
+    return application;
+  }
+
+  async getLoanApplication(id: string): Promise<LoanApplication | undefined> {
+    const [application] = await db
+      .select()
+      .from(loanApplications)
+      .where(eq(loanApplications.id, id));
+    return application || undefined;
+  }
+
+  async getUserLoanApplications(userId: string): Promise<LoanApplication[]> {
+    return await db
+      .select()
+      .from(loanApplications)
+      .where(eq(loanApplications.userId, userId))
+      .orderBy(desc(loanApplications.createdAt));
+  }
+
+  async updateLoanApplicationStatus(id: string, status: string, notes?: string): Promise<LoanApplication> {
+    const [application] = await db
+      .update(loanApplications)
+      .set({
+        status,
+        notes: notes || undefined,
+        updatedAt: new Date(),
+      })
+      .where(eq(loanApplications.id, id))
+      .returning();
+    return application;
+  }
+
+  async createConsultation(insertConsultation: InsertConsultation): Promise<Consultation> {
+    const [consultation] = await db
+      .insert(consultations)
+      .values(insertConsultation)
+      .returning();
+    return consultation;
+  }
+
+  async getConsultations(): Promise<Consultation[]> {
+    return await db
+      .select()
+      .from(consultations)
+      .orderBy(desc(consultations.createdAt));
+  }
+
+  async getBlogPosts(limit?: number): Promise<BlogPost[]> {
+    const query = db
+      .select()
+      .from(blogPosts)
+      .where(eq(blogPosts.published, true))
+      .orderBy(desc(blogPosts.createdAt));
+    
+    return limit ? await query.limit(limit) : await query;
+  }
+}
+
+// Keep MemStorage for backward compatibility but use DatabaseStorage
 export class MemStorage implements IStorage {
   private users: Map<string, User>;
   private loanApplications: Map<string, LoanApplication>;
@@ -65,6 +189,12 @@ export class MemStorage implements IStorage {
     };
     this.users.set(testUser.id, testUser);
     console.log("Test user initialized:", testUser.mobile);
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(
+      (user) => user.email === email,
+    );
   }
 
   private initializeBlogPosts() {
@@ -145,6 +275,16 @@ export class MemStorage implements IStorage {
     return updatedUser;
   }
 
+  async updateUser(id: string, data: Partial<InsertUser>): Promise<User> {
+    const user = this.users.get(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const updatedUser = { ...user, ...data, updatedAt: new Date() };
+    this.users.set(id, updatedUser);
+    return updatedUser;
+  }
+
   async createLoanApplication(insertApplication: InsertLoanApplication): Promise<LoanApplication> {
     const id = randomUUID();
     const application: LoanApplication = {
@@ -215,4 +355,5 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Use DatabaseStorage for production, with real data persistence
+export const storage = new DatabaseStorage();
