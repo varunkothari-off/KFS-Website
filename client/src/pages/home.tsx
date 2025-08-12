@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import StickyHeader from "@/components/sticky-header";
 import HeroSection from "@/components/hero-section";
 import AnimatedStatsSection from "@/components/animated-stats-section";
@@ -9,21 +10,79 @@ import EMICalculator from "@/components/emi-calculator";
 import BlogPreview from "@/components/blog-preview";
 import FloatingWhatsApp from "@/components/floating-whatsapp";
 import LoanQuestionnaire from "@/components/loan-questionnaire";
+import PageLoader from "@/components/page-loader";
+import FloatingParticles from "@/components/floating-particles";
 
 export default function Home() {
+  const [showContent, setShowContent] = useState(false);
+
+  useEffect(() => {
+    // Delay showing content to allow loader animation
+    const timer = setTimeout(() => setShowContent(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[#0a0b1e]">
-      <StickyHeader />
-      <HeroSection />
-      <ModernFeaturesSection />
-      <AnimatedStatsSection />
-      <TrustBuildingSection />
-      <LoanQuestionnaire />
-      <TestimonialsSection />
-      <ServicesSection />
-      <EMICalculator />
-      <BlogPreview />
-      <FloatingWhatsApp />
+    <div className="min-h-screen bg-[#0a0b1e] relative overflow-hidden">
+      <PageLoader />
+      <FloatingParticles />
+      
+      {showContent && (
+        <div className="relative z-10">
+          <StickyHeader />
+          
+          {/* Hero Section with reduced bottom padding */}
+          <div className="relative">
+            <HeroSection />
+            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-[#0a0b1e]" />
+          </div>
+          
+          {/* Features Section with clear demarcation */}
+          <div className="relative border-t border-white/5">
+            <ModernFeaturesSection />
+          </div>
+          
+          {/* Stats Section with visual separator */}
+          <div className="relative">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent" />
+            <AnimatedStatsSection />
+          </div>
+          
+          {/* Trust Building Section */}
+          <div className="relative border-t border-white/5">
+            <TrustBuildingSection />
+          </div>
+          
+          {/* Loan Questionnaire with spacing */}
+          <div className="relative">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-px bg-gradient-to-r from-transparent via-pink-500 to-transparent" />
+            <LoanQuestionnaire />
+          </div>
+          
+          {/* Testimonials Section */}
+          <div className="relative border-t border-white/5">
+            <TestimonialsSection />
+          </div>
+          
+          {/* Services Section */}
+          <div className="relative">
+            <ServicesSection />
+          </div>
+          
+          {/* EMI Calculator with visual break */}
+          <div className="relative border-t border-white/5">
+            <EMICalculator />
+          </div>
+          
+          {/* Blog Preview */}
+          <div className="relative">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent" />
+            <BlogPreview />
+          </div>
+          
+          <FloatingWhatsApp />
+        </div>
+      )}
       
       {/* Footer */}
       <footer className="bg-gradient-to-br from-[#0a0b1e] via-[#141428] to-[#0a0b1e] text-white py-16 border-t border-white/10">

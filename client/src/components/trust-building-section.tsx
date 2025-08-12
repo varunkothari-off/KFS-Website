@@ -25,7 +25,7 @@ export default function TrustBuildingSection() {
   ];
 
   return (
-    <section id="about" className="py-12 md:py-24 bg-gradient-to-b from-[#141428] to-[#0a0b1e] relative overflow-hidden">
+    <section id="about" className="py-12 md:py-16 bg-gradient-to-b from-[#141428] to-[#0a0b1e] relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-40 left-10 w-64 h-64 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
@@ -49,7 +49,7 @@ export default function TrustBuildingSection() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 max-w-6xl mx-auto">
             {leadership.map((leader, index) => (
-              <div key={index} className="text-center bg-gradient-to-br from-[#141428]/90 to-[#1a1b3a]/90 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-white/10 hover:border-purple-500/30 transition-all">
+              <div key={index} className="text-center bg-gradient-to-br from-[#141428]/90 to-[#1a1b3a]/90 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-white/10 hover:border-purple-500/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/20 data-highlight">
                 <img 
                   src={leader.image} 
                   alt={`${leader.name} - ${leader.role}`} 

@@ -111,7 +111,13 @@ export default function AnimatedStatsSection() {
           
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-12">
             {stats.map((stat, index) => (
-              <div key={index} className="bg-gradient-to-br from-[#141428]/50 to-[#1a1b3a]/50 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-purple-500/30 transition-all">
+              <div 
+                key={index} 
+                className="bg-gradient-to-br from-[#141428]/50 to-[#1a1b3a]/50 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-purple-500/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/20 group"
+                style={{
+                  animationDelay: `${index * 0.1}s`
+                }}
+              >
                 <StatItem
                   value={stat.value}
                   label={stat.label}

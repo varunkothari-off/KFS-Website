@@ -89,7 +89,7 @@ export default function LoanQuestionnaire() {
   }
 
   return (
-    <section className="py-20 bg-gradient-to-br from-[#0a0b1e] via-[#141428] to-[#0a0b1e]">
+    <section className="py-12 bg-gradient-to-br from-[#0a0b1e] via-[#141428] to-[#0a0b1e]">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-white mb-4">

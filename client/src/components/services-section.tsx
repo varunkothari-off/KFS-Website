@@ -31,7 +31,7 @@ export default function ServicesSection() {
   ];
 
   return (
-    <section id="services" className="py-12 md:py-24 bg-gradient-to-b from-[#0a0b1e] to-[#141428] relative overflow-hidden">
+    <section id="services" className="py-12 md:py-16 bg-gradient-to-b from-[#0a0b1e] to-[#141428] relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 right-20 w-64 h-64 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
@@ -52,7 +52,7 @@ export default function ServicesSection() {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
           {services.map((service, index) => (
-            <div key={index} className="bg-gradient-to-br from-[#141428]/90 to-[#1a1b3a]/90 backdrop-blur-xl rounded-2xl border border-white/10 p-6 md:p-8 hover:border-purple-500/30 transition-all group">
+            <div key={index} className="bg-gradient-to-br from-[#141428]/90 to-[#1a1b3a]/90 backdrop-blur-xl rounded-2xl border border-white/10 p-6 md:p-8 hover:border-purple-500/50 transition-all duration-300 group hover:scale-105 hover:shadow-xl hover:shadow-purple-500/20 data-highlight">
               <div className={`w-16 h-16 bg-gradient-to-br ${
                 index === 0 ? 'from-blue-500 to-cyan-500' :
                 index === 1 ? 'from-green-500 to-emerald-500' :

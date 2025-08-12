@@ -35,7 +35,7 @@ export default function EMICalculator() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-[#0a0b1e] via-[#141428] to-[#0a0b1e]">
+    <section className="py-12 bg-gradient-to-br from-[#0a0b1e] via-[#141428] to-[#0a0b1e]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">

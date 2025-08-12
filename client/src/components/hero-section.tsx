@@ -62,7 +62,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0b1e] py-20">
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#0a0b1e] py-12">
       {/* Dark gradient background - cleaner */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0b1e] via-[#0f1020] to-[#141428]"></div>

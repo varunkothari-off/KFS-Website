@@ -15,7 +15,7 @@ export default function BlogPreview() {
 
   if (isLoading) {
     return (
-      <section id="blog" className="py-12 md:py-24 bg-gradient-to-b from-[#0a0b1e] to-[#141428] relative overflow-hidden">
+      <section id="blog" className="py-12 md:py-16 bg-gradient-to-b from-[#0a0b1e] to-[#141428] relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-8 md:mb-16">
             <h2 className="text-2xl md:text-3xl font-semibold mb-3 md:mb-4">
@@ -50,7 +50,7 @@ export default function BlogPreview() {
   }
 
   return (
-    <section id="blog" className="py-12 md:py-24 bg-gradient-to-b from-[#0a0b1e] to-[#141428] relative overflow-hidden">
+    <section id="blog" className="py-12 md:py-16 bg-gradient-to-b from-[#0a0b1e] to-[#141428] relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-20 w-64 h-64 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>

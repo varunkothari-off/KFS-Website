@@ -42,7 +42,7 @@ export default function ModernFeaturesSection() {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-[#141428] to-[#0a0b1e] relative overflow-hidden">
+    <section className="py-12 bg-gradient-to-b from-[#141428] to-[#0a0b1e] relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-64 h-64 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
@@ -78,7 +78,7 @@ export default function ModernFeaturesSection() {
               viewport={{ once: true }}
               className="group"
             >
-              <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-white/10 hover:border-white/20 h-full">
+              <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-lg rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 border border-white/10 hover:border-purple-500/50 h-full hover:scale-105 data-highlight">
                 {/* Icon with gradient background */}
                 <div className={`w-14 h-14 bg-gradient-to-br ${feature.gradient} rounded-xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform`}>
                   {feature.icon}

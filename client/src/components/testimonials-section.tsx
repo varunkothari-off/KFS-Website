@@ -26,7 +26,7 @@ export default function TestimonialsSection() {
   ];
 
   return (
-    <section className="py-12 md:py-24 bg-gradient-to-b from-[#141428] to-[#0a0b1e] relative overflow-hidden">
+    <section className="py-12 md:py-16 bg-gradient-to-b from-[#141428] to-[#0a0b1e] relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 right-1/3 w-64 h-64 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
@@ -46,7 +46,7 @@ export default function TestimonialsSection() {
         </div>
         
         {/* Featured Testimonial */}
-        <div className="max-w-4xl mx-auto mb-8 md:mb-16 bg-gradient-to-br from-[#141428]/90 to-[#1a1b3a]/90 backdrop-blur-xl rounded-2xl border border-white/10 p-8 md:p-12 text-center">
+        <div className="max-w-4xl mx-auto mb-8 md:mb-16 bg-gradient-to-br from-[#141428]/90 to-[#1a1b3a]/90 backdrop-blur-xl rounded-2xl border border-white/10 hover:border-purple-500/50 p-8 md:p-12 text-center transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-purple-500/20 pulse-glow">
           <div className="flex justify-center mb-6">
             <div className="flex text-yellow-400">
               {[...Array(5)].map((_, i) => (
