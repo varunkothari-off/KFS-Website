@@ -7,6 +7,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface LoanProduct {
   id: string;
@@ -117,6 +118,7 @@ export default function LoanComparisonTool() {
   ];
 
   const [selectedLoans, setSelectedLoans] = useState<string[]>(["working-capital", "term-loan"]);
+  const [filterType, setFilterType] = useState<string>("all");
 
   const toggleLoan = (loanId: string) => {
     if (selectedLoans.includes(loanId)) {
@@ -130,7 +132,8 @@ export default function LoanComparisonTool() {
     }
   };
 
-  const selectedProducts = loanProducts.filter(loan => selectedLoans.includes(loan.id));
+  const filteredLoanProducts = loanProducts.filter(loan => filterType === "all" || loan.type === filterType);
+  const selectedProducts = filteredLoanProducts.filter(loan => selectedLoans.includes(loan.id));
 
   return (
     <section className="py-16 bg-gradient-to-b from-[#0a0b1e] to-[#141428] relative overflow-hidden">
@@ -154,8 +157,28 @@ export default function LoanComparisonTool() {
 
         {/* Loan Selector */}
         <div className="mb-8">
+          <div className="flex flex-wrap gap-4 justify-center items-center mb-4">
+            <Select value={filterType} onValueChange={setFilterType}>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Filter by type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Types</SelectItem>
+                <SelectItem value="Short-term Finance">Short-term Finance</SelectItem>
+                <SelectItem value="Long-term Finance">Long-term Finance</SelectItem>
+                <SelectItem value="Secured Loan">Secured Loan</SelectItem>
+                <SelectItem value="Government Backed">Government Backed</SelectItem>
+              </SelectContent>
+            </Select>
+            <button
+              onClick={() => setSelectedLoans([])}
+              className="px-4 py-2 rounded-full border border-white/20 bg-white/5 text-white/60 hover:bg-white/10 transition-all"
+            >
+              Clear Selection
+            </button>
+          </div>
           <div className="flex flex-wrap gap-3 justify-center">
-            {loanProducts.map((loan) => (
+            {filteredLoanProducts.map((loan) => (
               <button
                 key={loan.id}
                 onClick={() => toggleLoan(loan.id)}

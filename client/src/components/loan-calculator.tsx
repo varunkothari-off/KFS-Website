@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function LoanCalculator() {
   // EMI Calculator State
@@ -20,6 +21,7 @@ export default function LoanCalculator() {
   const [profitMargin, setProfitMargin] = useState([20]);
   const [existingEmi, setExistingEmi] = useState([0]);
   const [eligibleAmount, setEligibleAmount] = useState(0);
+  const [loanType, setLoanType] = useState("business");
 
   // Calculate EMI
   useEffect(() => {
@@ -39,7 +41,13 @@ export default function LoanCalculator() {
   // Calculate Eligibility
   useEffect(() => {
     const monthlyProfit = (monthlyRevenue[0] * profitMargin[0]) / 100;
-    const availableForEmi = monthlyProfit * 0.5; // 50% of profit for EMI
+    let incomeRatio = 0.5; // Default for business loan
+    if (loanType === "property") {
+      incomeRatio = 0.6; // Higher for property loans
+    } else if (loanType === "personal") {
+      incomeRatio = 0.4; // Lower for personal loans
+    }
+    const availableForEmi = monthlyProfit * incomeRatio;
     const netAvailable = availableForEmi - existingEmi[0];
     
     if (netAvailable > 0) {
@@ -51,7 +59,7 @@ export default function LoanCalculator() {
     } else {
       setEligibleAmount(0);
     }
-  }, [monthlyRevenue, profitMargin, existingEmi]);
+  }, [monthlyRevenue, profitMargin, existingEmi, loanType]);
 
   const formatCurrency = (amount: number): string => {
     if (amount >= 10000000) {
@@ -257,6 +265,21 @@ export default function LoanCalculator() {
                 <CardContent className="space-y-6">
                   <div>
                     <div className="flex justify-between mb-2">
+                      <Label className="text-white/80">Loan Type</Label>
+                    </div>
+                    <Select value={loanType} onValueChange={setLoanType}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select loan type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="business">Business Loan</SelectItem>
+                        <SelectItem value="property">Property Loan</SelectItem>
+                        <SelectItem value="personal">Personal Loan</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <div className="flex justify-between mb-2">
                       <Label className="text-white/80">Monthly Revenue</Label>
                       <span className="text-white font-semibold">{formatCurrency(monthlyRevenue[0])}</span>
                     </div>
@@ -332,6 +355,11 @@ export default function LoanCalculator() {
                     </CardContent>
                   </Card>
                 </motion.div>
+                <a href="/loan-application">
+                  <button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
+                    Apply Now
+                  </button>
+                </a>
 
                 {/* Financial Summary */}
                 <Card className="bg-white/5 border-white/10">
