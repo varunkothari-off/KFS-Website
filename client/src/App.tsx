@@ -1,24 +1,28 @@
+import { Suspense, lazy } from "react";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Home from "./pages/home";
-import LoanApplication from "./pages/loan-application";
-import Consultation from "./pages/consultation";
-import ApplicationStatus from "./pages/application-status";
-import Login from "./pages/login";
-import Register from "./pages/register";
-import Dashboard from "./pages/dashboard";
-import ComprehensiveDashboard from "./pages/comprehensive-dashboard";
-import DocumentUpload from "./pages/document-upload";
-import PrivacyPolicy from "./pages/privacy-policy";
-import TermsOfService from "./pages/terms-of-service";
-import MumbaiPage from "./pages/locations/mumbai";
-import DelhiPage from "./pages/locations/delhi";
-import BangalorePage from "./pages/locations/bangalore";
-import KolkataPage from "./pages/locations/kolkata";
-import NotFound from "./pages/not-found";
+
+const Home = lazy(() => import("./pages/home"));
+const LoanApplication = lazy(() => import("./pages/loan-application"));
+const Consultation = lazy(() => import("./pages/consultation"));
+const ApplicationStatus = lazy(() => import("./pages/application-status"));
+const Login = lazy(() => import("./pages/login"));
+const Register = lazy(() => import("./pages/register"));
+const Dashboard = lazy(() => import("./pages/dashboard"));
+const ComprehensiveDashboard = lazy(
+  () => import("./pages/comprehensive-dashboard"),
+);
+const DocumentUpload = lazy(() => import("./pages/document-upload"));
+const PrivacyPolicy = lazy(() => import("./pages/privacy-policy"));
+const TermsOfService = lazy(() => import("./pages/terms-of-service"));
+const MumbaiPage = lazy(() => import("./pages/locations/mumbai"));
+const DelhiPage = lazy(() => import("./pages/locations/delhi"));
+const BangalorePage = lazy(() => import("./pages/locations/bangalore"));
+const KolkataPage = lazy(() => import("./pages/locations/kolkata"));
+const NotFound = lazy(() => import("./pages/not-found"));
 
 function Router() {
   return (
@@ -48,7 +52,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Router />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Router />
+        </Suspense>
       </TooltipProvider>
     </QueryClientProvider>
   );
